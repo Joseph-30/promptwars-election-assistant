@@ -1,20 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>The Sketchy Voting Process</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
+
         body {
             margin: 0;
             overflow: hidden;
             background-color: #fcf9f2;
+            /* Warm paper color */
             font-family: 'Architects Daughter', cursive, sans-serif;
             color: #2c2c2c;
             touch-action: none;
         }
-        #canvas-container { width: 100vw; height: 100vh; display: block; }
+
+        #canvas-container {
+            width: 100vw;
+            height: 100vh;
+            display: block;
+        }
+
+        /* Sketchy UI Overlay */
         #ui-container {
             position: absolute;
             bottom: 30px;
@@ -30,12 +40,24 @@
             box-shadow: 6px 6px 0px rgba(44, 44, 44, 0.2);
             pointer-events: auto;
             z-index: 10;
+            min-height: 160px;
         }
-        h1 { margin: 0 0 10px 0; font-size: 1.8rem; letter-spacing: 1px; }
-        p  { margin: 0 0 20px 0; font-size: 1.2rem; line-height: 1.4; }
+
+        h1 {
+            margin: 0 0 10px 0;
+            font-size: 1.6rem;
+            letter-spacing: 1px;
+        }
+
+        p {
+            margin: 0 0 20px 0;
+            font-size: 1.1rem;
+            line-height: 1.4;
+        }
+
         button {
             font-family: 'Architects Daughter', cursive;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: bold;
             color: #2c2c2c;
             background: #ffffff;
@@ -46,10 +68,33 @@
             box-shadow: 4px 4px 0px #2c2c2c;
             transition: all 0.1s ease;
         }
-        button:hover { background: #f0f0f0; }
-        button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: 4px 4px 0px #2c2c2c; }
-        button:active:not(:disabled) { box-shadow: 0px 0px 0px #2c2c2c; transform: translate(4px, 4px); }
-        #loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 2rem; z-index: 20; }
+
+        button:hover {
+            background: #f0f0f0;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 4px 4px 0px #2c2c2c;
+        }
+
+        button:active:not(:disabled) {
+            box-shadow: 0px 0px 0px #2c2c2c;
+            transform: translate(4px, 4px);
+        }
+
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            z-index: 20;
+        }
+
+        /* Floating 3D Text Bubbles */
         .speech-bubble {
             position: absolute;
             background: white;
@@ -65,6 +110,7 @@
             z-index: 15;
             white-space: nowrap;
         }
+
         .speech-bubble::after {
             content: '';
             position: absolute;
@@ -77,21 +123,33 @@
         }
     </style>
 </head>
+
 <body>
     <div id="loading">Sketching the scene...</div>
     <div id="canvas-container"></div>
+
     <div id="ui-container" style="display: none;">
         <h1 id="step-title">The Polling Station</h1>
         <p id="step-desc">Welcome! The queue is forming outside. Ready to see how the voting process works?</p>
         <button id="action-btn">Start Process</button>
     </div>
-    <div id="bubble-po1"   class="speech-bubble">ID Verified! ✓</div>
-    <div id="bubble-po2"   class="speech-bubble">Inked &amp; Registered! ☝️</div>
-    <div id="bubble-booth" class="speech-bubble">BEEP! Vote Cast! 🗳️</div>
 
+    <!-- Speech Bubbles for the 9 Steps -->
+    <div id="bubble-enter" class="speech-bubble">Entering Booth... 🚶</div>
+    <div id="bubble-id" class="speech-bubble">ID Verified! 🪪</div>
+    <div id="bubble-list" class="speech-bubble">Name found on List! 📋</div>
+    <div id="bubble-ink" class="speech-bubble">Indelible Ink Applied! ☝️</div>
+    <div id="bubble-slip" class="speech-bubble">Permission Slip Granted 📝</div>
+    <div id="bubble-evm" class="speech-bubble">Approaching EVM...</div>
+    <div id="bubble-vote" class="speech-bubble">Candidate Selected 🔘</div>
+    <div id="bubble-vvpat" class="speech-bubble">BEEP! VVPAT Confirmed 🗳️</div>
+    <div id="bubble-exit" class="speech-bubble">Duty Fulfilled! 🇮🇳</div>
+
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
+
     <script>
         let scene, camera, renderer, controls;
         let citizen, official1, official2;
@@ -100,141 +158,222 @@
         let movingCharacters = [];
         let sketchLines = [];
         let allStickmen = [];
+        let vvpatSlip; // Global reference for the VVPAT paper
+
         let currentStep = 0;
 
         const uiContainer = document.getElementById('ui-container');
-        const titleEl     = document.getElementById('step-title');
-        const descEl      = document.getElementById('step-desc');
-        const btnEl       = document.getElementById('action-btn');
-        const loadingEl   = document.getElementById('loading');
+        const titleEl = document.getElementById('step-title');
+        const descEl = document.getElementById('step-desc');
+        const btnEl = document.getElementById('action-btn');
+        const loadingEl = document.getElementById('loading');
 
         function init() {
             const container = document.getElementById('canvas-container');
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0xfcf9f2);
             scene.fog = new THREE.Fog(0xfcf9f2, 10, 40);
+
             camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
             camera.position.set(-6, 10, 20);
+
             renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             container.appendChild(renderer.domElement);
+
             controls = new THREE.OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
             controls.dampingFactor = 0.05;
             controls.maxPolarAngle = Math.PI / 2 - 0.05;
             controls.minDistance = 3;
             controls.maxDistance = 25;
+
             const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
             scene.add(ambientLight);
             const dirLight = new THREE.DirectionalLight(0xffffff, 0.5);
             dirLight.position.set(5, 10, 5);
             scene.add(dirLight);
+
             buildEnvironment();
+
+            // Setup Officials inside the room
             official1 = createStickman(0x2c2c2c);
             official1.position.set(-4, 0, -1.5);
+            official1.rotation.y = 0;
             scene.add(official1);
+
             official2 = createStickman(0x2c2c2c);
             official2.position.set(-1.5, 0, -1.5);
+            official2.rotation.y = 0;
             scene.add(official2);
+
+            // Setup the Queue (Outside the wall)
             for (let i = 0; i < 5; i++) {
                 let p = createStickman(0x2c2c2c);
                 p.position.set(-3.5, 0, 5 + (i * 2));
                 scene.add(p);
                 queue.push(p);
             }
+
+            // Our main character is the first in queue
             citizen = queue[0];
+
             btnEl.addEventListener('click', handleNextStep);
             window.addEventListener('resize', onWindowResize);
+
             setTimeout(() => {
                 loadingEl.style.display = 'none';
                 uiContainer.style.display = 'block';
+                // Initial sweeping camera move to show the outside queue
                 tweenCamera(-4, 6, 14, -3.5, 1, 4, 2000);
             }, 500);
         }
 
         function createSketchyMesh(geometry, isSolid = true, color = 0xffffff) {
             const group = new THREE.Group();
+
             if (isSolid) {
-                const mat = new THREE.MeshBasicMaterial({ color, polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 });
-                group.add(new THREE.Mesh(geometry, mat));
+                const mat = new THREE.MeshBasicMaterial({
+                    color: color,
+                    polygonOffset: true,
+                    polygonOffsetFactor: 1,
+                    polygonOffsetUnits: 1
+                });
+                const mesh = new THREE.Mesh(geometry, mat);
+                group.add(mesh);
             }
-            const edges   = new THREE.EdgesGeometry(geometry, 15);
-            const lineMat = new THREE.LineBasicMaterial({ color: 0x2c2c2c, linewidth: 2, transparent: true, opacity: 0.8 });
-            const line    = new THREE.LineSegments(edges, lineMat);
+
+            const edges = new THREE.EdgesGeometry(geometry, 15);
+            const lineMat = new THREE.LineBasicMaterial({
+                color: 0x2c2c2c,
+                linewidth: 2,
+                transparent: true,
+                opacity: 0.8
+            });
+            const line = new THREE.LineSegments(edges, lineMat);
+
             line.userData.originalPositions = edges.attributes.position.array.slice();
             sketchLines.push(line);
+
             group.add(line);
             return group;
         }
 
         function buildEnvironment() {
-            const floorGeo   = new THREE.PlaneGeometry(40, 40, 15, 15);
+            // Floor
+            const floorGeo = new THREE.PlaneGeometry(40, 40, 15, 15);
             floorGeo.rotateX(-Math.PI / 2);
             const floorEdges = new THREE.EdgesGeometry(floorGeo);
             const floorLines = new THREE.LineSegments(floorEdges, new THREE.LineBasicMaterial({ color: 0xdddddd }));
+
             const pos = floorLines.geometry.attributes.position.array;
-            for (let i = 0; i < pos.length; i++) pos[i] += (Math.random() - 0.5) * 0.2;
+            for (let i = 0; i < pos.length; i++) {
+                pos[i] += (Math.random() - 0.5) * 0.2;
+            }
             scene.add(floorLines);
 
+            // Container for all exterior wall elements
             wallContainer = new THREE.Group();
+
             const wallGroup = new THREE.Group();
-            const wallL = createSketchyMesh(new THREE.BoxGeometry(4, 3, 0.2), true, 0xe0e0e0);
+            const wallLGeo = new THREE.BoxGeometry(4, 3, 0.2);
+            const wallL = createSketchyMesh(wallLGeo, true, 0xe0e0e0);
             wallL.position.set(-6.5, 1.5, 3);
-            const wallR = createSketchyMesh(new THREE.BoxGeometry(10, 3, 0.2), true, 0xe0e0e0);
+
+            const wallRGeo = new THREE.BoxGeometry(10, 3, 0.2);
+            const wallR = createSketchyMesh(wallRGeo, true, 0xe0e0e0);
             wallR.position.set(2.5, 1.5, 3);
-            const wallT = createSketchyMesh(new THREE.BoxGeometry(2, 1, 0.2), true, 0xe0e0e0);
+
+            const wallTGeo = new THREE.BoxGeometry(2, 1, 0.2);
+            const wallT = createSketchyMesh(wallTGeo, true, 0xe0e0e0);
             wallT.position.set(-3.5, 2.5, 3);
+
             wallGroup.add(wallL, wallR, wallT);
             wallContainer.add(wallGroup);
-            const signBoard = createSketchyMesh(new THREE.BoxGeometry(3, 1, 0.1), true, 0xffffff);
+
+            const signBoardGeo = new THREE.BoxGeometry(3, 1, 0.1);
+            const signBoard = createSketchyMesh(signBoardGeo, true, 0xffffff);
             signBoard.position.set(-3.5, 3.6, 3.1);
             wallContainer.add(signBoard);
+
             scene.add(wallContainer);
 
-            const desk = createSketchyMesh(new THREE.BoxGeometry(5.5, 1.2, 1.5));
+            // Registration Desk inside the room
+            const deskGeo = new THREE.BoxGeometry(5.5, 1.2, 1.5);
+            const desk = createSketchyMesh(deskGeo);
             desk.position.set(-2.5, 0.6, 0);
             scene.add(desk);
 
             const paperGeo = new THREE.PlaneGeometry(0.5, 0.7);
             paperGeo.rotateX(-Math.PI / 2);
+
             const list = createSketchyMesh(paperGeo, true, 0xffffff);
             list.position.set(-4, 1.21, 0.2);
             list.rotation.y = 0.1;
             scene.add(list);
+
             const slips = createSketchyMesh(paperGeo, true, 0xffffff);
             slips.position.set(-1.5, 1.21, 0);
             slips.rotation.y = -0.2;
             scene.add(slips);
-            const inkBot = createSketchyMesh(new THREE.CylinderGeometry(0.1, 0.1, 0.2, 8), true, 0x555555);
+
+            const inkBotGeo = new THREE.CylinderGeometry(0.1, 0.1, 0.2, 8);
+            const inkBot = createSketchyMesh(inkBotGeo, true, 0x555555);
             inkBot.position.set(-1.8, 1.3, 0.3);
             scene.add(inkBot);
 
+            // Voting Booth inside the room
             const boothGroup = new THREE.Group();
-            const back = createSketchyMesh(new THREE.BoxGeometry(3.5, 3, 0.1));
+
+            const backGeo = new THREE.BoxGeometry(3.5, 3, 0.1);
+            const back = createSketchyMesh(backGeo);
             back.position.set(0, 1.5, -1);
             boothGroup.add(back);
-            const left = createSketchyMesh(new THREE.BoxGeometry(0.1, 3, 2));
+
+            const leftGeo = new THREE.BoxGeometry(0.1, 3, 2);
+            const left = createSketchyMesh(leftGeo);
             left.position.set(-1.7, 1.5, 0);
             boothGroup.add(left);
-            const right = createSketchyMesh(new THREE.BoxGeometry(0.1, 3, 2));
+
+            const rightGeo = new THREE.BoxGeometry(0.1, 3, 2);
+            const right = createSketchyMesh(rightGeo);
             right.position.set(1.7, 1.5, 0);
             boothGroup.add(right);
-            const bTable = createSketchyMesh(new THREE.BoxGeometry(3.3, 0.1, 1));
+
+            const bTableGeo = new THREE.BoxGeometry(3.3, 0.1, 1);
+            const bTable = createSketchyMesh(bTableGeo);
             bTable.position.set(0, 1.2, -0.4);
             boothGroup.add(bTable);
-            const evm = createSketchyMesh(new THREE.BoxGeometry(0.8, 0.2, 0.6), true, 0xeeeeee);
+
+            // EVM Control Unit
+            const evmGeo = new THREE.BoxGeometry(0.8, 0.2, 0.6);
+            const evm = createSketchyMesh(evmGeo, true, 0xeeeeee);
             evm.position.set(-0.5, 1.35, -0.5);
             boothGroup.add(evm);
-            const evmBtn = createSketchyMesh(new THREE.CylinderGeometry(0.05, 0.05, 0.1), true, 0x3498db);
+
+            const btnGeo = new THREE.CylinderGeometry(0.05, 0.05, 0.1);
+            const evmBtn = createSketchyMesh(btnGeo, true, 0x3498db);
             evmBtn.position.set(-0.5, 1.45, -0.4);
             boothGroup.add(evmBtn);
-            const vvpat = createSketchyMesh(new THREE.BoxGeometry(0.6, 0.7, 0.5), true, 0xcccccc);
+
+            // VVPAT Machine
+            const vvpatGeo = new THREE.BoxGeometry(0.6, 0.7, 0.5);
+            const vvpat = createSketchyMesh(vvpatGeo, true, 0xcccccc);
             vvpat.position.set(0.6, 1.6, -0.5);
             boothGroup.add(vvpat);
-            const screen = createSketchyMesh(new THREE.PlaneGeometry(0.4, 0.3), true, 0x333333);
+
+            const screenGeo = new THREE.PlaneGeometry(0.4, 0.3);
+            const screen = createSketchyMesh(screenGeo, true, 0x333333);
             screen.position.set(0.6, 1.7, -0.24);
             boothGroup.add(screen);
+
+            // The VVPAT Slip (hidden initially)
+            const slipGeo = new THREE.PlaneGeometry(0.25, 0.25);
+            vvpatSlip = createSketchyMesh(slipGeo, true, 0xffffff);
+            vvpatSlip.position.set(0.6, 1.5, -0.23); // Starts hidden below screen
+            boothGroup.add(vvpatSlip);
+
             boothGroup.position.set(4, 0, -2);
             boothGroup.rotation.y = -0.4;
             scene.add(boothGroup);
@@ -243,113 +382,220 @@
         function createStickman(color) {
             const group = new THREE.Group();
             const legH = 0.8, bodyH = 1.0, armH = 0.7, headR = 0.25;
+
             const head = createSketchyMesh(new THREE.SphereGeometry(headR, 8, 8));
             head.position.y = legH + bodyH + headR;
             group.add(head);
+
             const body = createSketchyMesh(new THREE.CylinderGeometry(0.1, 0.05, bodyH, 5));
             body.position.y = legH + bodyH / 2;
             group.add(body);
+
             const leftLegPivot = new THREE.Group();
             leftLegPivot.position.set(-0.15, legH, 0);
             const leftLeg = createSketchyMesh(new THREE.CylinderGeometry(0.05, 0.05, legH, 5));
             leftLeg.position.y = -legH / 2;
             leftLegPivot.add(leftLeg);
             group.add(leftLegPivot);
+
             const rightLegPivot = new THREE.Group();
             rightLegPivot.position.set(0.15, legH, 0);
             const rightLeg = createSketchyMesh(new THREE.CylinderGeometry(0.05, 0.05, legH, 5));
             rightLeg.position.y = -legH / 2;
             rightLegPivot.add(rightLeg);
             group.add(rightLegPivot);
+
             const leftArmPivot = new THREE.Group();
             leftArmPivot.position.set(-0.25, legH + bodyH - 0.1, 0);
             const leftArm = createSketchyMesh(new THREE.CylinderGeometry(0.05, 0.05, armH, 5));
             leftArm.position.y = -armH / 2;
             leftArmPivot.add(leftArm);
             group.add(leftArmPivot);
+
             const rightArmPivot = new THREE.Group();
             rightArmPivot.position.set(0.25, legH + bodyH - 0.1, 0);
             const rightArm = createSketchyMesh(new THREE.CylinderGeometry(0.05, 0.05, armH, 5));
             rightArm.position.y = -armH / 2;
             rightArmPivot.add(rightArm);
             group.add(rightArmPivot);
+
             group.userData = { leftLegPivot, rightLegPivot, leftArmPivot, rightArmPivot, rightArm, walkTime: 0 };
             allStickmen.push(group);
             return group;
         }
 
+        // Helper to hide all text bubbles
+        function hideAllBubbles() {
+            document.querySelectorAll('.speech-bubble').forEach(b => b.style.opacity = '0');
+        }
+
+        // --- NARRATIVE LOGIC (9 Steps) --- //
+
         const narrativeSteps = [
             {
-                title: "Step 1: Enter the Station & ID Check",
-                desc: "When it's your turn, you enter the room. Polling Officer 1 checks your name on the electoral roll and verifies your ID.",
-                btnText: "Enter & Verify",
+                title: "Step 1: Entering the Polling Station",
+                desc: "The voter leaves the queue outside and enters the polling booth. The simulation begins.",
+                btnText: "Verify Identity",
                 action: () => {
+                    hideAllBubbles();
                     advanceQueue();
+
+                    // Lower walls to see inside
                     new TWEEN.Tween(wallContainer.position).to({ y: -6 }, 1500).easing(TWEEN.Easing.Cubic.InOut).start();
-                    moveCharacterTo(citizen, -4, 1.5, 0, () => {
-                        showBubble('bubble-po1', -4, 3);
-                        new TWEEN.Tween(official1.rotation).to({ x: 0.2 }, 200).yoyo(true).repeat(3).start();
+
+                    moveCharacterTo(citizen, -4.5, 1.5, 0, () => {
+                        showBubble('bubble-enter', -4.5, 3);
                     });
                     tweenCamera(-4, 5, 8, -4, 1, 0);
                 }
             },
             {
-                title: "Step 2: Indelible Ink & Voter Slip",
-                desc: "Polling Officer 2 marks your left forefinger with indelible ink, takes your signature, and gives you a voter slip.",
-                btnText: "Move to PO-2",
+                title: "Step 2: Identity Verification",
+                desc: "Polling Officer 1 checks the voter's official ID card (EPIC or other valid document) to verify their identity.",
+                btnText: "Check Voter List",
                 action: () => {
-                    hideBubble('bubble-po1');
-                    moveCharacterTo(citizen, -1.5, 1.5, 0, () => {
-                        showBubble('bubble-po2', -1.5, 3);
-                        const inkGeo = new THREE.SphereGeometry(0.08, 8, 8);
-                        const inkMat = new THREE.MeshBasicMaterial({ color: 0x6a0dad });
-                        const ink = new THREE.Mesh(inkGeo, inkMat);
-                        ink.position.set(0, -0.3, 0);
-                        citizen.userData.leftArmPivot.children[0].add(ink);
+                    hideAllBubbles();
+                    showBubble('bubble-id', -4, 3.5);
+                    new TWEEN.Tween(official1.rotation).to({ x: 0.2 }, 300).yoyo(true).repeat(1)
+                        .onComplete(() => { btnEl.disabled = false; }) // Unlock button
+                        .start();
+                }
+            },
+            {
+                title: "Step 3: Checking Voter List Confirmation",
+                desc: "The officer confirms the voter's name and details match exactly on the electoral roll.",
+                btnText: "Get Inked",
+                action: () => {
+                    hideAllBubbles();
+                    showBubble('bubble-list', -4, 3.5);
+                    new TWEEN.Tween(official1.rotation).to({ z: -0.2 }, 300).yoyo(true).repeat(3)
+                        .onComplete(() => { btnEl.disabled = false; }) // Unlock button
+                        .start();
+                }
+            },
+            {
+                title: "Step 4: Ink Marking Step",
+                desc: "Polling Officer 2 applies indelible ink to the voter's left forefinger to prevent double voting.",
+                btnText: "Get Permission",
+                action: () => {
+                    hideAllBubbles();
+                    moveCharacterTo(citizen, -1.8, 1.5, 0, () => {
+                        showBubble('bubble-ink', -1.5, 3);
+
+                        // Add ink mark to citizen's left arm
+                        if (!citizen.userData.leftArmPivot.children[0].getObjectByName('indelibleInk')) {
+                            const inkGeo = new THREE.SphereGeometry(0.08, 8, 8);
+                            const inkMat = new THREE.MeshBasicMaterial({ color: 0x6a0dad });
+                            const ink = new THREE.Mesh(inkGeo, inkMat);
+                            ink.position.set(0, -0.3, 0);
+                            ink.name = "indelibleInk";
+                            citizen.userData.leftArmPivot.children[0].add(ink);
+                        }
+
                         new TWEEN.Tween(official2.rotation).to({ x: 0.2 }, 200).yoyo(true).repeat(2).start();
                     });
                     tweenCamera(-1.5, 4, 6, -2, 1, 0);
                 }
             },
             {
-                title: "Step 3: Casting the Vote",
-                desc: "You proceed to the voting booth. Press the blue button on the EVM. A beep sounds, and the VVPAT prints a slip to confirm your vote!",
-                btnText: "Go to EVM Booth",
+                title: "Step 5: Receiving Voting Permission",
+                desc: "The officer takes the voter's signature and issues a voter slip granting permission to vote.",
+                btnText: "Approach EVM",
                 action: () => {
-                    hideBubble('bubble-po2');
+                    hideAllBubbles();
+                    showBubble('bubble-slip', -1.5, 3.5);
+                    setTimeout(() => { btnEl.disabled = false; }, 800); // Unlock button after text shows
+                }
+            },
+            {
+                title: "Step 6: Approaching EVM Machine",
+                desc: "The voter proceeds to the voting compartment where the Electronic Voting Machine (EVM) is kept in secret.",
+                btnText: "Select Candidate",
+                action: () => {
+                    hideAllBubbles();
                     moveCharacterTo(citizen, 3.5, -1, -0.5, () => {
-                        showBubble('bubble-booth', 4, 3.5);
-                        new TWEEN.Tween(citizen.userData.rightArmPivot.rotation).to({ x: -Math.PI / 2 }, 300).yoyo(true).repeat(1).start();
+                        showBubble('bubble-evm', 4, 3.5);
                     });
                     tweenCamera(4, 5, 4, 4, 1, -2);
                 }
             },
             {
-                title: "Step 4: Duty Fulfilled!",
-                desc: "Your vote is cast and secured. You exit the polling station, making way for the next citizen in the queue.",
-                btnText: "Exit Station",
+                title: "Step 7: Selecting Candidate Button",
+                desc: "The voter presses the blue button on the EVM next to their chosen candidate.",
+                btnText: "Confirm VVPAT",
                 action: () => {
-                    hideBubble('bubble-booth');
-                    moveCharacterTo(citizen, 10, 4, Math.PI / 2, () => { btnEl.innerText = "Next Voter"; });
+                    hideAllBubbles();
+                    showBubble('bubble-vote', 4, 3.5);
+                    // Raise right arm to press EVM
+                    new TWEEN.Tween(citizen.userData.rightArmPivot.rotation)
+                        .to({ x: -Math.PI / 2 }, 300)
+                        .onComplete(() => { btnEl.disabled = false; }) // Unlock button
+                        .start();
+                }
+            },
+            {
+                title: "Step 8: Confirming Vote with VVPAT Feedback",
+                desc: "A loud BEEP sounds! The VVPAT machine prints a visible slip confirming the candidate chosen before dropping it securely.",
+                btnText: "Exit Booth",
+                action: () => {
+                    hideAllBubbles();
+                    showBubble('bubble-vvpat', 4.5, 4);
+
+                    // Lower arm
+                    new TWEEN.Tween(citizen.userData.rightArmPivot.rotation).to({ x: 0 }, 300).start();
+
+                    // Animate VVPAT paper printing out
+                    new TWEEN.Tween(vvpatSlip.position)
+                        .to({ y: 1.85 }, 1000)
+                        .yoyo(true)
+                        .repeat(1)
+                        .delay(300)
+                        .onComplete(() => { btnEl.disabled = false; }) // Unlock button
+                        .start();
+                }
+            },
+            {
+                title: "Step 9: Exiting Polling Booth",
+                desc: "The voting process is complete! The citizen exits the station, having successfully participated in democracy.",
+                btnText: "Next Voter",
+                action: () => {
+                    hideAllBubbles();
+                    moveCharacterTo(citizen, 10, 4, Math.PI / 2, () => {
+                        showBubble('bubble-exit', 8, 4.5);
+                        btnEl.innerText = "Next Voter";
+                    });
                     tweenCamera(6, 6, 8, 5, 1, 2);
                 }
             },
             {
                 title: "The Polling Station",
-                desc: "The queue continues! Every vote counts in a democracy.",
+                desc: "The queue continues outside! Every vote counts.",
                 btnText: "Start Process",
                 action: () => {
+                    hideAllBubbles();
+
+                    // Reset current citizen and make the next person in queue the new citizen
                     scene.remove(citizen);
                     queue.shift();
+
                     let newPerson = createStickman(0x2c2c2c);
                     newPerson.position.set(-3.5, 0, 5 + (4 * 2));
                     scene.add(newPerson);
                     queue.push(newPerson);
+
                     citizen = queue[0];
                     currentStep = 0;
+
                     tweenCamera(-4, 6, 14, -3.5, 1, 4, 1500);
-                    new TWEEN.Tween(wallContainer.position).to({ y: 0 }, 1500).easing(TWEEN.Easing.Cubic.InOut).start();
-                    setTimeout(() => { btnEl.click(); }, 1500);
+
+                    new TWEEN.Tween(wallContainer.position)
+                        .to({ y: 0 }, 1500)
+                        .easing(TWEEN.Easing.Cubic.InOut)
+                        .start();
+
+                    setTimeout(() => {
+                        btnEl.click(); // Auto-start step 1
+                    }, 1500);
                 }
             }
         ];
@@ -357,15 +603,22 @@
         function handleNextStep() {
             const step = narrativeSteps[currentStep];
             titleEl.innerText = step.title;
-            descEl.innerText  = step.desc;
-            btnEl.innerText   = step.btnText;
-            btnEl.disabled    = true;
+            descEl.innerText = step.desc;
+            btnEl.innerText = step.btnText;
+            btnEl.disabled = true;
+
             step.action();
+
             currentStep++;
-            if (currentStep >= narrativeSteps.length) currentStep = 0;
+            if (currentStep >= narrativeSteps.length) {
+                currentStep = 0;
+            }
         }
 
+        // --- ANIMATION CONTROLLERS --- //
+
         function advanceQueue() {
+            // Move everyone except the first person (who is walking to the desk inside) forward by 2 units
             for (let i = 1; i < queue.length; i++) {
                 let p = queue[i];
                 movingCharacters.push(p);
@@ -373,63 +626,88 @@
                     .to({ z: p.position.z - 2 }, 1200)
                     .easing(TWEEN.Easing.Quadratic.InOut)
                     .onComplete(() => {
-                        const idx = movingCharacters.indexOf(p);
-                        if (idx > -1) movingCharacters.splice(idx, 1);
+                        const index = movingCharacters.indexOf(p);
+                        if (index > -1) movingCharacters.splice(index, 1);
                         p.userData.leftLegPivot.rotation.x = 0;
                         p.userData.rightLegPivot.rotation.x = 0;
                         p.userData.leftArmPivot.rotation.x = 0;
                         p.userData.rightArmPivot.rotation.x = 0;
-                    }).start();
+                    })
+                    .start();
             }
         }
 
         function moveCharacterTo(character, x, z, targetRotation, callback) {
             movingCharacters.push(character);
+
             const dx = x - character.position.x;
             const dz = z - character.position.z;
             const angle = Math.atan2(dx, dz);
-            new TWEEN.Tween(character.rotation).to({ y: angle }, 300).easing(TWEEN.Easing.Quadratic.Out).start();
+
+            new TWEEN.Tween(character.rotation)
+                .to({ y: angle }, 300)
+                .easing(TWEEN.Easing.Quadratic.Out)
+                .start();
+
             const dist = Math.sqrt(dx * dx + dz * dz);
+            const duration = dist * 400;
+
             new TWEEN.Tween(character.position)
-                .to({ x, z }, dist * 400)
+                .to({ x: x, z: z }, duration)
                 .easing(TWEEN.Easing.Linear.None)
                 .onComplete(() => {
-                    const idx = movingCharacters.indexOf(character);
-                    if (idx > -1) movingCharacters.splice(idx, 1);
+                    const index = movingCharacters.indexOf(character);
+                    if (index > -1) movingCharacters.splice(index, 1);
+
                     character.userData.leftLegPivot.rotation.x = 0;
                     character.userData.rightLegPivot.rotation.x = 0;
                     character.userData.leftArmPivot.rotation.x = 0;
                     character.userData.rightArmPivot.rotation.x = 0;
-                    new TWEEN.Tween(character.rotation).to({ y: targetRotation }, 300).start()
+
+                    new TWEEN.Tween(character.rotation)
+                        .to({ y: targetRotation }, 300)
+                        .start()
                         .onComplete(() => {
                             btnEl.disabled = false;
                             if (callback) callback();
                         });
-                }).start();
+                })
+                .start();
         }
 
         function tweenCamera(cx, cy, cz, tx, ty, tz, duration = 1500) {
             controls.enabled = false;
-            new TWEEN.Tween(camera.position).to({ x: cx, y: cy, z: cz }, duration).easing(TWEEN.Easing.Cubic.InOut).start();
-            new TWEEN.Tween(controls.target).to({ x: tx, y: ty, z: tz }, duration).easing(TWEEN.Easing.Cubic.InOut)
-                .onComplete(() => { controls.enabled = true; }).start();
+
+            new TWEEN.Tween(camera.position)
+                .to({ x: cx, y: cy, z: cz }, duration)
+                .easing(TWEEN.Easing.Cubic.InOut)
+                .start();
+
+            new TWEEN.Tween(controls.target)
+                .to({ x: tx, y: ty, z: tz }, duration)
+                .easing(TWEEN.Easing.Cubic.InOut)
+                .onComplete(() => {
+                    controls.enabled = true;
+                })
+                .start();
         }
 
         function showBubble(id, x, y, z = 0) {
             const bubble = document.getElementById(id);
             bubble.style.opacity = '1';
-            const update = () => {
-                if (bubble.style.opacity === '0') return;
+
+            const updateBubblePos = () => {
+                if (bubble.style.opacity == '0') return;
                 const pos = new THREE.Vector3(x, y, z);
                 pos.project(camera);
-                bubble.style.left = `${(pos.x * .5 + .5) * window.innerWidth}px`;
-                bubble.style.top  = `${(pos.y * -.5 + .5) * window.innerHeight - 30}px`;
-                requestAnimationFrame(update);
+                const screenX = (pos.x * .5 + .5) * window.innerWidth;
+                const screenY = (pos.y * -.5 + .5) * window.innerHeight;
+                bubble.style.left = `${screenX}px`;
+                bubble.style.top = `${screenY - 30}px`;
+                requestAnimationFrame(updateBubblePos);
             };
-            update();
+            updateBubblePos();
         }
-
-        function hideBubble(id) { document.getElementById(id).style.opacity = '0'; }
 
         function onWindowResize() {
             camera.aspect = window.innerWidth / window.innerHeight;
@@ -437,20 +715,27 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         }
 
+        // --- RENDER LOOP & PROCEDURAL EFFECTS --- //
+
         let lastWobbleTime = 0;
+        const WOBBLE_INTERVAL = 100;
+
         function animate(time) {
             requestAnimationFrame(animate);
             TWEEN.update(time);
             controls.update();
+
             time = time || 0;
+
             movingCharacters.forEach(char => {
                 char.userData.walkTime += 0.15;
                 const swing = Math.sin(char.userData.walkTime) * 0.6;
-                char.userData.leftLegPivot.rotation.x  =  swing;
+                char.userData.leftLegPivot.rotation.x = swing;
                 char.userData.rightLegPivot.rotation.x = -swing;
-                char.userData.leftArmPivot.rotation.x  = -swing;
-                char.userData.rightArmPivot.rotation.x =  swing;
+                char.userData.leftArmPivot.rotation.x = -swing;
+                char.userData.rightArmPivot.rotation.x = swing;
             });
+
             const breath = Math.sin(time * 0.002) * 0.02;
             allStickmen.forEach(char => {
                 if (!movingCharacters.includes(char)) {
@@ -458,21 +743,24 @@
                     char.children[0].position.y = 0.8 + 1.0 + 0.25 + breath;
                 }
             });
-            if (time - lastWobbleTime > 100) {
+
+            if (time - lastWobbleTime > WOBBLE_INTERVAL) {
                 lastWobbleTime = time;
                 sketchLines.forEach(line => {
                     const posAttr = line.geometry.attributes.position;
-                    const orig    = line.userData.originalPositions;
+                    const orig = line.userData.originalPositions;
                     for (let i = 0; i < posAttr.count; i++) {
-                        posAttr.setXYZ(i,
-                            orig[i*3]   + (Math.random() - 0.5) * 0.04,
-                            orig[i*3+1] + (Math.random() - 0.5) * 0.04,
-                            orig[i*3+2] + (Math.random() - 0.5) * 0.04
+                        posAttr.setXYZ(
+                            i,
+                            orig[i * 3] + (Math.random() - 0.5) * 0.04,
+                            orig[i * 3 + 1] + (Math.random() - 0.5) * 0.04,
+                            orig[i * 3 + 2] + (Math.random() - 0.5) * 0.04
                         );
                     }
                     posAttr.needsUpdate = true;
                 });
             }
+
             renderer.render(scene, camera);
         }
 
@@ -480,4 +768,5 @@
         requestAnimationFrame(animate);
     </script>
 </body>
+
 </html>

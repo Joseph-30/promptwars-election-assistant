@@ -74,17 +74,17 @@ export function InteractiveTimeline({
                   Current Stage: {currentStage.title}
                 </span>
                 <h1 className="font-h1 text-h1 text-primary mb-3">Your Civic Journey</h1>
-                <p className="text-on-surface-variant mb-2 text-sm max-w-md">
+                <p className="text-on-surface-variant mb-2 text-sm max-w-2xl">
                   {completedModules.length === 0
                     ? "Start with Registration — the foundation of your democratic participation."
                     : `You've completed ${completedModules.length} of ${timelineData.length} modules. Keep going!`}
                 </p>
 
                 {/* Progress bar */}
-                <div className="mb-6 max-w-sm">
-                  <div className="flex justify-between text-xs text-slate-500 mb-1">
-                    <span className="font-semibold uppercase tracking-wider">Overall Progress</span>
-                    <span className="font-bold text-primary">{pct}%</span>
+                <div className="mb-6 max-w-md">
+                  <div className="flex justify-between text-xs text-slate-500 mb-1 gap-4">
+                    <span className="font-semibold uppercase tracking-wider whitespace-nowrap">Overall Progress</span>
+                    <span className="font-bold text-primary whitespace-nowrap">{pct}%</span>
                   </div>
                   <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
                     <div
@@ -97,14 +97,14 @@ export function InteractiveTimeline({
                 <div className="flex gap-3 flex-wrap">
                   <button
                     onClick={() => goToModule(currentProgressModule)}
-                    className="px-6 py-3 bg-primary text-on-primary rounded-xl font-semibold hover:opacity-90 transition-all shadow-lg shadow-primary/20 flex items-center gap-2"
+                    className="px-6 py-3 bg-primary text-on-primary rounded-xl font-semibold hover:opacity-90 transition-all shadow-lg shadow-primary/20 flex items-center gap-2 whitespace-nowrap"
                   >
                     {completedModules.length === 0 ? "Start Learning" : "Resume Learning"}
                     <span className="material-symbols-outlined text-sm">play_circle</span>
                   </button>
                   <button
                     onClick={() => setActiveSection && setActiveSection("quiz")}
-                    className="px-6 py-3 bg-white border border-slate-300 text-primary rounded-xl font-semibold hover:bg-slate-50 transition-colors"
+                    className="px-6 py-3 bg-white border border-slate-300 text-primary rounded-xl font-semibold hover:bg-slate-50 transition-colors whitespace-nowrap"
                   >
                     Take Quiz
                   </button>
@@ -184,9 +184,9 @@ export function InteractiveTimeline({
             {/* Card body */}
             <div className="p-6">
               <div className="flex items-start justify-between gap-4">
-                <div>
+                <div className="flex-1">
                   <h2 className="font-h2 text-2xl text-primary font-bold mb-1">How Voting Works</h2>
-                  <p className="text-on-surface-variant text-sm max-w-lg">
+                  <p className="text-on-surface-variant text-sm max-w-2xl">
                     Walk through the complete polling station experience — from ID check to casting your EVM vote — in this hand-drawn 3D walkthrough. Use orbit controls to explore the scene from any angle.
                   </p>
                 </div>
