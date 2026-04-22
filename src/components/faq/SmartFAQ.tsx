@@ -1,62 +1,97 @@
 "use client";
 
 import React, { useState } from "react";
-import { faqData } from "@/data/mockData";
+import { faqData, glossaryData } from "@/data/mockData";
 import { motion, AnimatePresence } from "framer-motion";
 
-export function SmartFAQ() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedFaq, setSelectedFaq] = useState<number | null>(null);
+interface SmartFAQProps {
+  setActiveSection?: (s: string) => void;
+}
 
-  const filteredFaqs = faqData.filter(faq => 
-    faq.question.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    faq.answer.toLowerCase().includes(searchQuery.toLowerCase())
+export function SmartFAQ({ setActiveSection }: SmartFAQProps) {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedFaq, setSelectedFaq] = useState<number | null>(0);
+  const [glossaryFilter, setGlossaryFilter] = useState("");
+
+  const filteredFaqs = faqData.filter(
+    (faq) =>
+      faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      faq.answer.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const filteredGlossary = glossaryData.filter((term) =>
+    term.term.toLowerCase().includes(glossaryFilter.toLowerCase())
   );
 
   return (
-    <div className="max-w-3xl mx-auto py-8 h-full flex flex-col">
-      <div className="mb-8 text-center">
-        <h2 className="font-h2 text-h2 text-primary">Smart Civic FAQ</h2>
-        <p className="text-on-surface-variant mt-2 font-body-md">Ask a question to understand the election process better.</p>
+    <div className="max-w-5xl mx-auto">
+      {/* Hero Header */}
+      <div className="text-center mb-8">
+        <h1 className="font-h1 text-h1 text-primary mb-3">How can we help you participate?</h1>
+        <p className="text-on-surface-variant max-w-xl mx-auto">
+          Ask any question about the voting process or election terminology to get instant, verified guidance.
+        </p>
       </div>
 
-      <div className="flex-1 bg-white rounded-xl shadow-quiz-card flex flex-col overflow-hidden">
-        <div className="bg-surface border-b border-slate-200 p-lg">
-          <div className="relative">
+      {/* Search Bar */}
+      <div className="max-w-2xl mx-auto mb-8">
+        <div className="flex gap-3">
+          <div className="relative flex-1">
             <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">search</span>
-            <input 
-              type="text" 
-              placeholder="E.g., What is NOTA?" 
-              className="w-full pl-12 pr-4 py-3 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all font-body-md bg-white"
+            <input
+              type="text"
+              placeholder="e.g., 'Am I eligible to vote?' or 'What is a constituency?'"
+              className="w-full pl-12 pr-4 py-4 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all bg-white shadow-sm font-body-md"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
+          <button className="px-6 py-4 bg-primary text-on-primary font-semibold rounded-xl hover:opacity-90 transition-all shadow-lg shadow-primary/20">
+            Ask Now
+          </button>
         </div>
-        <div className="p-0 flex-1 overflow-y-auto bg-surface-container-low">
-          <div className="divide-y divide-slate-200">
+      </div>
+
+      {/* 2-Column Layout */}
+      <div className="flex flex-col lg:flex-row gap-gutter">
+        {/* Left: FAQ */}
+        <div className="flex-1">
+          {/* FAQ Header */}
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-h2 text-h2 text-primary">Frequently Asked Questions</h2>
+            <span className="text-xs font-bold text-secondary bg-secondary/10 px-3 py-1 rounded-full">Updated 1h ago</span>
+          </div>
+
+          {/* FAQ Cards */}
+          <div className="space-y-4">
             {filteredFaqs.length > 0 ? (
               filteredFaqs.map((faq, idx) => (
-                <div key={idx} className="p-6 hover:bg-white transition-colors cursor-pointer" onClick={() => setSelectedFaq(selectedFaq === idx ? null : idx)}>
-                  <div className="flex gap-4">
-                    <div className="mt-1 shrink-0">
-                      <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center">
-                        <span className="material-symbols-outlined text-lg">chat_bubble</span>
-                      </div>
+                <div
+                  key={idx}
+                  className={`bg-white rounded-xl p-6 shadow-quiz-card border-2 cursor-pointer transition-all ${
+                    selectedFaq === idx ? "border-primary" : "border-transparent hover:border-slate-200"
+                  }`}
+                  onClick={() => setSelectedFaq(selectedFaq === idx ? null : idx)}
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center shrink-0">
+                      <span className="material-symbols-outlined text-secondary" style={{ fontVariationSettings: "'FILL' 1" }}>verified_user</span>
                     </div>
                     <div className="flex-1">
-                      <h4 className="font-h3 text-quiz-option text-primary">{faq.question}</h4>
+                      <h3 className="font-h3 text-quiz-option text-primary font-semibold mb-2">{faq.question}</h3>
                       <AnimatePresence>
                         {selectedFaq === idx && (
                           <motion.div
-                            initial={{ height: 0, opacity: 0, marginTop: 0 }}
-                            animate={{ height: "auto", opacity: 1, marginTop: 12 }}
-                            exit={{ height: 0, opacity: 0, marginTop: 0 }}
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
                             className="overflow-hidden"
                           >
-                            <div className="p-4 bg-white border border-slate-200 rounded-lg text-on-surface-variant shadow-sm text-body-md leading-relaxed">
-                              {faq.answer}
-                            </div>
+                            <p className="text-on-surface-variant text-sm leading-relaxed mb-3">{faq.answer}</p>
+                            <button className="text-primary text-sm font-semibold flex items-center gap-1 hover:underline">
+                              Learn more about {faq.question.toLowerCase().includes("nota") ? "NOTA" : "registration"}
+                              <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                            </button>
                           </motion.div>
                         )}
                       </AnimatePresence>
@@ -65,12 +100,97 @@ export function SmartFAQ() {
                 </div>
               ))
             ) : (
-              <div className="p-8 text-center text-on-surface-variant font-body-md">
-                No results found for "{searchQuery}". Try a different keyword.
+              <div className="p-8 text-center text-on-surface-variant bg-white rounded-xl shadow-quiz-card">
+                No results found for &quot;{searchQuery}&quot;. Try a different keyword.
               </div>
             )}
           </div>
+
+          {/* Quick Check Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+            <div className="bg-white rounded-xl p-6 shadow-quiz-card border-t-4 border-secondary">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="material-symbols-outlined text-secondary" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                <span className="font-label-caps text-label-caps text-secondary">QUICK CHECK</span>
+              </div>
+              <h4 className="font-semibold text-primary mb-2">Registration Deadline</h4>
+              <p className="text-xs text-on-surface-variant">The final date to update your details is <strong>October 15th</strong>. Check your status now to avoid last-minute issues.</p>
+            </div>
+            <div className="bg-white rounded-xl p-6 shadow-quiz-card border-t-4 border-primary">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="material-symbols-outlined text-primary">info</span>
+                <span className="font-label-caps text-label-caps text-primary">PRO TIP</span>
+              </div>
+              <h4 className="font-semibold text-primary mb-2">Acceptable ID Proofs</h4>
+              <p className="text-xs text-on-surface-variant">Voter ID is primary, but Passport, Driving License, or Government Employee IDs are also valid at the booth.</p>
+            </div>
+          </div>
+
+          {/* Visual Guide Banner */}
+          <div className="mt-6 rounded-xl overflow-hidden relative h-48">
+            <img src="/polling_station.png" alt="Polling station" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex items-end p-6">
+              <div>
+                <h3 className="text-xl font-bold text-white mb-1">Visual Guide: At the Polling Station</h3>
+                <p className="text-sm text-white/80">See exactly what happens from the moment you enter until you cast your vote.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Still Have Questions */}
+          <div className="mt-8 bg-surface-container-low rounded-xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div>
+              <h3 className="font-h3 text-h3 text-primary mb-2">Still have questions?</h3>
+              <p className="text-on-surface-variant text-sm">Our community ambassadors are ready to help you navigate the process. Connect with a live guide for specific regional queries.</p>
+            </div>
+            <button className="px-8 py-3 bg-error text-on-error rounded-xl font-semibold hover:opacity-90 transition-colors whitespace-nowrap shadow-sm">
+              Speak to an Ambassador
+            </button>
+          </div>
         </div>
+
+        {/* Right: Glossary Sidebar */}
+        <aside className="hidden lg:block w-72 shrink-0">
+          <div className="bg-white rounded-xl p-md shadow-quiz-card border border-slate-100 sticky top-24">
+            <h3 className="font-h3 text-quiz-option text-primary font-semibold mb-md">Terminology Glossary</h3>
+            {/* Filter */}
+            <div className="relative mb-md">
+              <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">filter_list</span>
+              <input
+                type="text"
+                placeholder="Filter terms..."
+                className="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                value={glossaryFilter}
+                onChange={(e) => setGlossaryFilter(e.target.value)}
+              />
+            </div>
+            {/* Letter Filters */}
+            <div className="flex gap-2 mb-md flex-wrap">
+              {["A", "B", "C", "D", "E", "F"].map((letter, i) => (
+                <button
+                  key={letter}
+                  className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${
+                    i === 0 ? "bg-primary text-white" : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+                  }`}
+                >
+                  {letter}
+                </button>
+              ))}
+            </div>
+            {/* Terms */}
+            <div className="space-y-4 max-h-96 overflow-y-auto">
+              {filteredGlossary.map((term, idx) => (
+                <div key={idx}>
+                  <h4 className="text-sm font-bold text-primary">{term.term}</h4>
+                  <p className="text-xs text-on-surface-variant leading-relaxed">{term.definition}</p>
+                </div>
+              ))}
+            </div>
+            <button className="w-full mt-md text-sm font-bold text-primary border-t border-slate-100 pt-md hover:underline">
+              Download Full PDF Glossary
+            </button>
+          </div>
+        </aside>
       </div>
     </div>
   );
