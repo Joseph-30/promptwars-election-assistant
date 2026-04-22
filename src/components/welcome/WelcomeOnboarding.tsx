@@ -61,35 +61,35 @@ export function WelcomeOnboarding({ setActiveSection }: WelcomeOnboardingProps) 
           <div className="h-1 w-24 bg-secondary mx-auto rounded-full"></div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Step 1: Registration */}
-          <button onClick={() => setActiveSection("navigator")} className="bg-white p-lg rounded-xl shadow-quiz-card border-t-4 border-secondary/20 hover:border-secondary transition-all group text-left">
-            <div className="w-12 h-12 rounded-lg bg-surface flex items-center justify-center mb-md group-hover:bg-secondary/10 transition-colors">
+          <button onClick={() => setActiveSection("navigator")} className="bg-white p-6 rounded-xl shadow-quiz-card border-t-4 border-secondary/20 hover:border-secondary transition-all group text-left">
+            <div className="w-12 h-12 rounded-lg bg-surface flex items-center justify-center mb-4 group-hover:bg-secondary/10 transition-colors">
               <span className="material-symbols-outlined text-primary group-hover:text-secondary transition-colors">how_to_reg</span>
             </div>
-            <h3 className="font-h3 text-h3 text-primary mb-sm">Registration</h3>
-            <p className="font-body-md text-on-surface-variant">Master the prerequisites. Learn about eligibility, verification, and the foundational requirements of the franchise.</p>
+            <h3 className="text-xl font-semibold text-primary mb-2">Registration</h3>
+            <p className="text-sm text-on-surface-variant leading-relaxed">Master the prerequisites. Learn about eligibility, verification, and the foundational requirements of the franchise.</p>
           </button>
 
           {/* Step 2: Primaries & Campaigns (Visual Focus) */}
-          <button onClick={() => setActiveSection("timeline")} className="md:col-span-1 bg-primary text-white p-lg rounded-xl shadow-quiz-card relative overflow-hidden flex flex-col justify-end min-h-[300px] text-left">
-            <div className="absolute inset-0 opacity-20">
+          <button onClick={() => setActiveSection("timeline")} className="md:col-span-1 bg-primary-container text-white p-6 rounded-xl shadow-quiz-card relative overflow-hidden flex flex-col justify-end min-h-[280px] text-left">
+            <div className="absolute inset-0 opacity-30">
               <img alt="Government building" className="w-full h-full object-cover" src="/primaries_img.png" />
             </div>
             <div className="relative z-10">
-              <span className="font-label-caps text-label-caps opacity-80 mb-xs block">INSTITUTIONAL CORE</span>
-              <h3 className="font-h3 text-h3 mb-sm">Primaries &amp; Campaigns</h3>
-              <p className="text-on-primary-container text-sm">Understanding the mechanics of choice before the final ballot is cast.</p>
+              <span className="text-xs font-bold tracking-widest uppercase opacity-90 mb-1 block">INSTITUTIONAL CORE</span>
+              <h3 className="text-xl font-semibold mb-1">Primaries &amp; Campaigns</h3>
+              <p className="text-white/80 text-sm">Understanding the mechanics of choice before the final ballot is cast.</p>
             </div>
           </button>
 
           {/* Step 3: Certification */}
-          <button onClick={() => setActiveSection("quiz")} className="bg-white p-lg rounded-xl shadow-quiz-card border-t-4 border-secondary/20 hover:border-secondary transition-all group text-left">
-            <div className="w-12 h-12 rounded-lg bg-surface flex items-center justify-center mb-md group-hover:bg-secondary/10 transition-colors">
+          <button onClick={() => setActiveSection("quiz")} className="bg-white p-6 rounded-xl shadow-quiz-card border-t-4 border-secondary/20 hover:border-secondary transition-all group text-left">
+            <div className="w-12 h-12 rounded-lg bg-surface flex items-center justify-center mb-4 group-hover:bg-secondary/10 transition-colors">
               <span className="material-symbols-outlined text-primary group-hover:text-secondary transition-colors">verified</span>
             </div>
-            <h3 className="font-h3 text-h3 text-primary mb-sm">Certification</h3>
-            <p className="font-body-md text-on-surface-variant">Complete the journey. Gain institutional recognition of your civic literacy and preparedness.</p>
+            <h3 className="text-xl font-semibold text-primary mb-2">Certification</h3>
+            <p className="text-sm text-on-surface-variant leading-relaxed">Complete the journey. Gain institutional recognition of your civic literacy and preparedness.</p>
           </button>
         </div>
 

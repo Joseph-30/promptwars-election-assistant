@@ -26,6 +26,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${publicSans.variable} ${lexend.variable} h-full antialiased`}
     >
       <head>

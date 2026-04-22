@@ -102,10 +102,6 @@ export function MicroQuiz({ setActiveSection }: MicroQuizProps) {
           <div className="bg-white rounded-xl p-lg shadow-quiz-card border-t-4 border-secondary">
             <div className="mb-lg">
               <h2 className="font-h3 text-h3 text-primary mb-md">{currentQuestion.question}</h2>
-              {/* Question Image */}
-              <div className="aspect-video w-full rounded-lg bg-slate-100 mb-lg overflow-hidden">
-                <img src="/capitol_dome.png" alt="Civic context" className="w-full h-full object-cover" />
-              </div>
             </div>
 
             {/* Options */}
@@ -253,14 +249,14 @@ export function MicroQuiz({ setActiveSection }: MicroQuizProps) {
           </div>
 
           {/* Glossary Corner */}
-          <div className="bg-primary text-on-primary rounded-xl p-md shadow-quiz-card overflow-hidden relative">
+          <div className="bg-slate-800 text-white rounded-xl p-md shadow-quiz-card overflow-hidden relative">
             <div className="relative z-10">
-              <span className="material-symbols-outlined text-on-primary-container mb-2">menu_book</span>
-              <h4 className="font-h3 text-quiz-option mb-2">Glossary Corner</h4>
-              <p className="text-sm opacity-80 mb-md">Stuck on a term? Certification refers to the formal process of validating election results by authorized boards.</p>
+              <span className="material-symbols-outlined text-slate-300 mb-2">menu_book</span>
+              <h4 className="text-base font-semibold mb-2">Glossary Corner</h4>
+              <p className="text-sm text-slate-300 mb-md">Stuck on a term? Certification refers to the formal process of validating election results by authorized boards.</p>
               <button
                 onClick={() => setActiveSection && setActiveSection("faq")}
-                className="inline-flex items-center gap-2 text-sm font-bold text-secondary-fixed"
+                className="inline-flex items-center gap-2 text-sm font-bold text-green-400"
               >
                 Explore Glossary
                 <span className="material-symbols-outlined text-sm">open_in_new</span>

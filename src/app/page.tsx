@@ -15,12 +15,12 @@ const sidebarLinks = [
   { id: "glossary", label: "Certification", icon: "verified" },
 ];
 
-const topNavLinks: Record<string, { label: string; items: string[] }> = {
-  welcome:   { label: "CivicTrack", items: [] },
-  timeline:  { label: "Registration", items: ["Registration", "Primaries", "Campaigns"] },
-  navigator: { label: "Learn", items: ["Learn", "Participate", "Impact"] },
-  quiz:      { label: "Learning", items: ["Learning", "Resources", "Community"] },
-  faq:       { label: "Resources", items: ["Dashboard", "Elections", "Resources"] },
+const topNavLinks: Record<string, { items: { label: string; target: string }[] }> = {
+  welcome:   { items: [] },
+  timeline:  { items: [{ label: "Registration", target: "navigator" }, { label: "Primaries", target: "timeline" }, { label: "Campaigns", target: "faq" }] },
+  navigator: { items: [{ label: "Learn", target: "navigator" }, { label: "Participate", target: "quiz" }, { label: "Impact", target: "timeline" }] },
+  quiz:      { items: [{ label: "Learning", target: "navigator" }, { label: "Resources", target: "faq" }, { label: "Community", target: "faq" }] },
+  faq:       { items: [{ label: "Dashboard", target: "timeline" }, { label: "Elections", target: "quiz" }, { label: "Resources", target: "faq" }] },
 };
 
 // Pages that show the sidebar
@@ -43,9 +43,13 @@ export default function Home() {
               <div className="h-6 w-px bg-slate-200 ml-2"></div>
               <nav className="hidden md:flex gap-6 items-center h-full ml-4">
                 {navConfig.items.map((item, i) => (
-                  <span key={i} className={`h-full flex items-center px-2 transition-all duration-150 cursor-pointer ${i === 0 ? "text-primary border-b-2 border-primary" : "text-slate-500 hover:bg-slate-50"}`}>
-                    {item}
-                  </span>
+                  <button
+                    key={i}
+                    onClick={() => setActiveSection(item.target)}
+                    className={`h-full flex items-center px-2 transition-all duration-150 cursor-pointer ${item.target === activeSection ? "text-primary border-b-2 border-primary" : "text-slate-500 hover:bg-slate-50"}`}
+                  >
+                    {item.label}
+                  </button>
                 ))}
               </nav>
             </>

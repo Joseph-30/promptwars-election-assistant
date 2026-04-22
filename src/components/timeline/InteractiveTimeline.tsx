@@ -200,19 +200,19 @@ export function InteractiveTimeline({ setActiveSection }: InteractiveTimelinePro
         </div>
 
         {/* Critical Deadlines */}
-        <div className="bg-primary text-on-primary rounded-xl p-md shadow-quiz-card overflow-hidden relative">
+        <div className="bg-slate-800 text-white rounded-xl p-md shadow-quiz-card overflow-hidden relative">
           <div className="absolute -right-4 -bottom-4 opacity-10">
             <span className="material-symbols-outlined text-[100px]">event_note</span>
           </div>
-          <h3 className="font-label-caps text-label-caps opacity-80 mb-md uppercase tracking-widest">Critical Deadlines</h3>
+          <h3 className="text-xs font-bold tracking-widest uppercase text-slate-300 mb-md">Critical Deadlines</h3>
           <div className="space-y-3 relative z-10">
             <div className="bg-white/10 p-3 rounded-lg">
-              <p className="text-[10px] font-bold text-secondary-fixed uppercase">OCT 15, 2024</p>
-              <p className="text-sm font-semibold">Final Registration Verification</p>
+              <p className="text-[10px] font-bold text-green-400 uppercase">OCT 15, 2024</p>
+              <p className="text-sm font-semibold text-white">Final Registration Verification</p>
             </div>
             <div className="bg-white/10 p-3 rounded-lg">
-              <p className="text-[10px] font-bold text-secondary-fixed uppercase">NOV 05, 2024</p>
-              <p className="text-sm font-semibold">Certification Module Submission</p>
+              <p className="text-[10px] font-bold text-green-400 uppercase">NOV 05, 2024</p>
+              <p className="text-sm font-semibold text-white">Certification Module Submission</p>
             </div>
           </div>
         </div>
