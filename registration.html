@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed": "#d6e3ff",
+                    "inverse-primary": "#adc7f7",
+                    "inverse-surface": "#263142",
+                    "primary-fixed-dim": "#adc7f7",
+                    "outline-variant": "#c4c6cf",
+                    "tertiary-fixed-dim": "#c2c7cc",
+                    "on-secondary-fixed-variant": "#00497e",
+                    "tertiary": "#1c2225",
+                    "on-secondary": "#ffffff",
+                    "on-primary-fixed-variant": "#2d476f",
+                    "on-background": "#111c2c",
+                    "surface-container-high": "#dee8ff",
+                    "on-tertiary-fixed": "#171c20",
+                    "on-secondary-fixed": "#001d37",
+                    "inverse-on-surface": "#ebf1ff",
+                    "secondary": "#0061a5",
+                    "secondary-fixed": "#d2e4ff",
+                    "tertiary-fixed": "#dee3e8",
+                    "surface-variant": "#d8e3fa",
+                    "on-secondary-container": "#004172",
+                    "secondary-container": "#66affe",
+                    "surface-dim": "#cfdaf1",
+                    "outline": "#74777f",
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "surface-tint": "#455f88",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-highest": "#d8e3fa",
+                    "surface-container-low": "#f0f3ff",
+                    "on-tertiary-fixed-variant": "#42474c",
+                    "surface": "#f9f9ff",
+                    "primary": "#002045",
+                    "surface-bright": "#f9f9ff",
+                    "on-surface-variant": "#43474e",
+                    "secondary-fixed-dim": "#9fcaff",
+                    "on-primary-container": "#86a0cd",
+                    "on-primary-fixed": "#001b3c",
+                    "background": "#f9f9ff",
+                    "on-primary": "#ffffff",
+                    "surface-container": "#e7eeff",
+                    "on-surface": "#111c2c",
+                    "error": "#ba1a1a",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-container": "#9aa0a4",
+                    "tertiary-container": "#31373b",
+                    "primary-container": "#1a365d",
+                    "on-error": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "container-padding": "24px",
+                    "section-gap": "48px",
+                    "base": "8px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "body-md": ["Public Sans"],
+                    "label-sm": ["Inter"],
+                    "headline-md": ["Public Sans"],
+                    "headline-lg": ["Public Sans"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-sm": ["14px", {"lineHeight": "1.0", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .canvas-gradient {
+            background: radial-gradient(circle at 0% 0%, #f0f3ff 0%, #f9f9ff 50%, #ebf1ff 100%);
+        }
+        .surface-card {
+            box-shadow: 0 4px 20px rgba(17, 28, 44, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md canvas-gradient min-h-screen">
+<!-- TopNavBar -->
+<header class="bg-slate-50/80 backdrop-blur-md border-b border-slate-200 shadow-sm docked full-width top-0 sticky z-50">
+<div class="flex justify-between items-center w-full px-6 py-3 max-w-full">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tighter text-slate-900">CivicPulse</span>
+<nav class="hidden md:flex items-center gap-6">
+<a class="font-public-sans text-sm font-medium tracking-tight text-slate-600 hover:text-slate-900 transition-colors duration-200" href="#">Modules</a>
+<a class="font-public-sans text-sm font-medium tracking-tight text-slate-600 hover:text-slate-900 transition-colors duration-200" href="#">Resources</a>
+<a class="font-public-sans text-sm font-medium tracking-tight text-slate-600 hover:text-slate-900 transition-colors duration-200" href="#">Community</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-secondary/50 outline-none w-64" placeholder="Search resources..." type="text"/>
+</div>
+<button class="p-2 text-slate-600 hover:bg-slate-100 transition-colors rounded-full cursor-pointer active:opacity-70">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-slate-600 hover:bg-slate-100 transition-colors rounded-full cursor-pointer active:opacity-70">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<div class="flex min-h-[calc(100vh-64px)]">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col h-[calc(100vh-64px)] w-64 border-r border-slate-200 bg-white sticky top-16 p-4 gap-2">
+<div class="mb-6 px-3">
+<div class="flex items-center gap-3 mb-2">
+<img alt="Learning Progress Avatar" class="w-10 h-10 rounded-full object-cover" data-alt="Professional portrait of a young woman smiling, soft corporate office background with warm natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNRYm9E_PQTCKm7VEuhKoJUm0pG0CXbYWUMEUtIDU9IVdN1JFWgq8pGjrL6U9-felnAzAHQF9wv_NGKCtr_dKeGDOMv2k9zrWOoJ6xYCI52cofzBO0JaUHeeeU9ug_Ud3GXkNLrSxCiPDbtgk0CrB_K2iUH7qmHdkVEHMCqFed-vT-_8WzG_CxekF99EUf3bH-OBqkbdz_yKdKfrBOanfzdzgUi69811FAzsjEMS0-f3dSV7FBQa7veS3qDGmF-P9tFljtfou8isYT"/>
+<div>
+<p class="font-public-sans text-sm font-semibold text-primary">Learning Path</p>
+<p class="text-xs text-slate-500">65% Completed</p>
+</div>
+</div>
+<div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-[65%]"></div>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<a class="flex items-center gap-3 text-slate-500 p-3 hover:bg-slate-50 hover:translate-x-1 transition-all rounded-md font-public-sans text-sm font-semibold" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+                    Constitution 101
+                </a>
+<a class="flex items-center gap-3 text-slate-500 p-3 hover:bg-slate-50 hover:translate-x-1 transition-all rounded-md font-public-sans text-sm font-semibold" href="#">
+<span class="material-symbols-outlined">how_to_vote</span>
+                    Election Basics
+                </a>
+<a class="flex items-center gap-3 text-slate-500 p-3 hover:bg-slate-50 hover:translate-x-1 transition-all rounded-md font-public-sans text-sm font-semibold" href="#">
+<span class="material-symbols-outlined">location_city</span>
+                    Local Government
+                </a>
+<a class="flex items-center gap-3 text-slate-500 p-3 hover:bg-slate-50 hover:translate-x-1 transition-all rounded-md font-public-sans text-sm font-semibold" href="#">
+<span class="material-symbols-outlined">gavel</span>
+                    Civil Liberties
+                </a>
+<a class="flex items-center gap-3 text-slate-500 p-3 hover:bg-slate-50 hover:translate-x-1 transition-all rounded-md font-public-sans text-sm font-semibold" href="#">
+<span class="material-symbols-outlined">public</span>
+                    Global Diplomacy
+                </a>
+</nav>
+<button class="mt-4 bg-secondary text-white py-3 px-4 rounded-xl font-semibold text-sm hover:bg-secondary-container hover:text-on-secondary-container transition-colors shadow-sm">
+                Unlock Certification
+            </button>
+<div class="mt-auto pt-4 border-t border-slate-100 flex flex-col gap-1">
+<a class="flex items-center gap-3 text-slate-500 p-3 hover:bg-slate-50 rounded-md font-public-sans text-sm font-semibold" href="#">
+<span class="material-symbols-outlined">settings</span>
+                    Settings
+                </a>
+<a class="flex items-center gap-3 text-slate-500 p-3 hover:bg-slate-50 rounded-md font-public-sans text-sm font-semibold" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+                    Help Center
+                </a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 max-w-7xl mx-auto px-container-padding py-12">
+<!-- Welcome Header Section -->
+<section class="mb-section-gap">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<span class="text-secondary font-semibold tracking-wider uppercase text-xs mb-2 block">Welcome to Civic Assistant</span>
+<h1 class="font-headline-lg text-headline-lg text-primary mb-2">Empowering Your Civic Voice</h1>
+<p class="text-on-surface-variant max-w-2xl text-body-md">Your personalized gateway to institutional knowledge, public records, and active democratic participation. Select your region to begin.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-2 bg-white border border-outline rounded-xl text-primary font-semibold hover:bg-slate-50 transition-colors shadow-sm">View Archive</button>
+<button class="px-6 py-2 bg-secondary text-white rounded-xl font-semibold hover:opacity-90 transition-opacity shadow-lg shadow-secondary/20">Quick Start</button>
+</div>
+</div>
+</section>
+<!-- Bento Layout for Core Actions -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-section-gap">
+<!-- Tactile Region Selection Card -->
+<div class="lg:col-span-8 bg-white border border-slate-200 rounded-xl p-8 surface-card flex flex-col md:flex-row gap-8 overflow-hidden relative">
+<div class="flex-1 z-10">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-secondary">explore</span>
+<h3 class="font-headline-md text-headline-md text-primary">Active Jurisdiction</h3>
+</div>
+<p class="text-on-surface-variant mb-8 text-body-md">Currently monitoring federal and local governance updates for your selected region.</p>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-4 bg-secondary-fixed rounded-xl border border-secondary/20 transition-all cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-12 h-8 rounded-sm overflow-hidden bg-slate-200">
+<img alt="India Flag" class="w-full h-full object-cover" data-alt="Flag of India with Saffron, White, and Green stripes and the Ashoka Chakra in the center" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPpmuf1nffiA8t0-46lWBriG6qc3fp91Vh2XUpMufBQw9RQgCZ5dIvGNn-JipOE8jq3Q4D5TCxeXTOakvoDEX2W_U7VvQRLZsQrVIoFctS2mfOwlydViYLBAlo7lEcMp9kNx5cxl9J8uX3vurKg4hxx6Vep5l8_NLf3KteGJrAz43mvn8esrjrHHWhpIcx7fe6ZPWNRwB0X9a4I3h3JiigkVrV7TTr5KacKuyG8RIrfqeGvS2Ot17xDk5NVTPs7OxxjMIEiHiJsYPc"/>
+</div>
+<div>
+<h4 class="font-semibold text-primary">Republic of India</h4>
+<p class="text-xs text-on-secondary-fixed-variant">New Delhi • 28 States &amp; 8 UTs</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<button class="w-full flex items-center justify-center gap-2 p-4 border-2 border-dashed border-slate-200 rounded-xl text-slate-500 hover:border-secondary hover:text-secondary transition-all group">
+<span class="material-symbols-outlined transition-transform group-hover:rotate-90">add</span>
+<span class="font-semibold">Add Another Region</span>
+</button>
+</div>
+</div>
+<div class="flex-1 min-h-[300px] md:min-h-full rounded-xl overflow-hidden relative border border-slate-100">
+<img alt="India Map Visualization" class="w-full h-full object-cover opacity-90" data-alt="Modern topographic map of India with neon blue glowing district borders and data nodes over a dark navy background" data-location="India" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrT_OZYnSB6IlaQa2evT6MAA_WdTONfy-7HA1zY9DQtAvLgxeixWDuHGJmgv-GbU-ct1w-BPYoe0xnEhq61QaejKZvpfKCfa4RNU18Dch-ZqCFfKKCLn6JJh2qbh4A5odJNhFAhDivwv46jD-yNwICclYcBDkx--iZjpcSSrp7tjMjnWNtbXQU0AQkJnxE11WoixfPlprLnOi9dPXU-NnURs-1wTgFJYzOoyBG0wOrNybuLo16IB4jcRMtf-exkhEIYpw1OsljIVKj"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent pointer-events-none"></div>
+<div class="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-lg flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+<span class="text-xs font-semibold text-primary">Live Data Feed Active</span>
+</div>
+<span class="text-[10px] text-slate-500 font-medium">Updated 2m ago</span>
+</div>
+</div>
+</div>
+<!-- Stats/Briefing Column -->
+<div class="lg:col-span-4 flex flex-col gap-gutter">
+<div class="flex-1 bg-white border border-slate-200 rounded-xl p-6 surface-card">
+<h4 class="font-semibold text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">update</span>
+                            Today's Briefing
+                        </h4>
+<ul class="space-y-4">
+<li class="flex gap-3">
+<div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-xs text-blue-600">policy</span>
+</div>
+<div>
+<p class="text-sm font-medium text-slate-900 leading-tight">Parliament Session: Day 4</p>
+<p class="text-xs text-slate-500">Education bill under discussion</p>
+</div>
+</li>
+<li class="flex gap-3">
+<div class="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-xs text-amber-600">event</span>
+</div>
+<div>
+<p class="text-sm font-medium text-slate-900 leading-tight">Local Town Hall</p>
+<p class="text-xs text-slate-500">Starts in 4 hours • Sector 14</p>
+</div>
+</li>
+<li class="flex gap-3">
+<div class="w-8 h-8 rounded-full bg-emerald-50 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-xs text-emerald-600">verified_user</span>
+</div>
+<div>
+<p class="text-sm font-medium text-slate-900 leading-tight">Identity Renewal</p>
+<p class="text-xs text-slate-500">Digital Voter Card available</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="bg-primary text-white rounded-xl p-6 shadow-xl shadow-primary/20 relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 opacity-10 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-8xl">account_balance</span>
+</div>
+<h4 class="font-semibold mb-2 relative z-10">Premium Insights</h4>
+<p class="text-slate-300 text-xs mb-4 relative z-10 leading-relaxed">Get deep analytics on policy impacts and legislative history with AI summaries.</p>
+<button class="w-full bg-white text-primary py-2 rounded-lg font-bold text-xs relative z-10 hover:bg-slate-100 transition-colors">Upgrade Plan</button>
+</div>
+</div>
+</div>
+<!-- Educational Path Section -->
+<section>
+<div class="flex items-center justify-between mb-8">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary">Educational Path</h2>
+<p class="text-on-surface-variant text-sm">Master the mechanisms of governance through structured modules.</p>
+</div>
+<a class="text-secondary font-semibold text-sm flex items-center gap-1 hover:underline" href="#">
+                        View All Modules
+                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Card: Registration -->
+<div class="bg-white border border-slate-200 rounded-xl overflow-hidden surface-card group cursor-pointer hover:border-secondary transition-all">
+<div class="h-40 overflow-hidden">
+<img alt="Voter Registration" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Close up of a person signing official documents with a luxury pen, focus on the hand and paper, soft warm indoor light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLc4GoYuZb0P1bFjcMqOSOxkmd6uDqNUwI7dK77JwK7tEFbiEcnk4CPzJbLoq2V6C_WW_wOl7F-w0BxoadQii5X7LHRFkAv8iUbs0FnY2LjCLbXfAxKrQLJaCHj5j0xqrjXrDInArxggPSaoJUYhT-ompAftdzDB8UDJzWZduSMQpRYa91DMJ2F7rdEfwv3FJWNMDk16Q8z2jBsMvHrEmv3e6582rUNPGCZCX-88jL1Z5RrT_QXFFBuOkf7QDi4yBI-uR-EbWH9dcu"/>
+</div>
+<div class="p-6">
+<div class="flex items-center justify-between mb-3">
+<span class="px-2 py-1 bg-blue-50 text-blue-700 text-[10px] font-bold uppercase rounded">Step 01</span>
+<span class="material-symbols-outlined text-slate-300 group-hover:text-secondary transition-colors">assignment</span>
+</div>
+<h4 class="font-semibold text-primary mb-2">Registration Basics</h4>
+<p class="text-xs text-on-surface-variant mb-4">Learn the eligibility criteria, required documentation, and online filing procedures for civic identity.</p>
+<div class="flex items-center gap-2">
+<div class="flex-1 bg-slate-100 h-1.5 rounded-full overflow-hidden">
+<div class="bg-blue-600 h-full w-full"></div>
+</div>
+<span class="text-[10px] font-bold text-blue-700">Completed</span>
+</div>
+</div>
+</div>
+<!-- Card: Primaries -->
+<div class="bg-white border border-slate-200 rounded-xl overflow-hidden surface-card group cursor-pointer hover:border-secondary transition-all">
+<div class="h-40 overflow-hidden">
+<img alt="Elections and Primaries" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Architectural wide shot of an empty modern government assembly hall with circular seating and premium wooden finish" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrKARdB_1CYoV8NzXOpuxu_29CtDWf3L6TUz0iwRQdBPW-0YirFjZF3K9bdtrQBPvplGmb23JDDP49w3RtwtrDWwibnbjedJbLuVgWvOl_HOP0cRXFUAw386sreRrdTwniD5L07e8NTSvy1upUoE9cQePLBiUH7JD3JDoY-acNTnYj_2-jIspChlD5YqjG8Xzt7tk_y8kmaD6bmVWY4t6wOv8yRrg47w8cTDM_9oxV0TlidT1wz4nXdzsBYrNVoLZRi43thJ-UOtjA"/>
+</div>
+<div class="p-6">
+<div class="flex items-center justify-between mb-3">
+<span class="px-2 py-1 bg-amber-50 text-amber-700 text-[10px] font-bold uppercase rounded">Step 02</span>
+<span class="material-symbols-outlined text-slate-300 group-hover:text-amber-500 transition-colors">how_to_reg</span>
+</div>
+<h4 class="font-semibold text-primary mb-2">Elections &amp; Primaries</h4>
+<p class="text-xs text-on-surface-variant mb-4">Understanding party systems, internal nominations, and the primary voting cycle in your district.</p>
+<div class="flex items-center gap-2">
+<div class="flex-1 bg-slate-100 h-1.5 rounded-full overflow-hidden">
+<div class="bg-amber-500 h-full w-2/3"></div>
+</div>
+<span class="text-[10px] font-bold text-amber-700">65% Progress</span>
+</div>
+</div>
+</div>
+<!-- Card: Certification -->
+<div class="bg-white border border-slate-200 rounded-xl overflow-hidden surface-card group cursor-pointer hover:border-secondary transition-all">
+<div class="h-40 overflow-hidden relative grayscale group-hover:grayscale-0 transition-all duration-500">
+<img alt="Civic Certification" class="w-full h-full object-cover" data-alt="A prestigious embossed gold seal on a diploma certificate, macro view, shallow depth of field, royal blue ribbon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxPwEYfwDBzWPdl_BomzYyuXQvQuKmI_QrR5dZ7sTaYiF3nxfs2y-u29hMUPtsIkXkCyjRrKA7UrY-dkivB-BcHb5lDO5eFxa3qX5x8CfKSQABdyrOlzGsMgcs6GoAAf-nctfkoNZi_yUeBQp-AkUmAjJe4jQZgJz9qYsL1M5miZkS2_DA20t-Fk35q4_AQj3eFw231gESmrTnL03sMnzGW2R1U5sk5cPDdngcHrEuSPDWEtONXtBHu3xg1WGFZtSzT4gqAYUXHPzA"/>
+<div class="absolute inset-0 bg-slate-900/40 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-4xl">lock</span>
+</div>
+</div>
+<div class="p-6">
+<div class="flex items-center justify-between mb-3">
+<span class="px-2 py-1 bg-slate-100 text-slate-600 text-[10px] font-bold uppercase rounded">Final Phase</span>
+<span class="material-symbols-outlined text-slate-300">workspace_premium</span>
+</div>
+<h4 class="font-semibold text-slate-400 mb-2">Civic Certification</h4>
+<p class="text-xs text-on-surface-variant mb-4">Final assessment on institutional history and governance. Earn your certified badge.</p>
+<div class="flex items-center gap-2">
+<div class="flex-1 bg-slate-100 h-1.5 rounded-full"></div>
+<span class="text-[10px] font-bold text-slate-400">Locked</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- Floating Action Button -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-secondary text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform cursor-pointer group active:opacity-70">
+<span class="material-symbols-outlined text-3xl">chat_bubble</span>
+<div class="absolute right-16 bg-white px-3 py-1 rounded-lg border border-slate-200 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+<p class="text-primary text-xs font-bold">Ask Civic AI</p>
+</div>
+</button>
+</body></html>
