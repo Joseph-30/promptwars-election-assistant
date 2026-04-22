@@ -22,11 +22,11 @@ export function Sidebar({
   return (
     <aside className="w-64 border-r border-slate-200 bg-white min-h-screen p-4 flex flex-col hidden md:flex">
       <div className="mb-8 px-2">
-        <h1 className="text-2xl font-bold text-blue-700 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-primary flex items-center gap-2 font-heading">
           <BookOpen className="h-6 w-6" />
           CivicGuide
         </h1>
-        <p className="text-xs text-slate-500 mt-1">Election Process Assistant</p>
+        <p className="text-xs text-slate-500 mt-1 font-body">Election Process Assistant</p>
       </div>
 
       <nav className="flex-1 space-y-2">
@@ -38,13 +38,13 @@ export function Sidebar({
               key={item.id}
               onClick={() => setActiveSection(item.id)}
               className={cn(
-                "w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors",
+                "w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors font-body",
                 isActive
-                  ? "bg-blue-50 text-blue-700"
+                  ? "bg-primary/10 text-primary"
                   : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
               )}
             >
-              <Icon className={cn("h-5 w-5", isActive ? "text-blue-700" : "text-slate-400")} />
+              <Icon className={cn("h-5 w-5", isActive ? "text-primary" : "text-slate-400")} />
               {item.label}
             </button>
           );

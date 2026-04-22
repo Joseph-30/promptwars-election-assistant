@@ -18,12 +18,12 @@ export function SmartFAQ() {
   return (
     <div className="max-w-3xl mx-auto py-8 h-full flex flex-col">
       <div className="mb-8 text-center">
-        <h2 className="text-3xl font-bold tracking-tight">Smart Civic FAQ</h2>
-        <p className="text-slate-500 mt-2">Ask a question to understand the election process better.</p>
+        <h2 className="text-3xl font-bold tracking-tight font-heading text-primary">Smart Civic FAQ</h2>
+        <p className="text-slate-500 mt-2 font-body">Ask a question to understand the election process better.</p>
       </div>
 
-      <Card className="flex-1 border-2 shadow-sm flex flex-col overflow-hidden">
-        <CardHeader className="bg-slate-50 border-b p-4">
+      <Card className="flex-1 shadow-ambient border-primary/10 flex flex-col overflow-hidden font-body">
+        <CardHeader className="bg-surface border-b p-4">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
             <input 
@@ -42,12 +42,12 @@ export function SmartFAQ() {
                 <div key={idx} className="p-4 hover:bg-white transition-colors cursor-pointer" onClick={() => setSelectedFaq(selectedFaq === idx ? null : idx)}>
                   <div className="flex gap-4">
                     <div className="mt-1 shrink-0">
-                      <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center">
+                      <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center">
                         <MessageCircle className="w-4 h-4" />
                       </div>
                     </div>
                     <div className="flex-1">
-                      <h4 className="text-slate-800 font-medium">{faq.question}</h4>
+                      <h4 className="text-primary font-medium font-heading">{faq.question}</h4>
                       <AnimatePresence>
                         {selectedFaq === idx && (
                           <motion.div
@@ -56,7 +56,7 @@ export function SmartFAQ() {
                             exit={{ height: 0, opacity: 0, marginTop: 0 }}
                             className="overflow-hidden"
                           >
-                            <div className="p-3 bg-white border border-slate-100 rounded-lg text-slate-600 shadow-sm text-sm">
+                            <div className="p-3 bg-white border border-slate-100 rounded-lg text-slate-600 shadow-ambient text-sm">
                               {faq.answer}
                             </div>
                           </motion.div>
