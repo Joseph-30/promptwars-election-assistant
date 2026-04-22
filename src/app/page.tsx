@@ -37,15 +37,15 @@ export default function Home() {
       </header>
 
       <main className="pt-24 pb-24 px-6 max-w-[1200px] mx-auto min-h-screen w-full">
-        {activeSection === "navigator" && <GuidedProcessNavigator />}
-        {activeSection === "timeline" && <InteractiveTimeline />}
+        {activeSection === "navigator" && <GuidedProcessNavigator setActiveSection={setActiveSection} />}
+        {activeSection === "timeline" && <InteractiveTimeline setActiveSection={setActiveSection} />}
         {activeSection === "faq" && <SmartFAQ />}
         {activeSection === "quiz" && <MicroQuiz />}
         {activeSection === "glossary" && (
           <div className="max-w-3xl mx-auto py-8">
-            <div className="mb-8">
-              <h2 className="text-3xl font-bold tracking-tight font-heading text-primary">Full Glossary</h2>
-              <p className="text-slate-500 mt-2 font-body">Explore common election terminology.</p>
+            <div className="mb-8 text-center">
+              <h2 className="font-h2 text-h2 text-primary">Full Glossary</h2>
+              <p className="text-on-surface-variant mt-2 font-body-md">Explore common election terminology.</p>
             </div>
             <div className="bg-surface rounded-xl border border-primary/10 p-8 shadow-quiz-card font-body">
               <p className="text-slate-700 leading-loose">
