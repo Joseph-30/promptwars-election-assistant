@@ -113,23 +113,71 @@ export type GlossaryTerm = {
 
 export const glossaryData: GlossaryTerm[] = [
   {
-    term: "Constituency",
-    definition: "A specific geographical area that elects a representative to a legislative body."
+    term: "Absentee Ballot",
+    definition: "A ballot submitted by mail or in person before Election Day, allowing voters who cannot attend in person to participate."
   },
   {
-    term: "Model Code of Conduct",
-    definition: "Guidelines issued by the Election Commission to ensure free and fair elections."
+    term: "Ballot",
+    definition: "The method used to cast a vote, whether a paper form, electronic machine, or other official medium."
+  },
+  {
+    term: "By-election",
+    definition: "An election held to fill a vacancy in a legislative seat that has arisen between scheduled general elections."
+  },
+  {
+    term: "Canvassing",
+    definition: "The systematic process of going through election returns to verify accuracy before official certification."
+  },
+  {
+    term: "Constituency",
+    definition: "A specific geographical area that elects a representative to a legislative body."
   },
   {
     term: "Electoral Roll",
     definition: "The official list of all eligible voters in a constituency. Also known as the voter list."
   },
   {
+    term: "EVM",
+    definition: "Electronic Voting Machine, used to record and tally votes electronically."
+  },
+  {
+    term: "General Election",
+    definition: "A scheduled election in which all eligible voters may vote for candidates for various offices."
+  },
+  {
+    term: "Gerrymandering",
+    definition: "The manipulation of district boundaries to give one political party an advantage over another."
+  },
+  {
+    term: "Model Code of Conduct",
+    definition: "Guidelines issued by the Election Commission to ensure free and fair elections."
+  },
+  {
+    term: "NOTA",
+    definition: "'None of the Above' — an option on the ballot that allows voters to officially reject all candidates."
+  },
+  {
+    term: "Polling Station",
+    definition: "A designated location where voters go to cast their votes on Election Day."
+  },
+  {
+    term: "Primary Election",
+    definition: "An election held within a political party to select its candidate for the general election."
+  },
+  {
     term: "Returning Officer",
     definition: "The official responsible for overseeing the election in a constituency, including the counting of votes."
   },
   {
-    term: "EVM",
-    definition: "Electronic Voting Machine, used to record and tally votes electronically."
+    term: "Runoff Election",
+    definition: "A second election held when no candidate wins an outright majority in the first round."
+  },
+  {
+    term: "Voter Suppression",
+    definition: "Strategies used to discourage or prevent specific groups from exercising their right to vote."
+  },
+  {
+    term: "VVPAT",
+    definition: "Voter Verifiable Paper Audit Trail — a device attached to EVMs that provides a printed confirmation of the vote cast."
   }
 ];

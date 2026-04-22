@@ -9,9 +9,10 @@ interface SmartFAQProps {
 }
 
 export function SmartFAQ({ setActiveSection }: SmartFAQProps) {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedFaq, setSelectedFaq] = useState<number | null>(0);
+  const [searchQuery,    setSearchQuery]    = useState("");
+  const [selectedFaq,    setSelectedFaq]    = useState<number | null>(0);
   const [glossaryFilter, setGlossaryFilter] = useState("");
+  const [letterFilter,   setLetterFilter]   = useState("");
 
   const filteredFaqs = faqData.filter(
     (faq) =>
@@ -19,9 +20,16 @@ export function SmartFAQ({ setActiveSection }: SmartFAQProps) {
       faq.answer.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const filteredGlossary = glossaryData.filter((term) =>
-    term.term.toLowerCase().includes(glossaryFilter.toLowerCase())
-  );
+  const filteredGlossary = glossaryData.filter((term) => {
+    const matchesText   = term.term.toLowerCase().includes(glossaryFilter.toLowerCase());
+    const matchesLetter = letterFilter === "" || term.term.toUpperCase().startsWith(letterFilter);
+    return matchesText && matchesLetter;
+  });
+
+  // Build which letters actually have entries in the data
+  const availableLetters = Array.from(
+    new Set(glossaryData.map((t) => t.term[0].toUpperCase()))
+  ).sort();
 
   return (
     <div className="max-w-5xl mx-auto">
@@ -160,23 +168,32 @@ export function SmartFAQ({ setActiveSection }: SmartFAQProps) {
           <div className="bg-white rounded-xl p-md shadow-quiz-card border border-slate-100 sticky top-24">
             <h3 className="font-h3 text-quiz-option text-primary font-semibold mb-md">Terminology Glossary</h3>
             {/* Filter */}
-            <div className="relative mb-md">
+            <div className="relative mb-3">
               <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">filter_list</span>
               <input
                 type="text"
                 placeholder="Filter terms..."
                 className="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                 value={glossaryFilter}
-                onChange={(e) => setGlossaryFilter(e.target.value)}
+                onChange={(e) => { setGlossaryFilter(e.target.value); setLetterFilter(""); }}
               />
             </div>
-            {/* Letter Filters */}
-            <div className="flex gap-2 mb-md flex-wrap">
-              {["A", "B", "C", "D", "E", "F"].map((letter, i) => (
+            {/* Letter Filters – only show letters that exist in glossaryData */}
+            <div className="flex gap-1.5 mb-3 flex-wrap">
+              <button
+                onClick={() => { setLetterFilter(""); setGlossaryFilter(""); }}
+                className={`px-2.5 h-7 rounded-full text-xs font-bold transition-colors ${
+                  letterFilter === "" ? "bg-primary text-white" : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+                }`}
+              >
+                All
+              </button>
+              {availableLetters.map((letter) => (
                 <button
                   key={letter}
-                  className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${
-                    i === 0 ? "bg-primary text-white" : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+                  onClick={() => { setLetterFilter(letter === letterFilter ? "" : letter); setGlossaryFilter(""); }}
+                  className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${
+                    letterFilter === letter ? "bg-primary text-white" : "bg-slate-100 text-slate-500 hover:bg-slate-200"
                   }`}
                 >
                   {letter}
@@ -185,12 +202,16 @@ export function SmartFAQ({ setActiveSection }: SmartFAQProps) {
             </div>
             {/* Terms */}
             <div className="space-y-4 max-h-96 overflow-y-auto">
-              {filteredGlossary.map((term, idx) => (
-                <div key={idx}>
-                  <h4 className="text-sm font-bold text-primary">{term.term}</h4>
-                  <p className="text-xs text-on-surface-variant leading-relaxed">{term.definition}</p>
-                </div>
-              ))}
+              {filteredGlossary.length > 0 ? (
+                filteredGlossary.map((term, idx) => (
+                  <div key={idx}>
+                    <h4 className="text-sm font-bold text-primary">{term.term}</h4>
+                    <p className="text-xs text-on-surface-variant leading-relaxed">{term.definition}</p>
+                  </div>
+                ))
+              ) : (
+                <p className="text-xs text-slate-400 text-center py-4">No terms found.</p>
+              )}
             </div>
             <button 
               onClick={() => alert("Glossary PDF generation is coming soon!")}

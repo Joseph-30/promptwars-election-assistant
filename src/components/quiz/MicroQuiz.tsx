@@ -6,9 +6,10 @@ import { motion, AnimatePresence } from "framer-motion";
 
 interface MicroQuizProps {
   setActiveSection?: (s: string) => void;
+  completeModule?:   (i: number) => void;
 }
 
-export function MicroQuiz({ setActiveSection }: MicroQuizProps) {
+export function MicroQuiz({ setActiveSection, completeModule }: MicroQuizProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -37,6 +38,13 @@ export function MicroQuiz({ setActiveSection }: MicroQuizProps) {
       setIsSubmitted(false);
     } else {
       setQuizCompleted(true);
+      // On quiz completion, unlock modules proportional to score.
+      // Passing (>= 60%) unlocks all 5 modules; otherwise unlock as many as correct answers.
+      const finalScore = score + (selectedOption === currentQuestion.correctAnswerIndex ? 1 : 0);
+      const modulesToUnlock = finalScore >= Math.ceil(quizData.length * 0.6)
+        ? [0, 1, 2, 3, 4]
+        : Array.from({ length: finalScore + 1 }, (_, i) => i);
+      modulesToUnlock.forEach((i) => completeModule && completeModule(i));
     }
   };
 

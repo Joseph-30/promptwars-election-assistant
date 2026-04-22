@@ -8,55 +8,88 @@ import { MicroQuiz } from "@/components/quiz/MicroQuiz";
 import { WelcomeOnboarding } from "@/components/welcome/WelcomeOnboarding";
 
 const sidebarLinks = [
-  { id: 0, label: "Registration", icon: "how_to_reg" },
-  { id: 1, label: "Primaries", icon: "campaign" },
-  { id: 2, label: "Campaigns", icon: "groups" },
+  { id: 0, label: "Registration",     icon: "how_to_reg"  },
+  { id: 1, label: "Primaries",        icon: "campaign"    },
+  { id: 2, label: "Campaigns",        icon: "groups"      },
   { id: 3, label: "General Election", icon: "how_to_vote" },
-  { id: 4, label: "Certification", icon: "verified" },
+  { id: 4, label: "Certification",    icon: "verified"    },
 ];
 
-const topNavLinks: Record<string, { items: { label: string; target: string }[] }> = {
-  welcome:   { items: [] },
-  dashboard:  { items: [{ label: "Registration", target: "navigator" }, { label: "Primaries", target: "dashboard" }, { label: "Campaigns", target: "faq" }] },
-  navigator: { items: [{ label: "Learn", target: "navigator" }, { label: "Participate", target: "quiz" }, { label: "Impact", target: "dashboard" }] },
-  quiz:      { items: [{ label: "Learning", target: "navigator" }, { label: "Resources", target: "faq" }, { label: "Community", target: "faq" }] },
-  faq:       { items: [{ label: "Dashboard", target: "dashboard" }, { label: "Elections", target: "quiz" }, { label: "Resources", target: "faq" }] },
-};
+// These views show the persistent left sidebar
+const SIDEBAR_VIEWS = new Set(["dashboard", "navigator", "faq", "quiz"]);
 
-// Pages that show the sidebar
-const sidebarViews = new Set(["dashboard", "navigator", "faq"]);
+// Top-nav is the SAME across every sidebar view — no more per-page switching
+const GLOBAL_NAV = [
+  { label: "Dashboard", target: "dashboard" },
+  { label: "Learning",  target: "navigator" },
+  { label: "Quiz",      target: "quiz"      },
+  { label: "Resources", target: "faq"       },
+];
 
 export default function Home() {
-  const [activeView, setActiveView] = useState("welcome");
-  const [activeModule, setActiveModule] = useState(0);
+  const [activeView,        setActiveView]        = useState("welcome");
+  const [activeModule,      setActiveModule]      = useState(0);
+  // completedModules tracks which module indices have been finished
+  // Module N is unlocked only if N === 0 or N-1 is in completedModules
+  const [completedModules,  setCompletedModules]  = useState<number[]>([]);
 
-  const hasSidebar = sidebarViews.has(activeView);
-  const navConfig = topNavLinks[activeView] || topNavLinks.welcome;
+  const hasSidebar = SIDEBAR_VIEWS.has(activeView);
 
-  const navigateToSection = (view: string) => {
-    setActiveView(view);
-  };
+  /** Navigate to a top-level view */
+  const goToView = (view: string) => setActiveView(view);
 
-  const navigateToModule = (index: number) => {
+  /** Navigate to a specific learning module */
+  const goToModule = (index: number) => {
     setActiveModule(index);
     setActiveView("navigator");
   };
 
+  /** Mark a module as complete and unlock the next */
+  const completeModule = (index: number) => {
+    setCompletedModules((prev) =>
+      prev.includes(index) ? prev : [...prev, index]
+    );
+  };
+
+  /** Whether a module is unlocked (0 is always unlocked; N unlocked if N-1 is complete) */
+  const isUnlocked = (index: number) =>
+    index === 0 || completedModules.includes(index - 1);
+
+  const isModuleActive = (id: number) =>
+    activeView === "navigator" && activeModule === id;
+
+  // The "current" module for the hero banner = first non-completed unlocked module
+  const currentProgressModule =
+    sidebarLinks.find((l) => !completedModules.includes(l.id) && isUnlocked(l.id))?.id ?? 0;
+
   return (
     <div className="min-h-screen bg-surface font-body-md text-on-surface antialiased flex flex-col">
-      {/* ─── TopAppBar ─── */}
-      <header className="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white border-b border-slate-200 shadow-sm shadow-blue-900/5 font-['Public_Sans'] font-medium">
-        <div className="flex items-center gap-4">
-          <button onClick={() => navigateToSection("welcome")} className="text-xl font-bold text-primary tracking-tight cursor-pointer">CivicTrack</button>
-          {navConfig.items.length > 0 && (
+
+      {/* ─── Top App Bar ─── */}
+      <header className="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white border-b border-slate-200 shadow-sm font-['Public_Sans'] font-medium">
+        <div className="flex items-center">
+          {/* Logo */}
+          <button
+            onClick={() => goToView("welcome")}
+            className="text-xl font-bold text-primary tracking-tight mr-6"
+          >
+            CivicTrack
+          </button>
+
+          {/* Consistent global nav — only shown when inside the app (not on welcome) */}
+          {hasSidebar && (
             <>
-              <div className="h-6 w-px bg-slate-200 ml-2"></div>
-              <nav className="hidden md:flex gap-6 items-center h-full ml-4">
-                {navConfig.items.map((item, i) => (
+              <div className="h-6 w-px bg-slate-200 mr-6" />
+              <nav className="hidden md:flex items-center h-16">
+                {GLOBAL_NAV.map((item) => (
                   <button
-                    key={i}
-                    onClick={() => navigateToSection(item.target)}
-                    className={`h-full flex items-center px-2 transition-all duration-150 cursor-pointer ${item.target === activeView ? "text-primary border-b-2 border-primary" : "text-slate-500 hover:bg-slate-50"}`}
+                    key={item.target}
+                    onClick={() => goToView(item.target)}
+                    className={`h-full flex items-center px-4 text-sm transition-all border-b-2 ${
+                      item.target === activeView
+                        ? "text-primary border-primary font-semibold"
+                        : "border-transparent text-slate-500 hover:text-primary hover:bg-slate-50"
+                    }`}
                   >
                     {item.label}
                   </button>
@@ -65,78 +98,157 @@ export default function Home() {
             </>
           )}
         </div>
-        <div className="flex items-center gap-4">
-          <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 transition-colors">
+
+        <div className="flex items-center gap-3">
+          <button className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 transition-colors text-sm">
             <span className="material-symbols-outlined text-lg">public</span>
-            <span className="text-sm">Select Region</span>
+            Select Region
           </button>
           <button className="p-2 text-slate-500 hover:bg-slate-50 rounded-full transition-colors">
             <span className="material-symbols-outlined">notifications</span>
           </button>
-          <div className="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary text-xs font-bold">JD</div>
+          <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold">
+            JD
+          </div>
         </div>
       </header>
 
       {/* ─── Body ─── */}
-      <div className={`flex flex-1 pt-16 ${hasSidebar ? "" : ""}`}>
-        {/* ─── Left Sidebar (Dashboard Mode) ─── */}
+      <div className="flex flex-1 pt-16">
+
+        {/* ─── Persistent Left Sidebar ─── */}
         {hasSidebar && (
-          <aside className="hidden md:flex flex-col w-56 border-r border-slate-200 bg-white sticky top-16 h-[calc(100vh-64px)] p-4 gap-2 shrink-0">
-            <div className="mb-4 px-3">
+          <aside className="hidden md:flex flex-col w-56 shrink-0 border-r border-slate-200 bg-white sticky top-16 h-[calc(100vh-64px)] overflow-y-auto">
+
+            {/* Header */}
+            <div className="px-4 py-4 border-b border-slate-100">
               <p className="text-sm font-semibold text-primary">Election Guide</p>
-              <p className="text-[10px] text-slate-400 uppercase tracking-widest">Institutional Learning</p>
+              <p className="text-[10px] text-slate-400 uppercase tracking-widest mt-0.5">
+                {completedModules.length} / {sidebarLinks.length} modules done
+              </p>
             </div>
-            <nav className="flex-1 flex flex-col gap-1">
-              {sidebarLinks.map((link) => (
-                <button
-                  key={link.id}
-                  onClick={() => navigateToModule(link.id)}
-                  className={`flex items-center gap-3 p-3 rounded-md text-sm font-semibold transition-all text-left ${
-                    activeView === "navigator" && activeModule === link.id
-                      ? "text-primary bg-primary/5 border-l-2 border-primary"
-                      : "text-slate-500 hover:bg-slate-50 hover:translate-x-1"
-                  }`}
-                >
-                  <span className="material-symbols-outlined text-lg">{link.icon}</span>
-                  {link.label}
-                </button>
-              ))}
+
+            {/* Module nav */}
+            <nav className="flex-1 flex flex-col gap-0.5 p-3">
+              {sidebarLinks.map((link) => {
+                const locked    = !isUnlocked(link.id);
+                const completed = completedModules.includes(link.id);
+                const active    = isModuleActive(link.id);
+
+                return (
+                  <button
+                    key={link.id}
+                    disabled={locked}
+                    onClick={() => !locked && goToModule(link.id)}
+                    title={locked ? "Complete the previous module first" : link.label}
+                    className={`flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-left w-full border-l-[3px] ${
+                      locked
+                        ? "text-slate-300 cursor-not-allowed border-transparent"
+                        : active
+                        ? "text-primary bg-primary/5 border-primary font-semibold"
+                        : completed
+                        ? "text-secondary border-transparent hover:bg-slate-50"
+                        : "text-slate-600 border-transparent hover:bg-slate-50 hover:text-primary"
+                    }`}
+                  >
+                    {/* Status icon */}
+                    {locked ? (
+                      <span className="material-symbols-outlined text-base text-slate-300">lock</span>
+                    ) : completed ? (
+                      <span className="material-symbols-outlined text-base text-secondary" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                    ) : (
+                      <span className={`material-symbols-outlined text-base ${active ? "text-primary" : "text-slate-400"}`}>{link.icon}</span>
+                    )}
+                    <span className="truncate">{link.label}</span>
+                    {completed && !active && (
+                      <span className="ml-auto text-[9px] font-bold text-secondary uppercase tracking-wider">Done</span>
+                    )}
+                  </button>
+                );
+              })}
             </nav>
-            <button
-              onClick={() => navigateToSection("dashboard")}
-              className="bg-primary text-on-primary py-3 px-4 rounded-xl font-semibold text-sm hover:opacity-90 transition-opacity shadow-sm"
-            >
-              Check Progress
-            </button>
-            <div className="mt-auto pt-4 border-t border-slate-100 flex flex-col gap-1">
-              <button onClick={() => navigateToSection("faq")} className="flex items-center gap-3 text-slate-500 p-3 hover:bg-slate-50 rounded-md text-sm font-semibold">
-                <span className="material-symbols-outlined">menu_book</span>
-                Glossary
+
+            {/* Bottom actions */}
+            <div className="p-3 border-t border-slate-100 flex flex-col gap-1.5">
+              <button
+                onClick={() => goToView("quiz")}
+                className={`w-full py-2.5 px-4 rounded-xl font-semibold text-sm transition-opacity shadow-sm ${
+                  activeView === "quiz"
+                    ? "bg-primary/90 text-white"
+                    : "bg-primary text-on-primary hover:opacity-90"
+                }`}
+              >
+                Take Quiz
               </button>
-              <button className="flex items-center gap-3 text-slate-500 p-3 hover:bg-slate-50 rounded-md text-sm font-semibold">
-                <span className="material-symbols-outlined">help_outline</span>
-                Help
+              <button
+                onClick={() => goToView("faq")}
+                className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors w-full ${
+                  activeView === "faq"
+                    ? "text-primary bg-primary/5 font-semibold"
+                    : "text-slate-600 hover:bg-slate-50 hover:text-primary"
+                }`}
+              >
+                <span className="material-symbols-outlined text-base">menu_book</span>
+                Glossary &amp; FAQ
               </button>
             </div>
           </aside>
         )}
 
-        {/* ─── Main Content Area ─── */}
-        <main className={`flex-1 min-h-[calc(100vh-64px)] ${hasSidebar ? "max-w-7xl px-6 py-12" : ""}`}>
-          {activeView === "welcome" && <WelcomeOnboarding setActiveSection={navigateToSection} />}
-          {activeView === "dashboard" && <InteractiveTimeline setActiveSection={navigateToSection} setActiveModule={navigateToModule} />}
-          {activeView === "navigator" && <GuidedProcessNavigator setActiveSection={navigateToSection} activeModule={activeModule} setActiveModule={setActiveModule} />}
-          {activeView === "quiz" && <MicroQuiz setActiveSection={navigateToSection} />}
-          {activeView === "faq" && <SmartFAQ setActiveSection={navigateToSection} />}
+        {/* ─── Main Content ─── */}
+        <main className={`flex-1 min-h-[calc(100vh-64px)] overflow-x-hidden ${hasSidebar ? "px-6 py-10 max-w-[calc(100vw-224px)]" : ""}`}>
+          {activeView === "welcome"   && (
+            <WelcomeOnboarding setActiveSection={goToView} />
+          )}
+          {activeView === "dashboard" && (
+            <InteractiveTimeline
+              setActiveSection={goToView}
+              setActiveModule={goToModule}
+              completedModules={completedModules}
+              currentProgressModule={currentProgressModule}
+            />
+          )}
+          {activeView === "navigator" && (
+            <GuidedProcessNavigator
+              setActiveSection={goToView}
+              activeModule={activeModule}
+              setActiveModule={setActiveModule}
+              completedModules={completedModules}
+              completeModule={completeModule}
+            />
+          )}
+          {activeView === "quiz"      && (
+            <MicroQuiz
+              setActiveSection={goToView}
+              completeModule={completeModule}
+            />
+          )}
+          {activeView === "faq"       && (
+            <SmartFAQ setActiveSection={goToView} />
+          )}
         </main>
       </div>
 
       {/* ─── Mobile Bottom Nav ─── */}
-      <nav className="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 flex justify-around items-center h-16 z-50">
-        {sidebarLinks.slice(0, 4).map((link) => (
-          <button key={link.id} onClick={() => navigateToModule(link.id)} className={`flex flex-col items-center gap-1 ${activeView === "navigator" && activeModule === link.id ? "text-primary font-bold" : "text-slate-400"}`}>
-            <span className="material-symbols-outlined" style={activeView === "navigator" && activeModule === link.id ? { fontVariationSettings: "'FILL' 1" } : {}}>{link.icon}</span>
-            <span className="text-[10px]">{link.label}</span>
+      <nav className="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 flex justify-around items-center h-14 z-50">
+        {[
+          { label: "Timeline", view: "dashboard", icon: "dashboard" },
+          { label: "Learn",    view: "navigator", icon: "school"    },
+          { label: "Quiz",     view: "quiz",      icon: "quiz"      },
+          { label: "Help",     view: "faq",       icon: "menu_book" },
+        ].map((item) => (
+          <button
+            key={item.view}
+            onClick={() => goToView(item.view)}
+            className={`flex flex-col items-center gap-0.5 px-3 py-1 ${activeView === item.view ? "text-primary" : "text-slate-400"}`}
+          >
+            <span
+              className="material-symbols-outlined text-xl"
+              style={activeView === item.view ? { fontVariationSettings: "'FILL' 1" } : {}}
+            >
+              {item.icon}
+            </span>
+            <span className="text-[9px] font-medium">{item.label}</span>
           </button>
         ))}
       </nav>
