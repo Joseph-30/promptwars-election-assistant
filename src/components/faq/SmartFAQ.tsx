@@ -26,9 +26,9 @@ export function SmartFAQ({ setActiveSection }: SmartFAQProps) {
   return (
     <div className="max-w-5xl mx-auto">
       {/* Hero Header */}
-      <div className="text-center mb-8">
+      <div className="text-center mb-8 px-4">
         <h1 className="font-h1 text-h1 text-primary mb-3">How can we help you participate?</h1>
-        <p className="text-on-surface-variant max-w-xl mx-auto">
+        <p className="text-on-surface-variant max-w-2xl mx-auto text-body-md">
           Ask any question about the voting process or election terminology to get instant, verified guidance.
         </p>
       </div>
@@ -46,7 +46,10 @@ export function SmartFAQ({ setActiveSection }: SmartFAQProps) {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-          <button className="px-6 py-4 bg-primary text-on-primary font-semibold rounded-xl hover:opacity-90 transition-all shadow-lg shadow-primary/20">
+          <button 
+            onClick={() => { if(searchQuery) alert(`Searching for: ${searchQuery}`); }}
+            className="px-6 py-4 bg-primary text-on-primary font-semibold rounded-xl hover:opacity-90 transition-all shadow-lg shadow-primary/20"
+          >
             Ask Now
           </button>
         </div>
@@ -143,9 +146,12 @@ export function SmartFAQ({ setActiveSection }: SmartFAQProps) {
               <h3 className="font-h3 text-h3 text-primary mb-2">Still have questions?</h3>
               <p className="text-on-surface-variant text-sm">Our community ambassadors are ready to help you navigate the process. Connect with a live guide for specific regional queries.</p>
             </div>
-            <button className="px-8 py-3 bg-error text-on-error rounded-xl font-semibold hover:opacity-90 transition-colors whitespace-nowrap shadow-sm">
-              Speak to an Ambassador
-            </button>
+          <button 
+            onClick={() => alert("Ambassador connection is coming soon!")}
+            className="px-8 py-3 bg-error text-on-error rounded-xl font-semibold hover:opacity-90 transition-colors whitespace-nowrap shadow-sm"
+          >
+            Speak to an Ambassador
+          </button>
           </div>
         </div>
 
@@ -186,7 +192,10 @@ export function SmartFAQ({ setActiveSection }: SmartFAQProps) {
                 </div>
               ))}
             </div>
-            <button className="w-full mt-md text-sm font-bold text-primary border-t border-slate-100 pt-md hover:underline">
+            <button 
+              onClick={() => alert("Glossary PDF generation is coming soon!")}
+              className="w-full mt-md text-sm font-bold text-primary border-t border-slate-100 pt-md hover:underline"
+            >
               Download Full PDF Glossary
             </button>
           </div>

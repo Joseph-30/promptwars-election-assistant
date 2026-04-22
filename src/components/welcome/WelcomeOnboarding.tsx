@@ -47,7 +47,7 @@ export function WelcomeOnboarding({ setActiveSection }: WelcomeOnboardingProps) 
 
         {/* CTA */}
         <button
-          onClick={() => setActiveSection("timeline")}
+          onClick={() => setActiveSection("dashboard")}
           className="w-full md:w-auto px-12 py-4 bg-primary text-white font-h3 text-quiz-option rounded-xl hover:opacity-90 active:scale-95 transition-all shadow-lg shadow-primary/20"
         >
           Get Started
@@ -72,7 +72,7 @@ export function WelcomeOnboarding({ setActiveSection }: WelcomeOnboardingProps) 
           </button>
 
           {/* Step 2: Primaries & Campaigns (Visual Focus) */}
-          <button onClick={() => setActiveSection("timeline")} className="md:col-span-1 bg-primary-container text-white p-6 rounded-xl shadow-quiz-card relative overflow-hidden flex flex-col justify-end min-h-[280px] text-left">
+          <button onClick={() => setActiveSection("dashboard")} className="md:col-span-1 bg-primary-container text-white p-6 rounded-xl shadow-quiz-card relative overflow-hidden flex flex-col justify-end min-h-[280px] text-left">
             <div className="absolute inset-0 opacity-30">
               <img alt="Government building" className="w-full h-full object-cover" src="/primaries_img.png" />
             </div>

@@ -61,14 +61,14 @@ export function MicroQuiz({ setActiveSection }: MicroQuizProps) {
             </div>
           </div>
           <h2 className="font-h2 text-h2 text-primary mb-2">Civic Literacy Badge Earned!</h2>
-          <p className="text-on-surface-variant mb-8 max-w-md mx-auto">
+          <p className="text-on-surface-variant mb-8 max-w-lg mx-auto text-body-md">
             Great job! You answered {score} out of {quizData.length} questions correctly.
           </p>
           <div className="flex gap-4 justify-center">
             <button onClick={handleRestart} className="px-6 py-3 border-2 border-primary text-primary font-bold rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-2">
               <span className="material-symbols-outlined">refresh</span> Retake Quiz
             </button>
-            <button onClick={() => setActiveSection && setActiveSection("timeline")} className="px-6 py-3 bg-primary text-on-primary font-bold rounded-lg hover:opacity-90 transition-all flex items-center gap-2 shadow-lg shadow-primary/20">
+            <button onClick={() => setActiveSection && setActiveSection("dashboard")} className="px-6 py-3 bg-primary text-on-primary font-bold rounded-lg hover:opacity-90 transition-all flex items-center gap-2 shadow-lg shadow-primary/20">
               View Timeline <span className="material-symbols-outlined">arrow_forward</span>
             </button>
           </div>
@@ -173,7 +173,7 @@ export function MicroQuiz({ setActiveSection }: MicroQuizProps) {
             {/* Navigation */}
             <div className="mt-xl flex flex-col sm:flex-row justify-between items-center gap-md">
               <button
-                onClick={() => setActiveSection && setActiveSection("timeline")}
+                onClick={() => setActiveSection && setActiveSection("dashboard")}
                 className="w-full sm:w-auto px-lg py-md border-2 border-primary text-primary font-bold rounded-lg hover:bg-slate-50 transition-colors flex items-center justify-center gap-2"
               >
                 <span className="material-symbols-outlined">close</span> Finish Quiz
@@ -241,7 +241,7 @@ export function MicroQuiz({ setActiveSection }: MicroQuizProps) {
               </div>
             </div>
             <button
-              onClick={() => setActiveSection && setActiveSection("timeline")}
+              onClick={() => setActiveSection && setActiveSection("dashboard")}
               className="w-full mt-lg py-sm text-sm font-bold text-primary border border-primary/20 rounded-lg hover:bg-primary/5 transition-colors"
             >
               View Full Curriculum
@@ -256,7 +256,7 @@ export function MicroQuiz({ setActiveSection }: MicroQuizProps) {
               <p className="text-sm text-slate-300 mb-md">Stuck on a term? Certification refers to the formal process of validating election results by authorized boards.</p>
               <button
                 onClick={() => setActiveSection && setActiveSection("faq")}
-                className="inline-flex items-center gap-2 text-sm font-bold text-green-400"
+                className="inline-flex items-center gap-2 text-sm font-bold text-secondary"
               >
                 Explore Glossary
                 <span className="material-symbols-outlined text-sm">open_in_new</span>

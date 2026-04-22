@@ -103,7 +103,7 @@ export default function Home() {
               ))}
             </nav>
             <button
-              onClick={() => navigateToSection("quiz")}
+              onClick={() => navigateToSection("dashboard")}
               className="bg-primary text-on-primary py-3 px-4 rounded-xl font-semibold text-sm hover:opacity-90 transition-opacity shadow-sm"
             >
               Check Progress
