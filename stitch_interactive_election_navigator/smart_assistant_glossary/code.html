@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CivicTrack | Question Assistant &amp; Glossary</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;family=Lexend:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#f7f9fb",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-container": "#abbccf",
+                        "secondary-fixed-dim": "#4ae183",
+                        "surface-container-low": "#f2f4f6",
+                        "secondary-fixed": "#6bfe9c",
+                        "on-surface-variant": "#42474f",
+                        "on-primary-fixed-variant": "#07497d",
+                        "tertiary-fixed-dim": "#b8c8db",
+                        "surface-variant": "#e0e3e5",
+                        "on-primary": "#ffffff",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-tertiary-fixed": "#0c1d2b",
+                        "on-surface": "#191c1e",
+                        "surface-dim": "#d8dadc",
+                        "tertiary": "#263544",
+                        "on-primary-container": "#8ebdf9",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#a0c9ff",
+                        "tertiary-fixed": "#d3e4f8",
+                        "tertiary-container": "#3c4c5c",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#005228",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-tertiary-fixed-variant": "#394858",
+                        "background": "#f7f9fb",
+                        "surface-tint": "#2d6197",
+                        "on-primary-fixed": "#001c37",
+                        "primary-fixed-dim": "#a0c9ff",
+                        "surface-bright": "#f7f9fb",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#00743a",
+                        "secondary": "#006d37",
+                        "inverse-surface": "#2d3133",
+                        "primary-container": "#0f4c81",
+                        "secondary-container": "#6bfe9c",
+                        "outline-variant": "#c2c7d1",
+                        "surface-container-high": "#e6e8ea",
+                        "primary-fixed": "#d2e4ff",
+                        "primary": "#00355f",
+                        "error-container": "#ffdad6",
+                        "outline": "#727780",
+                        "surface-container": "#eceef0",
+                        "on-background": "#191c1e",
+                        "on-secondary-fixed": "#00210c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "gutter": "24px",
+                        "lg": "24px",
+                        "container-max": "1200px",
+                        "xl": "48px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Public Sans"],
+                        "quiz-option": ["Lexend"],
+                        "h2": ["Public Sans"],
+                        "h3": ["Public Sans"],
+                        "h1": ["Public Sans"],
+                        "body-lg": ["Lexend"],
+                        "body-md": ["Lexend"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "quiz-option": ["16px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                        "h2": ["32px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "h3": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "h1": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glossary-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .glossary-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .glossary-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm shadow-blue-900/5">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold text-blue-900 dark:text-blue-50 font-['Public_Sans']">CivicTrack</span>
+<nav class="hidden md:flex gap-6 h-full items-center">
+<a class="font-['Public_Sans'] font-medium text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors px-3 py-2" href="#">Dashboard</a>
+<a class="font-['Public_Sans'] font-medium text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors px-3 py-2" href="#">Elections</a>
+<a class="font-['Public_Sans'] font-medium text-blue-900 dark:text-blue-400 border-b-2 border-blue-900 px-3 py-2" href="#">Resources</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 font-['Public_Sans'] text-sm hover:bg-slate-50 transition-colors">
+                Select Region
+            </button>
+<div class="flex gap-2">
+<span class="material-symbols-outlined p-2 text-slate-600 cursor-pointer hover:bg-slate-100 rounded-full">public</span>
+<span class="material-symbols-outlined p-2 text-slate-600 cursor-pointer hover:bg-slate-100 rounded-full">notifications</span>
+</div>
+</div>
+</header>
+<!-- SideNavBar (Institutional Guide) -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 flex flex-col py-4 bg-slate-50 dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 font-['Public_Sans'] text-sm z-40">
+<div class="px-6 mb-8">
+<h2 class="text-lg font-bold text-blue-900 dark:text-blue-50">Election Guide</h2>
+<p class="text-xs text-slate-500 uppercase tracking-widest mt-1">Institutional Learning</p>
+</div>
+<div class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-6 py-3 text-slate-600 dark:text-slate-400 hover:bg-blue-50/50 dark:hover:bg-slate-800 transition-transform duration-200 scale-98" href="#">
+<span class="material-symbols-outlined">how_to_reg</span>
+                Registration
+            </a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-600 dark:text-slate-400 hover:bg-blue-50/50 dark:hover:bg-slate-800 transition-transform duration-200 scale-98" href="#">
+<span class="material-symbols-outlined">ballot</span>
+                Primaries
+            </a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-600 dark:text-slate-400 hover:bg-blue-50/50 dark:hover:bg-slate-800 transition-transform duration-200 scale-98" href="#">
+<span class="material-symbols-outlined">campaign</span>
+                Campaigns
+            </a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-600 dark:text-slate-400 hover:bg-blue-50/50 dark:hover:bg-slate-800 transition-transform duration-200 scale-98" href="#">
+<span class="material-symbols-outlined">how_to_vote</span>
+                General Election
+            </a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-600 dark:text-slate-400 hover:bg-blue-50/50 dark:hover:bg-slate-800 transition-transform duration-200 scale-98" href="#">
+<span class="material-symbols-outlined">verified</span>
+                Certification
+            </a>
+</div>
+<div class="px-6 mb-6">
+<button class="w-full py-3 bg-primary text-on-primary rounded-lg font-semibold hover:opacity-90 transition-all">
+                Check Progress
+            </button>
+</div>
+<div class="border-t border-slate-200 pt-4">
+<a class="flex items-center gap-3 px-6 py-3 bg-blue-50 dark:bg-blue-900/30 text-blue-900 dark:text-blue-100 font-semibold border-r-4 border-blue-900 dark:border-blue-400" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+                Glossary
+            </a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-600 dark:text-slate-400 hover:bg-blue-50/50" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+                Help
+            </a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-16 min-h-screen">
+<div class="max-w-[1200px] mx-auto px-gutter py-xl">
+<!-- Hero Search Section -->
+<section class="mb-xl text-center max-w-[800px] mx-auto">
+<h1 class="font-h1 text-h1 text-primary mb-md">How can we help you participate?</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-lg">Ask any question about the voting process or election terminology to get instant, verified guidance.</p>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline text-2xl">search</span>
+</div>
+<input class="block w-full pl-16 pr-32 py-5 bg-white border-2 border-slate-200 rounded-xl font-body-lg text-body-lg focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all shadow-sm" placeholder="e.g., 'Am I eligible to vote?' or 'What is a constituency?'" type="text"/>
+<button class="absolute right-3 top-2.5 px-6 py-2.5 bg-primary text-on-primary font-semibold rounded-lg hover:bg-primary-container transition-colors">
+                        Ask Now
+                    </button>
+</div>
+</section>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-gutter items-start">
+<!-- Left: Question Assistant Results Area -->
+<div class="col-span-12 lg:col-span-8 space-y-gutter">
+<div class="flex items-center justify-between">
+<h2 class="font-h3 text-h3 text-primary">Frequently Asked Questions</h2>
+<span class="font-label-caps text-label-caps text-on-primary-fixed-variant bg-primary-fixed px-3 py-1 rounded-full">Updated 1h ago</span>
+</div>
+<!-- Assistant Result Card -->
+<div class="bg-white p-lg rounded-xl border border-slate-100 shadow-[0_4px_20px_rgba(15,76,129,0.06)] hover:shadow-[0_8px_30px_rgba(15,76,129,0.1)] transition-shadow">
+<div class="flex items-start gap-4">
+<div class="p-3 bg-secondary-container/20 rounded-lg">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">how_to_vote</span>
+</div>
+<div class="flex-1">
+<h3 class="font-h3 text-h3 mb-sm">Eligibility for General Elections</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md">To be eligible to vote, you must be at least 18 years old on or before the election day, be a citizen of the country, and have your name registered in the current electoral roll of your constituency.</p>
+<div class="flex gap-4">
+<button class="text-sm font-semibold text-primary flex items-center gap-1 hover:underline">
+                                        Learn more about registration
+                                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Step Indicator Feedback (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<div class="bg-white p-lg rounded-xl border-t-4 border-secondary shadow-sm">
+<div class="flex items-center gap-2 mb-md">
+<span class="material-symbols-outlined text-secondary">verified</span>
+<span class="font-label-caps text-label-caps text-secondary uppercase">Quick Check</span>
+</div>
+<h4 class="font-h3 text-[18px] mb-xs">Registration Deadline</h4>
+<p class="text-sm text-on-surface-variant">The final date to update your details is **October 15th**. Check your status now to avoid last-minute issues.</p>
+</div>
+<div class="bg-white p-lg rounded-xl border-t-4 border-primary shadow-sm">
+<div class="flex items-center gap-2 mb-md">
+<span class="material-symbols-outlined text-primary">info</span>
+<span class="font-label-caps text-label-caps text-primary uppercase">Pro Tip</span>
+</div>
+<h4 class="font-h3 text-[18px] mb-xs">Acceptable ID Proofs</h4>
+<p class="text-sm text-on-surface-variant">Voter ID is primary, but Passport, Driving License, or Government Employee IDs are also valid at the booth.</p>
+</div>
+</div>
+<!-- Result Canvas Image -->
+<div class="relative h-[240px] rounded-xl overflow-hidden shadow-sm group">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Modern clean educational space with voting booths and helpful staff in a bright government facility with large windows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNTFxiVdX4Z-_0zTM7awcv6W0LA5Eif7TSgxZps_eWNluGwX07BUAlVIy-6tpmEAr9dVSYlIrZE6I0KYRXCxo0RTjD0VE0LjeVKG7JOyhrcvIdEkHPBdLhCLI28RHqHQYttbaanKvffFqN2dytFYfviLwrNzLfP6q3Au8-gLWYSJQQCYPkR5fm4p-xdOQ52iVAlpS7x9iOVdqPo_6Y2a1OmgsGjffXv1t_bDIM9NKdQn7AcK-BKILJLLksrc9xPDq_nQnpoFs-8N_0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex items-end p-lg">
+<div>
+<h3 class="font-h3 text-white text-h3">Visual Guide: At the Polling Station</h3>
+<p class="text-white/80 font-body-md">See exactly what happens from the moment you enter until you cast your vote.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: Alphabetized Glossary Panel -->
+<div class="col-span-12 lg:col-span-4 sticky top-gutter">
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col max-h-[calc(100vh-160px)]">
+<div class="p-md border-b border-slate-100 bg-slate-50/50">
+<h2 class="font-h3 text-[20px] text-primary mb-sm">Terminology Glossary</h2>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">filter_alt</span>
+<input class="w-full pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Filter terms..." type="text"/>
+</div>
+</div>
+<!-- Alphabet Navigation -->
+<div class="flex gap-2 p-3 overflow-x-auto glossary-scrollbar border-b border-slate-100 bg-white">
+<button class="min-w-[32px] h-8 flex items-center justify-center rounded-md bg-primary text-white text-xs font-bold">A</button>
+<button class="min-w-[32px] h-8 flex items-center justify-center rounded-md hover:bg-slate-100 text-slate-600 text-xs font-bold">B</button>
+<button class="min-w-[32px] h-8 flex items-center justify-center rounded-md hover:bg-slate-100 text-slate-600 text-xs font-bold">C</button>
+<button class="min-w-[32px] h-8 flex items-center justify-center rounded-md hover:bg-slate-100 text-slate-600 text-xs font-bold">D</button>
+<button class="min-w-[32px] h-8 flex items-center justify-center rounded-md hover:bg-slate-100 text-slate-600 text-xs font-bold">E</button>
+<button class="min-w-[32px] h-8 flex items-center justify-center rounded-md hover:bg-slate-100 text-slate-600 text-xs font-bold">F</button>
+</div>
+<!-- Glossary List -->
+<div class="flex-1 overflow-y-auto glossary-scrollbar p-md space-y-md">
+<div class="group">
+<h4 class="font-bold text-primary group-hover:text-secondary transition-colors cursor-pointer">Absentee Ballot</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">A vote cast by someone who is unable or unwilling to attend the official polling station.</p>
+</div>
+<div class="group">
+<h4 class="font-bold text-primary group-hover:text-secondary transition-colors cursor-pointer">Adjournment</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">The formal postponement of a session or proceeding to a later date or time.</p>
+</div>
+<div class="group">
+<h4 class="font-bold text-primary group-hover:text-secondary transition-colors cursor-pointer">Constituency</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">A body of voters in a specified area who elect a representative to a legislative body.</p>
+</div>
+<div class="group">
+<h4 class="font-bold text-primary group-hover:text-secondary transition-colors cursor-pointer">Electoral Roll</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">A list of all the people in a particular area who are eligible to vote in an election.</p>
+</div>
+<div class="group">
+<h4 class="font-bold text-primary group-hover:text-secondary transition-colors cursor-pointer">NOTA (None Of The Above)</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">A ballot option designed to allow the voter to indicate disapproval of all of the candidates in a voting system.</p>
+</div>
+<div class="group">
+<h4 class="font-bold text-primary group-hover:text-secondary transition-colors cursor-pointer">Proxy Voting</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">A form of voting where a member of a decision-making body delegates their voting power to a representative.</p>
+</div>
+</div>
+<div class="p-md bg-slate-50 text-center">
+<button class="text-primary font-semibold text-sm hover:underline">Download Full PDF Glossary</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom CTA Section -->
+<section class="mt-xl py-xl px-lg bg-primary-container/10 rounded-2xl border border-primary-container/20 flex flex-col md:flex-row items-center justify-between gap-lg">
+<div class="max-w-[600px]">
+<h2 class="font-h3 text-h3 text-primary mb-xs">Still have questions?</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Our community ambassadors are ready to help you navigate the process. Connect with a live guide for specific regional queries.</p>
+</div>
+<button class="px-xl py-md bg-secondary text-on-secondary rounded-xl font-bold hover:shadow-lg transition-all whitespace-nowrap">
+                    Speak to an Ambassador
+                </button>
+</section>
+</div>
+</main>
+<!-- FAB (Contextual for Home/Resources) -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-secondary text-on-secondary rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform z-50">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">forum</span>
+</button>
+</body></html>

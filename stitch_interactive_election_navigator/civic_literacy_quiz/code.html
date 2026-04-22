@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Civic Literacy Quiz | CivicTrack</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&amp;family=Lexend:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#f7f9fb",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-container": "#abbccf",
+                    "secondary-fixed-dim": "#4ae183",
+                    "surface-container-low": "#f2f4f6",
+                    "secondary-fixed": "#6bfe9c",
+                    "on-surface-variant": "#42474f",
+                    "on-primary-fixed-variant": "#07497d",
+                    "tertiary-fixed-dim": "#b8c8db",
+                    "surface-variant": "#e0e3e5",
+                    "on-primary": "#ffffff",
+                    "surface-container-highest": "#e0e3e5",
+                    "on-tertiary-fixed": "#0c1d2b",
+                    "on-surface": "#191c1e",
+                    "surface-dim": "#d8dadc",
+                    "tertiary": "#263544",
+                    "on-primary-container": "#8ebdf9",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "inverse-primary": "#a0c9ff",
+                    "tertiary-fixed": "#d3e4f8",
+                    "tertiary-container": "#3c4c5c",
+                    "on-tertiary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed-variant": "#005228",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-tertiary-fixed-variant": "#394858",
+                    "background": "#f7f9fb",
+                    "surface-tint": "#2d6197",
+                    "on-primary-fixed": "#001c37",
+                    "primary-fixed-dim": "#a0c9ff",
+                    "surface-bright": "#f7f9fb",
+                    "on-error": "#ffffff",
+                    "on-secondary-container": "#00743a",
+                    "secondary": "#006d37",
+                    "inverse-surface": "#2d3133",
+                    "primary-container": "#0f4c81",
+                    "secondary-container": "#6bfe9c",
+                    "outline-variant": "#c2c7d1",
+                    "surface-container-high": "#e6e8ea",
+                    "primary-fixed": "#d2e4ff",
+                    "primary": "#00355f",
+                    "error-container": "#ffdad6",
+                    "outline": "#727780",
+                    "surface-container": "#eceef0",
+                    "on-background": "#191c1e",
+                    "on-secondary-fixed": "#00210c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "xs": "4px",
+                    "sm": "8px",
+                    "md": "16px",
+                    "gutter": "24px",
+                    "lg": "24px",
+                    "container-max": "1200px",
+                    "xl": "48px"
+            },
+            "fontFamily": {
+                    "label-caps": ["Public Sans"],
+                    "quiz-option": ["Lexend"],
+                    "h2": ["Public Sans"],
+                    "h3": ["Public Sans"],
+                    "h1": ["Public Sans"],
+                    "body-lg": ["Lexend"],
+                    "body-md": ["Lexend"]
+            },
+            "fontSize": {
+                    "label-caps": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "quiz-option": ["16px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                    "h2": ["32px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "h3": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "h1": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .quiz-card-shadow {
+            box-shadow: 0 4px 20px rgba(15, 76, 129, 0.08);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white border-b border-slate-200 shadow-sm shadow-blue-900/5 font-['Public_Sans'] font-medium">
+<div class="flex items-center gap-4">
+<span class="text-xl font-bold text-blue-900">CivicTrack</span>
+<div class="h-6 w-px bg-slate-200 ml-2"></div>
+<nav class="hidden md:flex gap-6 items-center h-full ml-4">
+<a class="text-blue-900 border-b-2 border-blue-900 h-full flex items-center px-2 transition-all duration-150" href="#">Learning</a>
+<a class="text-slate-500 hover:bg-slate-50 transition-colors h-full flex items-center px-2" href="#">Resources</a>
+<a class="text-slate-500 hover:bg-slate-50 transition-colors h-full flex items-center px-2" href="#">Community</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined text-lg">public</span>
+<span class="text-sm">Select Region</span>
+</button>
+<button class="p-2 text-slate-500 hover:bg-slate-50 rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary text-xs font-bold">JD</div>
+</div>
+</header>
+<!-- SideNavBar (Suppressed for focused Quiz layout as per Shell Visibility Rules) -->
+<main class="pt-24 pb-12 px-6 max-w-[1200px] mx-auto min-h-screen">
+<div class="flex flex-col lg:flex-row gap-gutter">
+<!-- Left Column: Quiz Content -->
+<div class="flex-1 max-w-[720px] mx-auto">
+<!-- Progress Header -->
+<div class="mb-xl">
+<div class="flex justify-between items-end mb-sm">
+<div>
+<span class="font-label-caps text-label-caps text-primary opacity-60">MODULE 02: THE ELECTORAL PROCESS</span>
+<h1 class="font-h1 text-h1 text-primary mt-1">General Election Fundamentals</h1>
+</div>
+<div class="text-right">
+<span class="font-quiz-option text-primary font-bold">Question 4 of 10</span>
+</div>
+</div>
+<!-- Progress Bar -->
+<div class="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
+<div class="h-full bg-secondary-container w-[40%] transition-all duration-500"></div>
+</div>
+</div>
+<!-- Quiz Card -->
+<div class="bg-white rounded-xl p-lg quiz-card-shadow border-t-4 border-secondary">
+<div class="mb-lg">
+<h2 class="font-h3 text-h3 text-primary mb-md">Which body is responsible for the official certification of presidential election results in the United States?</h2>
+<div class="aspect-video w-full rounded-lg bg-slate-100 mb-lg overflow-hidden">
+<img alt="The United States Capitol building dome under a clear blue sky, symbolizing legislative authority and institutional stability." class="w-full h-full object-cover" data-alt="The United States Capitol building dome under a clear blue sky, symbolizing legislative authority and institutional stability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUcOYW7Nu0sj1VHGU00NN6nbEFO_AIzyVRA3Xx0L16BF73x00yIyVH6d-V2mFPquEIpjwFv1ZU7XFUXXZ96RlT7ciddZ8uj3B4pj2rpc4Kn-FOoiJgRc4JFrhGMOu4p6Hh89BnN_YZJewI4-Zeo-3flvbA09PoYqrpZO91MJg_HyzZSOjR87H3QT3o8tjWOJgjqsfuNykeP3DW2JGOjbS5O3rt8zsaF6KVI1wQif74f7dfvMLbA9YeH8M2fpAEOMdKlhLISPrfruyS"/>
+</div>
+</div>
+<!-- Options Grid -->
+<div class="space-y-md">
+<!-- Default Option -->
+<button class="w-full flex items-center gap-md p-md border-2 border-slate-200 rounded-lg bg-white hover:border-primary-container transition-all text-left group">
+<div class="w-8 h-8 rounded-full border-2 border-slate-300 flex items-center justify-center font-bold text-slate-400 group-hover:border-primary-container group-hover:text-primary-container">A</div>
+<span class="font-quiz-option text-quiz-option text-on-surface">The Supreme Court</span>
+</button>
+<!-- Correct/Selected Option -->
+<button class="w-full flex items-center gap-md p-md border-2 border-primary rounded-lg bg-primary-fixed/30 text-left relative overflow-hidden">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center font-bold text-white">B</div>
+<span class="font-quiz-option text-quiz-option text-on-surface font-semibold">The United States Congress</span>
+<span class="material-symbols-outlined absolute right-4 text-secondary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</button>
+<!-- Option -->
+<button class="w-full flex items-center gap-md p-md border-2 border-slate-200 rounded-lg bg-white hover:border-primary-container transition-all text-left group">
+<div class="w-8 h-8 rounded-full border-2 border-slate-300 flex items-center justify-center font-bold text-slate-400 group-hover:border-primary-container group-hover:text-primary-container">C</div>
+<span class="font-quiz-option text-quiz-option text-on-surface">The Federal Election Commission</span>
+</button>
+<!-- Option -->
+<button class="w-full flex items-center gap-md p-md border-2 border-slate-200 rounded-lg bg-white hover:border-primary-container transition-all text-left group">
+<div class="w-8 h-8 rounded-full border-2 border-slate-300 flex items-center justify-center font-bold text-slate-400 group-hover:border-primary-container group-hover:text-primary-container">D</div>
+<span class="font-quiz-option text-quiz-option text-on-surface">The National Archives</span>
+</button>
+</div>
+<!-- Instant Feedback Section -->
+<div class="mt-lg p-lg bg-secondary-fixed/10 border border-secondary/20 rounded-lg">
+<div class="flex items-start gap-md">
+<span class="material-symbols-outlined text-secondary text-3xl" style="font-variation-settings: 'FILL' 1;">verified</span>
+<div>
+<h4 class="font-h3 text-quiz-option text-secondary font-bold mb-1">Correct!</h4>
+<p class="text-body-md text-on-surface-variant">
+                                    According to the 12th Amendment and the Electoral Count Act, Congress meets in a joint session to count electoral votes and certify the results. This process is presided over by the Vice President.
+                                </p>
+</div>
+</div>
+</div>
+<!-- Navigation Actions -->
+<div class="mt-xl flex flex-col sm:flex-row justify-between items-center gap-md">
+<button class="w-full sm:w-auto px-lg py-md border-2 border-primary text-primary font-bold rounded-lg hover:bg-slate-50 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">close</span>
+                            Finish Quiz
+                        </button>
+<div class="flex flex-col sm:flex-row gap-md w-full sm:w-auto">
+<button class="w-full sm:w-auto px-lg py-md text-slate-500 font-bold hover:text-primary transition-colors">
+                                Skip for now
+                            </button>
+<button class="w-full sm:w-auto px-lg py-md bg-primary text-on-primary font-bold rounded-lg hover:opacity-90 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
+                                Next Question
+                                <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Context & Stats -->
+<aside class="hidden lg:block w-80 space-y-gutter">
+<!-- Learning Path Bento -->
+<div class="bg-white rounded-xl p-md quiz-card-shadow border border-slate-100">
+<h3 class="font-label-caps text-label-caps text-slate-500 mb-md uppercase tracking-widest">Election Guide Progress</h3>
+<div class="space-y-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-secondary-fixed/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">how_to_reg</span>
+</div>
+<div>
+<p class="text-xs font-bold text-slate-400">STAGE 01</p>
+<p class="text-sm font-semibold text-primary">Registration</p>
+</div>
+<span class="material-symbols-outlined ml-auto text-secondary text-sm">check_circle</span>
+</div>
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">how_to_vote</span>
+</div>
+<div>
+<p class="text-xs font-bold text-primary">STAGE 02</p>
+<p class="text-sm font-semibold text-primary">General Election</p>
+</div>
+<span class="ml-auto flex items-center justify-center h-5 w-5 bg-primary rounded-full text-[10px] text-white">4/10</span>
+</div>
+<div class="flex items-center gap-md opacity-40">
+<div class="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400">
+<span class="material-symbols-outlined">verified</span>
+</div>
+<div>
+<p class="text-xs font-bold text-slate-400">STAGE 03</p>
+<p class="text-sm font-semibold text-slate-400">Certification</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-lg py-sm text-sm font-bold text-primary border border-primary/20 rounded-lg hover:bg-primary/5 transition-colors">
+                        View Full Curriculum
+                    </button>
+</div>
+<!-- Interactive Glossary Card -->
+<div class="bg-primary text-on-primary rounded-xl p-md quiz-card-shadow overflow-hidden relative">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-on-primary-container mb-2">menu_book</span>
+<h4 class="font-h3 text-quiz-option mb-2">Glossary Corner</h4>
+<p class="text-sm opacity-80 mb-md">Stuck on a term? Certification refers to the formal process of validating election results by authorized boards.</p>
+<a class="inline-flex items-center gap-2 text-sm font-bold text-secondary-fixed" href="#">
+                            Explore Glossary
+                            <span class="material-symbols-outlined text-sm">open_in_new</span>
+</a>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-[120px]">account_balance</span>
+</div>
+</div>
+<!-- Study Tip -->
+<div class="bg-surface-container-high rounded-xl p-md border border-slate-200">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary text-lg">lightbulb</span>
+<h4 class="text-sm font-bold text-primary">Study Tip</h4>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">Certification isn't just a formality—it's a critical legal step that confirms every valid ballot has been counted correctly and lawfully.</p>
+</div>
+</aside>
+</div>
+</main>
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 flex justify-around items-center h-16 z-50">
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">how_to_reg</span>
+<span class="text-[10px]">Registration</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">how_to_vote</span>
+<span class="text-[10px] font-bold">Election</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">campaign</span>
+<span class="text-[10px]">Campaigns</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="text-[10px]">Glossary</span>
+</a>
+</nav>
+</body></html>

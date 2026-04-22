@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Voter Registration - CivicTrack Learning</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&amp;family=Lexend:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#f7f9fb",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-container": "#abbccf",
+                        "secondary-fixed-dim": "#4ae183",
+                        "surface-container-low": "#f2f4f6",
+                        "secondary-fixed": "#6bfe9c",
+                        "on-surface-variant": "#42474f",
+                        "on-primary-fixed-variant": "#07497d",
+                        "tertiary-fixed-dim": "#b8c8db",
+                        "surface-variant": "#e0e3e5",
+                        "on-primary": "#ffffff",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-tertiary-fixed": "#0c1d2b",
+                        "on-surface": "#191c1e",
+                        "surface-dim": "#d8dadc",
+                        "tertiary": "#263544",
+                        "on-primary-container": "#8ebdf9",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#a0c9ff",
+                        "tertiary-fixed": "#d3e4f8",
+                        "tertiary-container": "#3c4c5c",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#005228",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-tertiary-fixed-variant": "#394858",
+                        "background": "#f7f9fb",
+                        "surface-tint": "#2d6197",
+                        "on-primary-fixed": "#001c37",
+                        "primary-fixed-dim": "#a0c9ff",
+                        "surface-bright": "#f7f9fb",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#00743a",
+                        "secondary": "#006d37",
+                        "inverse-surface": "#2d3133",
+                        "primary-container": "#0f4c81",
+                        "secondary-container": "#6bfe9c",
+                        "outline-variant": "#c2c7d1",
+                        "surface-container-high": "#e6e8ea",
+                        "primary-fixed": "#d2e4ff",
+                        "primary": "#00355f",
+                        "error-container": "#ffdad6",
+                        "outline": "#727780",
+                        "surface-container": "#eceef0",
+                        "on-background": "#191c1e",
+                        "on-secondary-fixed": "#00210c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "gutter": "24px",
+                        "lg": "24px",
+                        "container-max": "1200px",
+                        "xl": "48px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Public Sans"],
+                        "quiz-option": ["Lexend"],
+                        "h2": ["Public Sans"],
+                        "h3": ["Public Sans"],
+                        "h1": ["Public Sans"],
+                        "body-lg": ["Lexend"],
+                        "body-md": ["Lexend"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "quiz-option": ["16px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                        "h2": ["32px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "h3": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "h1": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .dashed-connector {
+            background-image: linear-gradient(to bottom, #cbd5e1 50%, transparent 50%);
+            background-position: right;
+            background-size: 2px 12px;
+            background-repeat: repeat-y;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm shadow-blue-900/5">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold text-blue-900 dark:text-blue-50 font-['Public_Sans']">CivicTrack</span>
+<div class="hidden md:flex items-center gap-6">
+<nav class="flex gap-6 font-['Public_Sans'] font-medium">
+<a class="text-blue-900 dark:text-blue-400 border-b-2 border-blue-900 py-5" href="#">Learn</a>
+<a class="text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors py-5" href="#">Participate</a>
+<a class="text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors py-5" href="#">Impact</a>
+</nav>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 font-medium text-sm hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined text-sm">public</span>
+                Select Region
+            </button>
+<div class="flex gap-2">
+<span class="material-symbols-outlined p-2 text-slate-500 hover:bg-slate-100 rounded-full cursor-pointer">notifications</span>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-xs">JD</div>
+</div>
+</div>
+</header>
+<div class="flex pt-16 h-screen overflow-hidden">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] flex flex-col py-4 bg-slate-50 dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 w-64 hidden lg:flex">
+<div class="px-6 mb-8">
+<h2 class="text-lg font-bold text-blue-900 dark:text-blue-50 font-['Public_Sans']">Election Guide</h2>
+<p class="text-xs text-slate-500 uppercase tracking-widest font-semibold mt-1">Institutional Learning</p>
+</div>
+<nav class="flex-1 space-y-1 px-3 custom-scrollbar overflow-y-auto">
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-900 dark:text-blue-100 font-semibold border-r-4 border-blue-900 dark:border-blue-400 transition-transform duration-200 scale-98" href="#">
+<span class="material-symbols-outlined" data-icon="how_to_reg">how_to_reg</span>
+<span class="font-['Public_Sans'] text-sm">Registration</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:text-blue-800 hover:bg-blue-50/50 dark:hover:bg-slate-800 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="ballot">ballot</span>
+<span class="font-['Public_Sans'] text-sm">Primaries</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:text-blue-800 hover:bg-blue-50/50 dark:hover:bg-slate-800 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="campaign">campaign</span>
+<span class="font-['Public_Sans'] text-sm">Campaigns</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:text-blue-800 hover:bg-blue-50/50 dark:hover:bg-slate-800 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="how_to_vote">how_to_vote</span>
+<span class="font-['Public_Sans'] text-sm">General Election</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:text-blue-800 hover:bg-blue-50/50 dark:hover:bg-slate-800 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="verified">verified</span>
+<span class="font-['Public_Sans'] text-sm">Certification</span>
+</a>
+</nav>
+<div class="px-6 py-4 mt-auto border-t border-slate-200">
+<button class="w-full bg-primary text-on-primary py-2.5 rounded-lg font-semibold text-sm shadow-md shadow-primary/20 hover:opacity-90 transition-opacity">
+                    Check Progress
+                </button>
+<div class="flex justify-around mt-4">
+<a class="text-slate-500 hover:text-primary transition-colors flex flex-col items-center gap-1" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="menu_book">menu_book</span>
+<span class="text-[10px] font-bold uppercase">Glossary</span>
+</a>
+<a class="text-slate-500 hover:text-primary transition-colors flex flex-col items-center gap-1" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="help_outline">help_outline</span>
+<span class="text-[10px] font-bold uppercase">Help</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 ml-0 lg:ml-64 overflow-y-auto bg-surface p-6 md:p-12 custom-scrollbar">
+<div class="max-w-[720px] mx-auto space-y-xl">
+<!-- Hero Section -->
+<section class="space-y-md">
+<div class="flex items-center gap-2 text-primary font-label-caps uppercase tracking-wider">
+<span class="material-symbols-outlined text-sm">school</span>
+<span>Module 01: Core Civics</span>
+</div>
+<h1 class="font-h1 text-h1 text-primary">Voter Registration</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                        Understanding how to enter the <span class="border-b-2 border-secondary/30 cursor-help group relative inline-block">Electoral Roll<span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-2 bg-primary text-on-primary text-xs rounded shadow-lg opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all z-10">The official list of persons who are qualified and registered to vote in an election.</span></span> is the foundational step in democratic participation. This module covers the why, when, and how of the registration process.
+                    </p>
+</section>
+<!-- Learning Progress -->
+<div class="bg-surface-container-low p-6 rounded-xl border border-slate-200 flex items-center justify-between">
+<div class="space-y-1">
+<span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Your Module Progress</span>
+<div class="flex items-center gap-4">
+<div class="w-48 h-2 bg-slate-200 rounded-full overflow-hidden">
+<div class="h-full w-1/3 bg-gradient-to-r from-secondary to-secondary-fixed"></div>
+</div>
+<span class="text-sm font-bold text-secondary">35% Complete</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary text-3xl" style="font-variation-settings: 'FILL' 1;">stars</span>
+</div>
+<!-- Bento Content Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Card 1: The Basics -->
+<div class="md:col-span-2 group glass-card p-gutter rounded-xl shadow-sm hover:shadow-xl hover:shadow-primary/5 transition-all cursor-pointer border-t-4 border-secondary">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">description</span>
+</div>
+<h3 class="font-h3 text-h3 text-primary">The "Why" Behind Registration</h3>
+</div>
+<span class="material-symbols-outlined text-slate-400 group-hover:rotate-180 transition-transform">expand_more</span>
+</div>
+<p class="text-on-surface-variant mb-4">Registration ensures that only eligible citizens vote, prevents fraud, and allows officials to manage polling resources effectively.</p>
+<div class="p-4 bg-slate-50 rounded-lg border-l-4 border-primary">
+<p class="text-sm italic font-medium">"Without a clean register, the integrity of the ballot box is at risk." — Institutional Motto</p>
+</div>
+</div>
+<!-- Card 2: Eligibility -->
+<div class="glass-card p-gutter rounded-xl shadow-sm hover:shadow-md transition-all">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-primary">person_check</span>
+<h3 class="font-h3 text-h3 text-primary text-xl">Eligibility</h3>
+</div>
+<ul class="space-y-3">
+<li class="flex items-start gap-2 text-sm">
+<span class="material-symbols-outlined text-secondary text-base">check_circle</span>
+<span>Age 18+ by election day</span>
+</li>
+<li class="flex items-start gap-2 text-sm">
+<span class="material-symbols-outlined text-secondary text-base">check_circle</span>
+<span>Legal citizen of the state</span>
+</li>
+<li class="flex items-start gap-2 text-sm">
+<span class="material-symbols-outlined text-secondary text-base">check_circle</span>
+<span>Residency proof provided</span>
+</li>
+</ul>
+</div>
+<!-- Card 3: Deadlines -->
+<div class="glass-card p-gutter rounded-xl shadow-sm hover:shadow-md transition-all">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-error">event_busy</span>
+<h3 class="font-h3 text-h3 text-primary text-xl">Deadlines</h3>
+</div>
+<p class="text-sm text-on-surface-variant leading-relaxed">Most jurisdictions require registration 15-30 days prior to election day. Missing this <span class="font-bold text-error">cut-off</span> results in ineligibility for that cycle.</p>
+<div class="mt-4 flex items-center gap-2 text-xs font-bold text-slate-400 uppercase">
+<span class="material-symbols-outlined text-sm">timer</span>
+                            Check your local state laws
+                        </div>
+</div>
+</div>
+<!-- Timeline Section -->
+<section class="space-y-lg pt-8 border-t border-slate-200">
+<h3 class="font-h3 text-h3 text-primary text-center">Registration Roadmap</h3>
+<div class="relative space-y-md">
+<div class="absolute left-6 top-4 bottom-4 w-0.5 dashed-connector"></div>
+<!-- Step 1 -->
+<div class="relative flex gap-6 pl-2 group">
+<div class="w-12 h-12 rounded-full bg-secondary text-on-secondary flex items-center justify-center z-10 shrink-0 shadow-lg shadow-secondary/20">
+<span class="material-symbols-outlined">edit_document</span>
+</div>
+<div class="glass-card flex-1 p-6 rounded-xl border-l-4 border-secondary group-hover:translate-x-1 transition-transform">
+<h4 class="font-bold text-primary mb-1">1. Fill out the Form</h4>
+<p class="text-sm text-on-surface-variant">Provide your full legal name, current address, and identification (SSN or License).</p>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="relative flex gap-6 pl-2 group">
+<div class="w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center z-10 shrink-0 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">send</span>
+</div>
+<div class="glass-card flex-1 p-6 rounded-xl group-hover:translate-x-1 transition-transform">
+<h4 class="font-bold text-primary mb-1">2. Submission</h4>
+<p class="text-sm text-on-surface-variant">Submit online via your Secretary of State website or by mail to your local registrar.</p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="relative flex gap-6 pl-2 group">
+<div class="w-12 h-12 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center z-10 shrink-0">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<div class="glass-card flex-1 p-6 rounded-xl group-hover:translate-x-1 transition-transform">
+<h4 class="font-bold text-primary mb-1">3. Confirmation Card</h4>
+<p class="text-sm text-on-surface-variant">Wait for your official registration card to arrive in the mail confirming your polling location.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Key Takeaways -->
+<section class="bg-primary p-gutter rounded-2xl text-on-primary relative overflow-hidden shadow-2xl shadow-primary/30">
+<div class="absolute -right-12 -top-12 w-48 h-48 bg-white/10 rounded-full blur-3xl"></div>
+<div class="relative z-10 space-y-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary-fixed">tips_and_updates</span>
+<span class="font-label-caps uppercase tracking-widest text-secondary-fixed">Module Summary</span>
+</div>
+<ul class="space-y-4">
+<li class="flex items-center gap-3">
+<div class="w-1 h-1 bg-secondary-fixed rounded-full"></div>
+<span class="text-body-md font-medium">Registration is mandated by law for election security.</span>
+</li>
+<li class="flex items-center gap-3">
+<div class="w-1 h-1 bg-secondary-fixed rounded-full"></div>
+<span class="text-body-md font-medium">You must re-register if you change your name or move home.</span>
+</li>
+<li class="flex items-center gap-3">
+<div class="w-1 h-1 bg-secondary-fixed rounded-full"></div>
+<span class="text-body-md font-medium">Auto-registration is available in several progressive states.</span>
+</li>
+</ul>
+</div>
+</section>
+<!-- Footer Action -->
+<div class="pt-8 pb-12 flex flex-col items-center gap-6">
+<p class="text-sm text-slate-500 text-center max-w-sm">Ready to test your knowledge? Take the registration quiz to unlock the 'Primaries' module.</p>
+<button class="flex items-center gap-3 px-10 py-4 bg-secondary text-on-secondary rounded-full font-bold text-lg shadow-xl shadow-secondary/30 hover:scale-105 active:scale-95 transition-all">
+                        Take Quiz
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="text-primary font-bold text-sm hover:underline">Download Module PDF</button>
+</div>
+</div>
+</main>
+</div>
+<!-- Mobile Nav Bar (Sync with bottom-nav requirement) -->
+<nav class="md:hidden fixed bottom-0 w-full h-16 bg-white border-t border-slate-100 flex items-center justify-around z-50">
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">how_to_reg</span>
+<span class="text-[10px] font-bold">Register</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined">ballot</span>
+<span class="text-[10px] font-bold">Primary</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined">campaign</span>
+<span class="text-[10px] font-bold">Campaign</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined">how_to_vote</span>
+<span class="text-[10px] font-bold">General</span>
+</button>
+</nav>
+</body></html>

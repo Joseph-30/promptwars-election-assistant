@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&amp;family=Lexend:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#f7f9fb",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-container": "#abbccf",
+                        "secondary-fixed-dim": "#4ae183",
+                        "surface-container-low": "#f2f4f6",
+                        "secondary-fixed": "#6bfe9c",
+                        "on-surface-variant": "#42474f",
+                        "on-primary-fixed-variant": "#07497d",
+                        "tertiary-fixed-dim": "#b8c8db",
+                        "surface-variant": "#e0e3e5",
+                        "on-primary": "#ffffff",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-tertiary-fixed": "#0c1d2b",
+                        "on-surface": "#191c1e",
+                        "surface-dim": "#d8dadc",
+                        "tertiary": "#263544",
+                        "on-primary-container": "#8ebdf9",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#a0c9ff",
+                        "tertiary-fixed": "#d3e4f8",
+                        "tertiary-container": "#3c4c5c",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#005228",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-tertiary-fixed-variant": "#394858",
+                        "background": "#f7f9fb",
+                        "surface-tint": "#2d6197",
+                        "on-primary-fixed": "#001c37",
+                        "primary-fixed-dim": "#a0c9ff",
+                        "surface-bright": "#f7f9fb",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#00743a",
+                        "secondary": "#006d37",
+                        "inverse-surface": "#2d3133",
+                        "primary-container": "#0f4c81",
+                        "secondary-container": "#6bfe9c",
+                        "outline-variant": "#c2c7d1",
+                        "surface-container-high": "#e6e8ea",
+                        "primary-fixed": "#d2e4ff",
+                        "primary": "#00355f",
+                        "error-container": "#ffdad6",
+                        "outline": "#727780",
+                        "surface-container": "#eceef0",
+                        "on-background": "#191c1e",
+                        "on-secondary-fixed": "#00210c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "gutter": "24px",
+                        "lg": "24px",
+                        "container-max": "1200px",
+                        "xl": "48px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Public Sans"],
+                        "quiz-option": ["Lexend"],
+                        "h2": ["Public Sans"],
+                        "h3": ["Public Sans"],
+                        "h1": ["Public Sans"],
+                        "body-lg": ["Lexend"],
+                        "body-md": ["Lexend"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "quiz-option": ["16px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                        "h2": ["32px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "h3": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "h1": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .timeline-spine::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: #e2e8f0;
+            z-index: 0;
+        }
+        .card-soft-shadow {
+            box-shadow: 0 4px 20px rgba(15, 76, 129, 0.08);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm shadow-blue-900/5 font-['Public_Sans'] font-medium">
+<div class="flex items-center gap-4">
+<span class="text-xl font-bold text-blue-900 dark:text-blue-50">CivicTrack</span>
+<div class="hidden md:flex items-center ml-8 space-x-6">
+<a class="text-blue-900 dark:text-blue-400 border-b-2 border-blue-900 h-16 flex items-center" href="#">Registration</a>
+<a class="text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors h-16 flex items-center px-2" href="#">Primaries</a>
+<a class="text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors h-16 flex items-center px-2" href="#">Campaigns</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-blue-900 hover:bg-slate-50 transition-colors rounded-lg border border-slate-200">
+<span class="material-symbols-outlined text-lg" data-icon="public">public</span>
+                Select Region
+            </button>
+<button class="p-2 text-slate-500 hover:bg-slate-50 rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 flex flex-col py-4 bg-slate-50 dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 font-['Public_Sans'] text-sm z-40 hidden lg:flex">
+<div class="px-6 mb-8">
+<h2 class="text-lg font-bold text-blue-900 dark:text-blue-50">Election Guide</h2>
+<p class="text-xs text-slate-500 uppercase tracking-wider">Institutional Learning</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center px-6 py-3 bg-blue-50 dark:bg-blue-900/30 text-blue-900 dark:text-blue-100 font-semibold border-r-4 border-blue-900 dark:border-blue-400 scale-98 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="how_to_reg">how_to_reg</span>
+                Registration
+            </a>
+<a class="flex items-center px-6 py-3 text-slate-600 dark:text-slate-400 hover:text-blue-800 hover:bg-blue-50/50 dark:hover:bg-slate-800 transition-all" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="ballot">ballot</span>
+                Primaries
+            </a>
+<a class="flex items-center px-6 py-3 text-slate-600 dark:text-slate-400 hover:text-blue-800 hover:bg-blue-50/50 dark:hover:bg-slate-800 transition-all" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="campaign">campaign</span>
+                Campaigns
+            </a>
+<a class="flex items-center px-6 py-3 text-slate-600 dark:text-slate-400 hover:text-blue-800 hover:bg-blue-50/50 dark:hover:bg-slate-800 transition-all" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="how_to_vote">how_to_vote</span>
+                General Election
+            </a>
+<a class="flex items-center px-6 py-3 text-slate-600 dark:text-slate-400 hover:text-blue-800 hover:bg-blue-50/50 dark:hover:bg-slate-800 transition-all" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="verified">verified</span>
+                Certification
+            </a>
+</nav>
+<div class="mt-auto px-4 py-4 border-t border-slate-200">
+<button class="w-full bg-primary text-on-primary py-3 rounded-xl font-semibold shadow-lg shadow-primary/20 hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+                Check Progress
+            </button>
+<div class="mt-4 space-y-1">
+<a class="flex items-center px-2 py-2 text-slate-500 hover:text-blue-900" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="menu_book">menu_book</span>
+                    Glossary
+                </a>
+<a class="flex items-center px-2 py-2 text-slate-500 hover:text-blue-900" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="help_outline">help_outline</span>
+                    Help
+                </a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="lg:ml-64 pt-24 pb-16 px-6 lg:px-12">
+<div class="max-w-[1200px] mx-auto">
+<!-- Hero / Resume Section -->
+<section class="mb-12">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white rounded-2xl p-8 card-soft-shadow overflow-hidden relative">
+<div class="lg:col-span-7 z-10">
+<span class="inline-block px-3 py-1 bg-secondary-container text-on-secondary-container text-label-caps font-label-caps rounded-full mb-4">Current Stage: Registration</span>
+<h1 class="font-h1 text-h1 text-primary mb-4 leading-tight">Your Civic Journey Awaits</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-8 max-w-[540px]">You've completed 40% of the institutional learning track. Next up: Navigating the Voter Eligibility Framework.</p>
+<div class="flex flex-wrap gap-4">
+<button class="bg-primary text-on-primary px-8 py-4 rounded-xl font-semibold flex items-center gap-2 hover:opacity-90 transition-opacity">
+                                Resume Learning
+                                <span class="material-symbols-outlined">play_circle</span>
+</button>
+<button class="border-2 border-primary text-primary px-8 py-4 rounded-xl font-semibold hover:bg-primary/5 transition-colors">
+                                View Curriculum
+                            </button>
+</div>
+</div>
+<div class="lg:col-span-5 relative h-64 lg:h-full min-h-[300px]">
+<img alt="Institutional architecture" class="absolute inset-0 w-full h-full object-cover rounded-xl grayscale-[20%] opacity-90" data-alt="Modern government building with clean white columns and large glass windows under a clear blue sky, professional and official atmosphere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5mHo4PuT6zFRBDS7UYqg0vz_E-qOKpfIiMTAIcolS94dkK3IqW-HrB3telAzyKMde7VJT6qyDg7XgJe6THp1iqBpKkJ_pR1dxQWIXZCqJXCj8q7Ii2lvXTe_bA8XTfsxwq31gT4bMId6IW3OTuWWK1oXO7fcx5UbabUpHs5BRjNnW2T5-8zbNUK9WDobi8Tydw--eczBs9bqKeVroHrMHCAGMT0oOkYicnRrpn-Dq9FbzUS2b-c0Dq2uQxY0ZemzJGxeWURg7qwyw"/>
+<div class="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent"></div>
+</div>
+</div>
+</section>
+<!-- Learning Dashboard Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
+<!-- Interactive Timeline Explorer -->
+<div class="xl:col-span-8 bg-white rounded-2xl p-8 card-soft-shadow relative overflow-hidden">
+<div class="flex items-center justify-between mb-12">
+<div>
+<h2 class="font-h2 text-h2 text-primary">Interactive Timeline Explorer</h2>
+<p class="text-on-surface-variant">The chronological path from eligibility to certification</p>
+</div>
+<div class="flex gap-2">
+<button class="p-2 bg-surface-container rounded-lg"><span class="material-symbols-outlined">zoom_in</span></button>
+<button class="p-2 bg-surface-container rounded-lg"><span class="material-symbols-outlined">filter_list</span></button>
+</div>
+</div>
+<div class="relative pl-8 timeline-spine">
+<!-- Stage 1: Completed -->
+<div class="relative mb-16">
+<div class="absolute -left-[45px] top-0 w-10 h-10 bg-secondary rounded-full flex items-center justify-center border-4 border-white shadow-md z-10">
+<span class="material-symbols-outlined text-white text-lg" data-weight="fill">check</span>
+</div>
+<div class="bg-surface-container-low rounded-xl p-6 border-t-4 border-secondary ml-4">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-h3 text-h3 text-primary">01. Eligibility Check</h3>
+<span class="text-secondary font-bold text-sm">COMPLETED</span>
+</div>
+<p class="text-on-surface-variant mb-4">Verifying citizenship status, age requirements, and residency qualifications within your specific electoral region.</p>
+<div class="flex gap-4">
+<span class="flex items-center gap-1 text-xs font-semibold text-on-surface-variant"><span class="material-symbols-outlined text-sm">menu_book</span> 3 Modules</span>
+<span class="flex items-center gap-1 text-xs font-semibold text-on-surface-variant"><span class="material-symbols-outlined text-sm">timer</span> 15m</span>
+</div>
+</div>
+</div>
+<!-- Stage 2: Active -->
+<div class="relative mb-16">
+<div class="absolute -left-[45px] top-0 w-10 h-10 bg-primary rounded-full flex items-center justify-center border-4 border-white shadow-md z-10 ring-4 ring-primary/10">
+<span class="material-symbols-outlined text-white text-lg">edit_note</span>
+</div>
+<div class="bg-white rounded-xl p-6 border-2 border-primary ml-4 shadow-xl shadow-primary/5">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-h3 text-h3 text-primary">02. Registration &amp; Verification</h3>
+<span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-tight">ACTIVE</span>
+</div>
+<p class="text-on-surface-variant mb-6">Mastering the submission process for registration forms and understanding the institutional verification timeline.</p>
+<div class="space-y-3">
+<div class="flex justify-between text-xs font-bold text-primary mb-1">
+<span>CURRENT MODULE: SYSTEM AUTHENTICATION</span>
+<span>40%</span>
+</div>
+<div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[40%] rounded-full"></div>
+</div>
+</div>
+<button class="mt-6 w-full bg-primary text-on-primary py-3 rounded-lg font-semibold hover:bg-primary-container transition-colors">Continue Module</button>
+</div>
+</div>
+<!-- Stage 3: Locked -->
+<div class="relative mb-16 opacity-60 grayscale-[40%]">
+<div class="absolute -left-[45px] top-0 w-10 h-10 bg-slate-300 rounded-full flex items-center justify-center border-4 border-white shadow-md z-10">
+<span class="material-symbols-outlined text-slate-600 text-lg">lock</span>
+</div>
+<div class="bg-white rounded-xl p-6 border border-slate-200 ml-4">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-h3 text-h3 text-slate-500">03. The Primary Season</h3>
+<span class="text-slate-400 text-xs font-bold uppercase">LOCKED</span>
+</div>
+<p class="text-slate-400">Deep dive into party platforms, delegate allocation, and the internal democratic mechanisms of primary elections.</p>
+</div>
+</div>
+<!-- Stage 4: Upcoming -->
+<div class="relative">
+<div class="absolute -left-[45px] top-0 w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center border-4 border-white shadow-md z-10">
+<span class="material-symbols-outlined text-slate-500 text-lg">how_to_vote</span>
+</div>
+<div class="bg-white rounded-xl p-6 border border-slate-200 ml-4">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-h3 text-h3 text-slate-500">04. Government Formation</h3>
+<span class="text-slate-400 text-xs font-bold uppercase">DEPENDENCY: STAGE 03</span>
+</div>
+<p class="text-slate-400">Understanding the transition of power, cabinet appointments, and the first 100 days of institutional administration.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Sidebar Content -->
+<div class="xl:col-span-4 space-y-8">
+<!-- Progress Card -->
+<div class="bg-white rounded-2xl p-6 card-soft-shadow">
+<h3 class="font-h3 text-primary mb-6">Learning Progress</h3>
+<div class="space-y-6">
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-full border-[6px] border-secondary border-r-surface-container flex items-center justify-center font-bold text-lg text-primary">
+                                    75%
+                                </div>
+<div>
+<p class="text-sm font-bold text-primary">Phase 1 Status</p>
+<p class="text-xs text-on-surface-variant">3 of 4 Modules Complete</p>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between text-xs font-bold">
+<span class="text-on-surface-variant uppercase">Course Content</span>
+<span class="text-primary">12 / 30 hrs</span>
+</div>
+<div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary-fixed-dim w-[40%] rounded-full"></div>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-slate-100 grid grid-cols-2 gap-4">
+<div class="text-center">
+<p class="text-2xl font-bold text-primary">14</p>
+<p class="text-[10px] text-on-surface-variant uppercase font-bold">Modules Done</p>
+</div>
+<div class="text-center border-l border-slate-100">
+<p class="text-2xl font-bold text-primary">2</p>
+<p class="text-[10px] text-on-surface-variant uppercase font-bold">Certificates</p>
+</div>
+</div>
+</div>
+<!-- Recommended Reading -->
+<div class="bg-white rounded-2xl p-6 card-soft-shadow">
+<h3 class="font-h3 text-primary mb-6">Institutional Resources</h3>
+<div class="space-y-4">
+<a class="group flex items-start gap-4 p-3 rounded-xl hover:bg-surface-container transition-colors" href="#">
+<div class="w-10 h-10 rounded-lg bg-primary/5 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary" data-icon="description">description</span>
+</div>
+<div>
+<p class="text-sm font-bold text-primary group-hover:text-primary-container">Voter Rights Act (2024)</p>
+<p class="text-xs text-on-surface-variant">Legislative framework summary</p>
+</div>
+</a>
+<a class="group flex items-start gap-4 p-3 rounded-xl hover:bg-surface-container transition-colors" href="#">
+<div class="w-10 h-10 rounded-lg bg-primary/5 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary" data-icon="video_library">video_library</span>
+</div>
+<div>
+<p class="text-sm font-bold text-primary group-hover:text-primary-container">Election Integrity Seminar</p>
+<p class="text-xs text-on-surface-variant">Archived institutional video</p>
+</div>
+</a>
+<a class="group flex items-start gap-4 p-3 rounded-xl hover:bg-surface-container transition-colors" href="#">
+<div class="w-10 h-10 rounded-lg bg-primary/5 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary" data-icon="article">article</span>
+</div>
+<div>
+<p class="text-sm font-bold text-primary group-hover:text-primary-container">Polling Station Logistics</p>
+<p class="text-xs text-on-surface-variant">Technical documentation</p>
+</div>
+</a>
+</div>
+</div>
+<!-- Upcoming Deadlines -->
+<div class="bg-primary text-on-primary rounded-2xl p-6 shadow-xl shadow-primary/20 relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-[120px]" data-icon="event">event</span>
+</div>
+<h3 class="font-h3 mb-4 relative z-10">Critical Deadlines</h3>
+<div class="space-y-4 relative z-10">
+<div class="bg-white/10 p-3 rounded-lg border border-white/20">
+<p class="text-xs font-bold text-secondary-fixed">OCT 15, 2024</p>
+<p class="text-sm font-medium">Final Registration Verification</p>
+</div>
+<div class="bg-white/10 p-3 rounded-lg border border-white/20">
+<p class="text-xs font-bold text-on-primary-container">NOV 05, 2024</p>
+<p class="text-sm font-medium">Certification Module Submission</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 h-16 flex justify-around items-center z-50">
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" data-icon="how_to_reg">how_to_reg</span>
+<span class="text-[10px] font-bold">Reg</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined" data-icon="ballot">ballot</span>
+<span class="text-[10px] font-bold">Primary</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined" data-icon="campaign">campaign</span>
+<span class="text-[10px] font-bold">Campaign</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined" data-icon="how_to_vote">how_to_vote</span>
+<span class="text-[10px] font-bold">Vote</span>
+</button>
+</nav>
+</body></html>
