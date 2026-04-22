@@ -6,10 +6,11 @@ import { motion, AnimatePresence } from "framer-motion";
 
 interface InteractiveTimelineProps {
   setActiveSection?: (s: string) => void;
+  setActiveModule?: (i: number) => void;
 }
 
-export function InteractiveTimeline({ setActiveSection }: InteractiveTimelineProps) {
-  const [activeStage, setActiveStage] = useState(1);
+export function InteractiveTimeline({ setActiveSection, setActiveModule }: InteractiveTimelineProps) {
+  const [activeStage, setActiveStage] = useState(0);
 
   return (
     <div className="flex flex-col lg:flex-row gap-gutter">
@@ -24,7 +25,10 @@ export function InteractiveTimeline({ setActiveSection }: InteractiveTimelinePro
               <p className="text-on-surface-variant mb-6">You&apos;ve completed 40% of the institutional learning track. Next up: Navigating the Voter Eligibility Framework.</p>
               <div className="flex gap-3">
                 <button
-                  onClick={() => setActiveSection && setActiveSection("navigator")}
+                  onClick={() => {
+                    if (setActiveModule) setActiveModule(activeStage);
+                    if (setActiveSection) setActiveSection("navigator");
+                  }}
                   className="px-6 py-3 bg-primary text-on-primary rounded-xl font-semibold hover:opacity-90 transition-all shadow-lg shadow-primary/20 flex items-center gap-2"
                 >
                   Resume Learning
@@ -120,7 +124,11 @@ export function InteractiveTimeline({ setActiveSection }: InteractiveTimelinePro
                           <div className="h-full bg-primary w-[40%]"></div>
                         </div>
                         <button
-                          onClick={(e) => { e.stopPropagation(); setActiveSection && setActiveSection("navigator"); }}
+                          onClick={(e) => { 
+                            e.stopPropagation(); 
+                            if (setActiveModule) setActiveModule(index);
+                            if (setActiveSection) setActiveSection("navigator"); 
+                          }}
                           className="w-full bg-primary text-on-primary py-3 rounded-lg font-semibold hover:opacity-90 transition-colors"
                         >
                           Continue Module

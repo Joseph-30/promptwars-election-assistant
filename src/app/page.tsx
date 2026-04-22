@@ -8,36 +8,46 @@ import { MicroQuiz } from "@/components/quiz/MicroQuiz";
 import { WelcomeOnboarding } from "@/components/welcome/WelcomeOnboarding";
 
 const sidebarLinks = [
-  { id: "navigator", label: "Registration", icon: "how_to_reg" },
-  { id: "timeline", label: "Primaries", icon: "campaign" },
-  { id: "faq", label: "Campaigns", icon: "groups" },
-  { id: "quiz", label: "General Election", icon: "how_to_vote" },
-  { id: "glossary", label: "Certification", icon: "verified" },
+  { id: 0, label: "Registration", icon: "how_to_reg" },
+  { id: 1, label: "Primaries", icon: "campaign" },
+  { id: 2, label: "Campaigns", icon: "groups" },
+  { id: 3, label: "General Election", icon: "how_to_vote" },
+  { id: 4, label: "Certification", icon: "verified" },
 ];
 
 const topNavLinks: Record<string, { items: { label: string; target: string }[] }> = {
   welcome:   { items: [] },
-  timeline:  { items: [{ label: "Registration", target: "navigator" }, { label: "Primaries", target: "timeline" }, { label: "Campaigns", target: "faq" }] },
-  navigator: { items: [{ label: "Learn", target: "navigator" }, { label: "Participate", target: "quiz" }, { label: "Impact", target: "timeline" }] },
+  dashboard:  { items: [{ label: "Registration", target: "navigator" }, { label: "Primaries", target: "dashboard" }, { label: "Campaigns", target: "faq" }] },
+  navigator: { items: [{ label: "Learn", target: "navigator" }, { label: "Participate", target: "quiz" }, { label: "Impact", target: "dashboard" }] },
   quiz:      { items: [{ label: "Learning", target: "navigator" }, { label: "Resources", target: "faq" }, { label: "Community", target: "faq" }] },
-  faq:       { items: [{ label: "Dashboard", target: "timeline" }, { label: "Elections", target: "quiz" }, { label: "Resources", target: "faq" }] },
+  faq:       { items: [{ label: "Dashboard", target: "dashboard" }, { label: "Elections", target: "quiz" }, { label: "Resources", target: "faq" }] },
 };
 
 // Pages that show the sidebar
-const sidebarPages = new Set(["timeline", "navigator", "faq"]);
+const sidebarViews = new Set(["dashboard", "navigator", "faq"]);
 
 export default function Home() {
-  const [activeSection, setActiveSection] = useState("welcome");
+  const [activeView, setActiveView] = useState("welcome");
+  const [activeModule, setActiveModule] = useState(0);
 
-  const hasSidebar = sidebarPages.has(activeSection);
-  const navConfig = topNavLinks[activeSection] || topNavLinks.welcome;
+  const hasSidebar = sidebarViews.has(activeView);
+  const navConfig = topNavLinks[activeView] || topNavLinks.welcome;
+
+  const navigateToSection = (view: string) => {
+    setActiveView(view);
+  };
+
+  const navigateToModule = (index: number) => {
+    setActiveModule(index);
+    setActiveView("navigator");
+  };
 
   return (
     <div className="min-h-screen bg-surface font-body-md text-on-surface antialiased flex flex-col">
       {/* ─── TopAppBar ─── */}
       <header className="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white border-b border-slate-200 shadow-sm shadow-blue-900/5 font-['Public_Sans'] font-medium">
         <div className="flex items-center gap-4">
-          <button onClick={() => setActiveSection("welcome")} className="text-xl font-bold text-primary tracking-tight cursor-pointer">CivicTrack</button>
+          <button onClick={() => navigateToSection("welcome")} className="text-xl font-bold text-primary tracking-tight cursor-pointer">CivicTrack</button>
           {navConfig.items.length > 0 && (
             <>
               <div className="h-6 w-px bg-slate-200 ml-2"></div>
@@ -45,8 +55,8 @@ export default function Home() {
                 {navConfig.items.map((item, i) => (
                   <button
                     key={i}
-                    onClick={() => setActiveSection(item.target)}
-                    className={`h-full flex items-center px-2 transition-all duration-150 cursor-pointer ${item.target === activeSection ? "text-primary border-b-2 border-primary" : "text-slate-500 hover:bg-slate-50"}`}
+                    onClick={() => navigateToSection(item.target)}
+                    className={`h-full flex items-center px-2 transition-all duration-150 cursor-pointer ${item.target === activeView ? "text-primary border-b-2 border-primary" : "text-slate-500 hover:bg-slate-50"}`}
                   >
                     {item.label}
                   </button>
@@ -80,9 +90,9 @@ export default function Home() {
               {sidebarLinks.map((link) => (
                 <button
                   key={link.id}
-                  onClick={() => setActiveSection(link.id)}
+                  onClick={() => navigateToModule(link.id)}
                   className={`flex items-center gap-3 p-3 rounded-md text-sm font-semibold transition-all text-left ${
-                    activeSection === link.id
+                    activeView === "navigator" && activeModule === link.id
                       ? "text-primary bg-primary/5 border-l-2 border-primary"
                       : "text-slate-500 hover:bg-slate-50 hover:translate-x-1"
                   }`}
@@ -93,13 +103,13 @@ export default function Home() {
               ))}
             </nav>
             <button
-              onClick={() => setActiveSection("quiz")}
+              onClick={() => navigateToSection("quiz")}
               className="bg-primary text-on-primary py-3 px-4 rounded-xl font-semibold text-sm hover:opacity-90 transition-opacity shadow-sm"
             >
               Check Progress
             </button>
             <div className="mt-auto pt-4 border-t border-slate-100 flex flex-col gap-1">
-              <button onClick={() => setActiveSection("faq")} className="flex items-center gap-3 text-slate-500 p-3 hover:bg-slate-50 rounded-md text-sm font-semibold">
+              <button onClick={() => navigateToSection("faq")} className="flex items-center gap-3 text-slate-500 p-3 hover:bg-slate-50 rounded-md text-sm font-semibold">
                 <span className="material-symbols-outlined">menu_book</span>
                 Glossary
               </button>
@@ -113,20 +123,19 @@ export default function Home() {
 
         {/* ─── Main Content Area ─── */}
         <main className={`flex-1 min-h-[calc(100vh-64px)] ${hasSidebar ? "max-w-7xl px-6 py-12" : ""}`}>
-          {activeSection === "welcome" && <WelcomeOnboarding setActiveSection={setActiveSection} />}
-          {activeSection === "timeline" && <InteractiveTimeline setActiveSection={setActiveSection} />}
-          {activeSection === "navigator" && <GuidedProcessNavigator setActiveSection={setActiveSection} />}
-          {activeSection === "quiz" && <MicroQuiz setActiveSection={setActiveSection} />}
-          {activeSection === "faq" && <SmartFAQ setActiveSection={setActiveSection} />}
-          {activeSection === "glossary" && <SmartFAQ setActiveSection={setActiveSection} />}
+          {activeView === "welcome" && <WelcomeOnboarding setActiveSection={navigateToSection} />}
+          {activeView === "dashboard" && <InteractiveTimeline setActiveSection={navigateToSection} setActiveModule={navigateToModule} />}
+          {activeView === "navigator" && <GuidedProcessNavigator setActiveSection={navigateToSection} activeModule={activeModule} setActiveModule={setActiveModule} />}
+          {activeView === "quiz" && <MicroQuiz setActiveSection={navigateToSection} />}
+          {activeView === "faq" && <SmartFAQ setActiveSection={navigateToSection} />}
         </main>
       </div>
 
       {/* ─── Mobile Bottom Nav ─── */}
       <nav className="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 flex justify-around items-center h-16 z-50">
         {sidebarLinks.slice(0, 4).map((link) => (
-          <button key={link.id} onClick={() => setActiveSection(link.id)} className={`flex flex-col items-center gap-1 ${activeSection === link.id ? "text-primary font-bold" : "text-slate-400"}`}>
-            <span className="material-symbols-outlined" style={activeSection === link.id ? { fontVariationSettings: "'FILL' 1" } : {}}>{link.icon}</span>
+          <button key={link.id} onClick={() => navigateToModule(link.id)} className={`flex flex-col items-center gap-1 ${activeView === "navigator" && activeModule === link.id ? "text-primary font-bold" : "text-slate-400"}`}>
+            <span className="material-symbols-outlined" style={activeView === "navigator" && activeModule === link.id ? { fontVariationSettings: "'FILL' 1" } : {}}>{link.icon}</span>
             <span className="text-[10px]">{link.label}</span>
           </button>
         ))}

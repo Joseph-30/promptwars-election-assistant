@@ -9,44 +9,44 @@ export type TimelineEvent = {
 
 export const timelineData: TimelineEvent[] = [
   {
-    id: "pre-election",
-    title: "Pre-election & Eligibility",
-    description: "The phase where citizens ensure they are eligible to vote and register on the electoral roll.",
+    id: "registration",
+    title: "Registration",
+    description: "Master the prerequisites. Learn about eligibility, verification, and the foundational requirements of the franchise.",
     whyItMatters: "Without registering, you cannot exercise your democratic right to vote.",
     actionSteps: ["Check if you are 18+ years old", "Verify your name on the voter list", "Apply for a Voter ID if missing"],
     advancedDetails: "The Electoral Registration Officer (ERO) oversees the preparation of the electoral roll. Special summary revisions are conducted every year to add new voters."
   },
   {
-    id: "campaigning",
-    title: "Campaigning",
-    description: "Candidates and political parties reach out to voters to share their manifestos and seek support.",
-    whyItMatters: "This is when you learn about the candidates, their promises, and their track records to make an informed choice.",
-    actionSteps: ["Read party manifestos", "Attend public debates or meetings", "Verify candidate backgrounds"],
-    advancedDetails: "The Model Code of Conduct (MCC) comes into effect during this time to ensure free and fair elections, preventing ruling parties from misusing official machinery."
+    id: "primaries",
+    title: "Primaries",
+    description: "The phase where political parties select their official candidates through internal elections or caucuses.",
+    whyItMatters: "Primaries determine the final choices you'll have on the general election ballot.",
+    actionSteps: ["Register with a political party (if required by your state)", "Research primary candidates", "Vote in your local primary or caucus"],
+    advancedDetails: "Some states have open primaries where any registered voter can participate, while others have closed primaries restricted to party members."
   },
   {
-    id: "voting-day",
-    title: "Voting Day",
-    description: "Voters visit their designated polling booths to cast their votes using EVMs (Electronic Voting Machines).",
-    whyItMatters: "Your vote directly contributes to choosing the representative for your constituency.",
-    actionSteps: ["Carry your Voter ID or approved ID", "Go to your designated polling booth", "Press the button against your chosen candidate or NOTA"],
-    advancedDetails: "VVPAT (Voter Verifiable Paper Audit Trail) is used alongside EVMs so you can verify that your vote went to the correct candidate."
+    id: "campaigns",
+    title: "Campaigns",
+    description: "Candidates reach out to voters to share their manifestos, debate opponents, and seek support.",
+    whyItMatters: "This is when you learn about the candidates' specific policy positions, their promises, and their track records.",
+    actionSteps: ["Read official party manifestos", "Watch candidate debates", "Verify claims and candidate backgrounds"],
+    advancedDetails: "The Model Code of Conduct (MCC) comes into effect during this time to ensure a level playing field and prevent the misuse of official machinery."
   },
   {
-    id: "counting",
-    title: "Counting",
-    description: "Votes cast in all polling stations are counted under the supervision of the Returning Officer.",
-    whyItMatters: "This ensures transparency and determines the collective choice of the constituency.",
-    actionSteps: ["Follow news updates", "Wait for official declarations"],
-    advancedDetails: "Counting agents from different parties are present to ensure the process is completely transparent and tamper-proof."
+    id: "general-election",
+    title: "General Election",
+    description: "Voters visit their designated polling booths to cast their final votes and determine the winners.",
+    whyItMatters: "Your vote directly contributes to choosing the representative for your constituency and shaping the government.",
+    actionSteps: ["Locate your designated polling booth", "Bring acceptable ID", "Cast your vote using the provided system (EVM or paper ballot)"],
+    advancedDetails: "VVPAT (Voter Verifiable Paper Audit Trail) systems may be used alongside electronic machines so you can verify your vote was recorded correctly."
   },
   {
-    id: "government-formation",
-    title: "Government Formation",
-    description: "The party or coalition with a majority of seats forms the government.",
-    whyItMatters: "This shapes the leadership and policies of the country/state for the next term.",
-    actionSteps: ["Observe the new cabinet", "Understand the new policies"],
-    advancedDetails: "If no single party has a clear majority, a coalition government may be formed, or the President/Governor may invite the single largest party to prove its majority."
+    id: "certification",
+    title: "Certification",
+    description: "The formal process where election officials verify counts, audit results, and officially declare the winners.",
+    whyItMatters: "Certification is the legal step that confirms every valid ballot has been counted correctly and lawfully, finalizing the election.",
+    actionSteps: ["Follow official state/local announcements", "Understand the audit procedures", "Recognize the legal finality of the process"],
+    advancedDetails: "Returning Officers and election boards conduct canvassing and resolve discrepancies before the final results are legally certified."
   }
 ];
 

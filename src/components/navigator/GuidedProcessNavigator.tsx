@@ -8,14 +8,15 @@ import { GlossaryTooltip } from "@/components/glossary/GlossaryTooltip";
 
 interface GuidedProcessNavigatorProps {
   setActiveSection?: (s: string) => void;
+  activeModule?: number;
+  setActiveModule?: (i: number) => void;
 }
 
-export function GuidedProcessNavigator({ setActiveSection }: GuidedProcessNavigatorProps) {
+export function GuidedProcessNavigator({ setActiveSection, activeModule = 0, setActiveModule }: GuidedProcessNavigatorProps) {
   const { isFirstTimeVoter } = useVoterMode();
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [expandedSection, setExpandedSection] = useState<string | null>("why");
 
-  const currentStage = timelineData[currentIndex];
+  const currentStage = timelineData[activeModule];
 
   const toggleSection = (id: string) => {
     setExpandedSection(expandedSection === id ? null : id);
@@ -27,7 +28,7 @@ export function GuidedProcessNavigator({ setActiveSection }: GuidedProcessNaviga
       <div className="mb-8">
         <div className="flex items-center gap-2 text-sm text-slate-500 mb-2">
           <span className="material-symbols-outlined text-sm">school</span>
-          <span className="font-label-caps text-label-caps">MODULE 0{currentIndex + 1}: CORE CIVICS</span>
+          <span className="font-label-caps text-label-caps">MODULE 0{activeModule + 1}: CORE CIVICS</span>
         </div>
         <h1 className="font-h1 text-h1 text-primary mb-3">{currentStage.title}</h1>
         <p className="text-on-surface-variant text-body-md max-w-2xl">
@@ -124,27 +125,27 @@ export function GuidedProcessNavigator({ setActiveSection }: GuidedProcessNaviga
       {/* Navigation Footer */}
       <div className="flex justify-between items-center mt-8 pt-6 border-t border-slate-100">
         <button
-          onClick={() => { if (currentIndex > 0) setCurrentIndex(currentIndex - 1); }}
-          disabled={currentIndex === 0}
+          onClick={() => { if (activeModule > 0 && setActiveModule) setActiveModule(activeModule - 1); }}
+          disabled={activeModule === 0}
           className="px-6 py-3 rounded-xl font-semibold text-primary border border-slate-300 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-colors"
         >
           <span className="material-symbols-outlined text-sm">arrow_back</span>
           Previous Module
         </button>
         <span className="text-sm font-bold text-slate-500">
-          Module {currentIndex + 1} of {timelineData.length}
+          Module {activeModule + 1} of {timelineData.length}
         </span>
         <button
           onClick={() => {
-            if (currentIndex < timelineData.length - 1) {
-              setCurrentIndex(currentIndex + 1);
+            if (activeModule < timelineData.length - 1) {
+              if (setActiveModule) setActiveModule(activeModule + 1);
             } else {
-              setActiveSection && setActiveSection("quiz");
+              if (setActiveSection) setActiveSection("quiz");
             }
           }}
           className="px-6 py-3 rounded-xl font-semibold bg-primary text-on-primary hover:opacity-90 flex items-center gap-2 transition-opacity shadow-sm"
         >
-          {currentIndex < timelineData.length - 1 ? "Next Module" : "Take Quiz"}
+          {activeModule < timelineData.length - 1 ? "Next Module" : "Take Quiz"}
           <span className="material-symbols-outlined text-sm">arrow_forward</span>
         </button>
       </div>
