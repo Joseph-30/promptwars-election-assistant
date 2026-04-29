@@ -113,8 +113,8 @@ export function InteractiveTimeline({
 
               <div className="w-full md:w-64 h-48 md:h-auto shrink-0">
                 <img
-                  src="/hero_building.png"
-                  alt="Government building"
+                  src="/The-new-Parliament.webp"
+                  alt="Indian Parliament"
                   className="w-full h-full object-cover"
                 />
               </div>

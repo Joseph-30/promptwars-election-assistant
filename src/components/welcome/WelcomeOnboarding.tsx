@@ -26,22 +26,19 @@ export function WelcomeOnboarding({ setActiveSection }: WelcomeOnboardingProps) 
           <label className="font-label-caps text-label-caps text-primary block mb-sm">CURRENT FOCUS AREA</label>
           <div className="relative">
             <select
-              value={region}
-              onChange={(e) => setRegion(e.target.value)}
-              className="w-full h-14 pl-md pr-xl bg-surface border border-outline-variant rounded-lg font-body-md focus:ring-2 focus:ring-primary focus:border-transparent appearance-none"
+              value="IN"
+              disabled
+              className="w-full h-14 pl-md pr-xl bg-slate-50 border border-outline-variant rounded-lg font-body-md cursor-not-allowed appearance-none"
             >
-              <option value="IN">India</option>
-              <option value="US">United States</option>
-              <option value="UK">United Kingdom</option>
-              <option value="EU">European Union</option>
+              <option value="IN">India (Locked)</option>
             </select>
             <div className="absolute right-md top-1/2 -translate-y-1/2 pointer-events-none">
-              <span className="material-symbols-outlined text-slate-400">expand_more</span>
+              <span className="material-symbols-outlined text-slate-400">lock</span>
             </div>
           </div>
           <p className="mt-sm text-xs text-on-surface-variant flex items-center gap-1">
             <span className="material-symbols-outlined text-sm">info</span>
-            Resources will be tailored to this specific electoral system.
+            Resources are currently tailored exclusively for the Indian Electoral System.
           </p>
         </div>
 
@@ -73,13 +70,13 @@ export function WelcomeOnboarding({ setActiveSection }: WelcomeOnboardingProps) 
 
           {/* Step 2: Primaries & Campaigns (Visual Focus) */}
           <button onClick={() => setActiveSection("dashboard")} className="md:col-span-1 bg-primary-container text-white p-6 rounded-xl shadow-quiz-card relative overflow-hidden flex flex-col justify-end min-h-[280px] text-left">
-            <div className="absolute inset-0 opacity-30">
-              <img alt="Government building" className="w-full h-full object-cover" src="/primaries_img.png" />
+            <div className="absolute inset-0 opacity-40">
+              <img alt="Indian Parliament" className="w-full h-full object-cover" src="/The-new-Parliament.webp" />
             </div>
             <div className="relative z-10">
               <span className="text-xs font-bold tracking-widest uppercase opacity-90 mb-1 block">INSTITUTIONAL CORE</span>
-              <h3 className="text-xl font-semibold mb-1">Primaries &amp; Campaigns</h3>
-              <p className="text-white/80 text-sm">Understanding the mechanics of choice before the final ballot is cast.</p>
+              <h3 className="text-xl font-semibold mb-1">Democratic Framework</h3>
+              <p className="text-white/80 text-sm">Understanding the mechanics of the Indian Parliamentary system.</p>
             </div>
           </button>
 
