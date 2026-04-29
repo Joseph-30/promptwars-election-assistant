@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { faqData, glossaryData } from "@/data/mockData";
 import { motion, AnimatePresence } from "framer-motion";
-import { useLanguage } from "@/context/LanguageContext";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface SmartFAQProps {
   setActiveSection?: (s: string) => void;
