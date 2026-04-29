@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { quizData, timelineData } from "@/data/mockData";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface MicroQuizProps {
   setActiveSection?: (s: string) => void;
@@ -10,6 +11,7 @@ interface MicroQuizProps {
 }
 
 export function MicroQuiz({ setActiveSection, completeModule }: MicroQuizProps) {
+  const { t } = useLanguage();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -38,8 +40,6 @@ export function MicroQuiz({ setActiveSection, completeModule }: MicroQuizProps) 
       setIsSubmitted(false);
     } else {
       setQuizCompleted(true);
-      // On quiz completion, unlock modules proportional to score.
-      // Passing (>= 60%) unlocks all 5 modules; otherwise unlock as many as correct answers.
       const finalScore = score + (selectedOption === currentQuestion.correctAnswerIndex ? 1 : 0);
       const modulesToUnlock = finalScore >= Math.ceil(quizData.length * 0.6)
         ? [0, 1, 2, 3, 4]
@@ -68,16 +68,16 @@ export function MicroQuiz({ setActiveSection, completeModule }: MicroQuizProps) 
               </div>
             </div>
           </div>
-          <h2 className="font-h2 text-h2 text-primary mb-2">Civic Literacy Badge Earned!</h2>
+          <h2 className="font-h2 text-h2 text-primary mb-2">{t.civicLiteracyBadgeEarned}</h2>
           <p className="text-on-surface-variant mb-8 max-w-lg mx-auto text-body-md">
             Great job! You answered {score} out of {quizData.length} questions correctly.
           </p>
           <div className="flex gap-4 justify-center">
             <button onClick={handleRestart} className="px-6 py-3 border-2 border-primary text-primary font-bold rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-2">
-              <span className="material-symbols-outlined">refresh</span> Retake Quiz
+              <span className="material-symbols-outlined">refresh</span> {t.retakeQuiz}
             </button>
             <button onClick={() => setActiveSection && setActiveSection("dashboard")} className="px-6 py-3 bg-primary text-on-primary font-bold rounded-lg hover:opacity-90 transition-all flex items-center gap-2 shadow-lg shadow-primary/20">
-              View Timeline <span className="material-symbols-outlined">arrow_forward</span>
+              {t.viewTimeline} <span className="material-symbols-outlined">arrow_forward</span>
             </button>
           </div>
         </div>
@@ -98,7 +98,7 @@ export function MicroQuiz({ setActiveSection, completeModule }: MicroQuizProps) 
                 <h1 className="font-h1 text-h1 text-primary mt-1">Election Fundamentals Quiz</h1>
               </div>
               <div className="text-right">
-                <span className="font-quiz-option text-primary font-bold">Question {currentQuestionIndex + 1} of {quizData.length}</span>
+                <span className="font-quiz-option text-primary font-bold">{t.question} {currentQuestionIndex + 1} {t.of} {quizData.length}</span>
               </div>
             </div>
             <div className="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
@@ -169,7 +169,7 @@ export function MicroQuiz({ setActiveSection, completeModule }: MicroQuizProps) 
                     <span className="material-symbols-outlined text-secondary text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>verified</span>
                     <div>
                       <h4 className="font-h3 text-quiz-option text-secondary font-bold mb-1">
-                        {selectedOption === currentQuestion.correctAnswerIndex ? "Correct!" : "Not quite."}
+                        {selectedOption === currentQuestion.correctAnswerIndex ? t.correct : t.notQuite}
                       </h4>
                       <p className="text-body-md text-on-surface-variant">{currentQuestion.explanation}</p>
                     </div>
@@ -184,11 +184,11 @@ export function MicroQuiz({ setActiveSection, completeModule }: MicroQuizProps) 
                 onClick={() => setActiveSection && setActiveSection("dashboard")}
                 className="w-full sm:w-auto px-lg py-md border-2 border-primary text-primary font-bold rounded-lg hover:bg-slate-50 transition-colors flex items-center justify-center gap-2"
               >
-                <span className="material-symbols-outlined">close</span> Finish Quiz
+                <span className="material-symbols-outlined">close</span> {t.finishQuiz}
               </button>
               <div className="flex flex-col sm:flex-row gap-md w-full sm:w-auto">
                 <button className="w-full sm:w-auto px-lg py-md text-slate-500 font-bold hover:text-primary transition-colors">
-                  Skip for now
+                  {t.skipForNow}
                 </button>
                 {!isSubmitted ? (
                   <button
@@ -196,14 +196,14 @@ export function MicroQuiz({ setActiveSection, completeModule }: MicroQuizProps) 
                     disabled={selectedOption === null}
                     className="w-full sm:w-auto px-lg py-md bg-primary text-on-primary font-bold rounded-lg hover:opacity-90 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20 disabled:opacity-50"
                   >
-                    Submit Answer
+                    {t.submitAnswer}
                   </button>
                 ) : (
                   <button
                     onClick={handleNext}
                     className="w-full sm:w-auto px-lg py-md bg-primary text-on-primary font-bold rounded-lg hover:opacity-90 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20"
                   >
-                    {currentQuestionIndex < quizData.length - 1 ? "Next Question" : "View Results"}
+                    {currentQuestionIndex < quizData.length - 1 ? t.nextQuestion : t.viewResults}
                     <span className="material-symbols-outlined">arrow_forward</span>
                   </button>
                 )}
@@ -216,15 +216,15 @@ export function MicroQuiz({ setActiveSection, completeModule }: MicroQuizProps) 
         <aside className="hidden lg:block w-72 space-y-gutter shrink-0">
           {/* Election Guide Progress */}
           <div className="bg-white rounded-xl p-md shadow-quiz-card border border-slate-100">
-            <h3 className="font-label-caps text-label-caps text-slate-500 mb-md uppercase tracking-widest">Election Guide Progress</h3>
+            <h3 className="font-label-caps text-label-caps text-slate-500 mb-md uppercase tracking-widest">{t.electionGuideProgress}</h3>
             <div className="space-y-md">
               <div className="flex items-center gap-md">
                 <div className="w-10 h-10 rounded-lg bg-secondary-fixed/20 flex items-center justify-center text-secondary">
                   <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>how_to_reg</span>
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-slate-400">STAGE 01</p>
-                  <p className="text-sm font-semibold text-primary">Registration</p>
+                  <p className="text-xs font-bold text-slate-400">{t.stage} 01</p>
+                  <p className="text-sm font-semibold text-primary">{t.registration}</p>
                 </div>
                 <span className="material-symbols-outlined ml-auto text-secondary text-sm">check_circle</span>
               </div>
@@ -233,7 +233,7 @@ export function MicroQuiz({ setActiveSection, completeModule }: MicroQuizProps) 
                   <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>how_to_vote</span>
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-primary">STAGE 02</p>
+                  <p className="text-xs font-bold text-primary">{t.stage} 02</p>
                   <p className="text-sm font-semibold text-primary">General Election</p>
                 </div>
                 <span className="ml-auto flex items-center justify-center h-5 w-5 bg-primary rounded-full text-[10px] text-white">{currentQuestionIndex + 1}/{quizData.length}</span>
@@ -243,8 +243,8 @@ export function MicroQuiz({ setActiveSection, completeModule }: MicroQuizProps) 
                   <span className="material-symbols-outlined">verified</span>
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-slate-400">STAGE 03</p>
-                  <p className="text-sm font-semibold text-slate-400">Certification</p>
+                  <p className="text-xs font-bold text-slate-400">{t.stage} 03</p>
+                  <p className="text-sm font-semibold text-slate-400">{t.certification}</p>
                 </div>
               </div>
             </div>
@@ -252,7 +252,7 @@ export function MicroQuiz({ setActiveSection, completeModule }: MicroQuizProps) 
               onClick={() => setActiveSection && setActiveSection("dashboard")}
               className="w-full mt-lg py-sm text-sm font-bold text-primary border border-primary/20 rounded-lg hover:bg-primary/5 transition-colors"
             >
-              View Full Curriculum
+              {t.viewFullCurriculum}
             </button>
           </div>
 
@@ -260,13 +260,13 @@ export function MicroQuiz({ setActiveSection, completeModule }: MicroQuizProps) 
           <div className="bg-slate-800 text-white rounded-xl p-md shadow-quiz-card overflow-hidden relative">
             <div className="relative z-10">
               <span className="material-symbols-outlined text-slate-300 mb-2">menu_book</span>
-              <h4 className="text-base font-semibold mb-2">Glossary Corner</h4>
+              <h4 className="text-base font-semibold mb-2">{t.glossaryCorner}</h4>
               <p className="text-sm text-slate-300 mb-md">Stuck on a term? Certification refers to the formal process of validating election results by authorized boards.</p>
               <button
                 onClick={() => setActiveSection && setActiveSection("faq")}
                 className="inline-flex items-center gap-2 text-sm font-bold text-secondary"
               >
-                Explore Glossary
+                {t.glossaryMenu}
                 <span className="material-symbols-outlined text-sm">open_in_new</span>
               </button>
             </div>
@@ -279,7 +279,7 @@ export function MicroQuiz({ setActiveSection, completeModule }: MicroQuizProps) 
           <div className="bg-surface-container-high rounded-xl p-md border border-slate-200">
             <div className="flex items-center gap-2 mb-2">
               <span className="material-symbols-outlined text-primary text-lg">lightbulb</span>
-              <h4 className="text-sm font-bold text-primary">Study Tip</h4>
+              <h4 className="text-sm font-bold text-primary">{t.studyTip}</h4>
             </div>
             <p className="text-xs text-on-surface-variant leading-relaxed">Certification isn&apos;t just a formality—it&apos;s a critical legal step that confirms every valid ballot has been counted correctly and lawfully.</p>
           </div>

@@ -4,6 +4,9 @@ CivicGuide is a premium, institutional-grade web application designed to educate
 
 ## 🌟 Key Features
 
+- **Multi-Language Support**: Fully localized in English, Hindi, Bengali, Tamil, Telugu, and Marathi.
+- **Constituency Finder**: Resolve Indian pincodes to districts and constituencies with real-time 2024 election analytics.
+- **Constitutional Deep-Dives**: Learn the legal foundation of every electoral process with direct links to the Constitution of India.
 - **Progress-Gated Learning**: Sequential modules ensure a logical flow from registration to voting.
 - **3D Voting Simulation**: An interactive, hand-drawn 3D walkthrough of a polling station, built with Three.js.
 - **Civic Literacy Quiz**: Test your knowledge and earn institutional recognition.

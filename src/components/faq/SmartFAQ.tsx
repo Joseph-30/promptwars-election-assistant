@@ -1,14 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
 import { faqData, glossaryData } from "@/data/mockData";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface SmartFAQProps {
   setActiveSection?: (s: string) => void;
 }
 
 export function SmartFAQ({ setActiveSection }: SmartFAQProps) {
+  const { t } = useLanguage();
   const [searchQuery,    setSearchQuery]    = useState("");
   const [selectedFaq,    setSelectedFaq]    = useState<number | null>(0);
   const [glossaryFilter, setGlossaryFilter] = useState("");
@@ -35,7 +36,7 @@ export function SmartFAQ({ setActiveSection }: SmartFAQProps) {
     <div className="max-w-5xl mx-auto">
       {/* Hero Header */}
       <div className="text-center mb-8 px-4">
-        <h1 className="font-h1 text-h1 text-primary mb-3">How can we help you participate?</h1>
+        <h1 className="font-h1 text-h1 text-primary mb-3">{t.howCanWeHelp}</h1>
         <p className="text-on-surface-variant max-w-2xl mx-auto text-body-md">
           Ask any question about the voting process or election terminology to get instant, verified guidance.
         </p>
@@ -58,7 +59,7 @@ export function SmartFAQ({ setActiveSection }: SmartFAQProps) {
             onClick={() => { if(searchQuery) alert(`Searching for: ${searchQuery}`); }}
             className="px-6 py-4 bg-primary text-on-primary font-semibold rounded-xl hover:opacity-90 transition-all shadow-lg shadow-primary/20"
           >
-            Ask Now
+            {t.askNow}
           </button>
         </div>
       </div>
@@ -69,7 +70,7 @@ export function SmartFAQ({ setActiveSection }: SmartFAQProps) {
         <div className="flex-1">
           {/* FAQ Header */}
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-h2 text-h2 text-primary">Frequently Asked Questions</h2>
+            <h2 className="font-h2 text-h2 text-primary">{t.faqTitle}</h2>
             <span className="text-xs font-bold text-secondary bg-secondary/10 px-3 py-1 rounded-full">Updated 1h ago</span>
           </div>
 
@@ -122,7 +123,7 @@ export function SmartFAQ({ setActiveSection }: SmartFAQProps) {
             <div className="bg-white rounded-xl p-6 shadow-quiz-card border-t-4 border-secondary">
               <div className="flex items-center gap-2 mb-3">
                 <span className="material-symbols-outlined text-secondary" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                <span className="font-label-caps text-label-caps text-secondary">QUICK CHECK</span>
+                <span className="font-label-caps text-label-caps text-secondary">{t.quickCheck}</span>
               </div>
               <h4 className="font-semibold text-primary mb-2">Registration Deadline</h4>
               <p className="text-xs text-on-surface-variant">The final date to update your details is <strong>October 15th</strong>. Check your status now to avoid last-minute issues.</p>
@@ -130,7 +131,7 @@ export function SmartFAQ({ setActiveSection }: SmartFAQProps) {
             <div className="bg-white rounded-xl p-6 shadow-quiz-card border-t-4 border-primary">
               <div className="flex items-center gap-2 mb-3">
                 <span className="material-symbols-outlined text-primary">info</span>
-                <span className="font-label-caps text-label-caps text-primary">PRO TIP</span>
+                <span className="font-label-caps text-label-caps text-primary">{t.proTip}</span>
               </div>
               <h4 className="font-semibold text-primary mb-2">Acceptable ID Proofs</h4>
               <p className="text-xs text-on-surface-variant">Voter ID is primary, but Passport, Driving License, or Government Employee IDs are also valid at the booth.</p>
@@ -151,14 +152,14 @@ export function SmartFAQ({ setActiveSection }: SmartFAQProps) {
           {/* Still Have Questions */}
           <div className="mt-8 bg-surface-container-low rounded-xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
-              <h3 className="font-h3 text-h3 text-primary mb-2">Still have questions?</h3>
+              <h3 className="font-h3 text-h3 text-primary mb-2">{t.stillHaveQuestions}</h3>
               <p className="text-on-surface-variant text-sm">Our community ambassadors are ready to help you navigate the process. Connect with a live guide for specific regional queries.</p>
             </div>
           <button 
             onClick={() => alert("Ambassador connection is coming soon!")}
             className="px-8 py-3 bg-error text-on-error rounded-xl font-semibold hover:opacity-90 transition-colors whitespace-nowrap shadow-sm"
           >
-            Speak to an Ambassador
+            {t.speakToAmbassador}
           </button>
           </div>
         </div>
@@ -166,13 +167,13 @@ export function SmartFAQ({ setActiveSection }: SmartFAQProps) {
         {/* Right: Glossary Sidebar */}
         <aside className="hidden lg:block w-72 shrink-0">
           <div className="bg-white rounded-xl p-md shadow-quiz-card border border-slate-100 sticky top-24">
-            <h3 className="font-h3 text-quiz-option text-primary font-semibold mb-md">Terminology Glossary</h3>
+            <h3 className="font-h3 text-quiz-option text-primary font-semibold mb-md">{t.terminologyGlossary}</h3>
             {/* Filter */}
             <div className="relative mb-3">
               <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">filter_list</span>
               <input
                 type="text"
-                placeholder="Filter terms..."
+                placeholder={t.filterTerms}
                 className="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                 value={glossaryFilter}
                 onChange={(e) => { setGlossaryFilter(e.target.value); setLetterFilter(""); }}
@@ -217,7 +218,7 @@ export function SmartFAQ({ setActiveSection }: SmartFAQProps) {
               onClick={() => alert("Glossary PDF generation is coming soon!")}
               className="w-full mt-md text-sm font-bold text-primary border-t border-slate-100 pt-md hover:underline"
             >
-              Download Full PDF Glossary
+              {t.downloadPdf}
             </button>
           </div>
         </aside>

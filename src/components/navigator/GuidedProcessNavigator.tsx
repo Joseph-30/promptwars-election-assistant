@@ -5,6 +5,7 @@ import { timelineData } from "@/data/mockData";
 import { useVoterMode } from "@/context/VoterModeContext";
 import { motion, AnimatePresence } from "framer-motion";
 import { GlossaryTooltip } from "@/components/glossary/GlossaryTooltip";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface GuidedProcessNavigatorProps {
   setActiveSection?: (s: string) => void;
@@ -21,6 +22,7 @@ export function GuidedProcessNavigator({
   completedModules = [],
   completeModule,
 }: GuidedProcessNavigatorProps) {
+  const { t } = useLanguage();
   const { isFirstTimeVoter } = useVoterMode();
   const [expandedSection, setExpandedSection] = useState<string | null>("why");
 
@@ -32,13 +34,11 @@ export function GuidedProcessNavigator({
     setExpandedSection(expandedSection === id ? null : id);
 
   const handleNext = () => {
-    // Mark current module as complete
     if (completeModule) completeModule(activeModule);
 
     if (!isLast) {
       if (setActiveModule) setActiveModule(activeModule + 1);
     } else {
-      // All modules done — go to quiz
       if (setActiveSection) setActiveSection("quiz");
     }
   };
@@ -60,7 +60,7 @@ export function GuidedProcessNavigator({
           {isCompleted && (
             <span className="ml-2 inline-flex items-center gap-1 text-secondary font-bold">
               <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-              Completed
+              {t.doneLabel}
             </span>
           )}
         </div>
@@ -90,7 +90,7 @@ export function GuidedProcessNavigator({
           </div>
           <div className="text-right">
             <p className="text-2xl font-bold text-secondary">{Math.round((completedModules.length / timelineData.length) * 100)}%</p>
-            <p className="text-xs text-slate-500">Complete</p>
+            <p className="text-xs text-slate-500">{t.doneLabel}</p>
           </div>
         </div>
       </div>
@@ -108,7 +108,7 @@ export function GuidedProcessNavigator({
               <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
                 <span className="material-symbols-outlined text-primary">description</span>
               </div>
-              <h3 className="font-h3 text-h3 text-primary">Why {currentStage.title} Matters</h3>
+              <h3 className="font-h3 text-h3 text-primary">{t.whyItMatters}: {currentStage.title}</h3>
             </div>
             <span className={`material-symbols-outlined text-slate-400 transition-transform shrink-0 ${expandedSection === "why" ? "rotate-180" : ""}`}>
               expand_more
@@ -124,9 +124,6 @@ export function GuidedProcessNavigator({
               >
                 <div className="px-6 pb-6">
                   <p className="text-on-surface-variant mb-4">{currentStage.whyItMatters}</p>
-                  <blockquote className="border-l-4 border-primary pl-4 italic text-slate-600 text-sm">
-                    &quot;Without a clean register, the integrity of the ballot box is at risk.&quot; — Institutional Motto
-                  </blockquote>
                 </div>
               </motion.div>
             )}
@@ -138,7 +135,7 @@ export function GuidedProcessNavigator({
           <div className="bg-white rounded-xl p-6 shadow-quiz-card border border-slate-100">
             <h4 className="font-h3 text-quiz-option text-primary mb-4 flex items-center gap-2">
               <span className="material-symbols-outlined text-secondary">how_to_reg</span>
-              {isFirstTimeVoter ? "Your Checklist" : "Action Steps"}
+              {isFirstTimeVoter ? "Your Checklist" : t.actionSteps}
             </h4>
             <ul className="space-y-3">
               {currentStage.actionSteps.map((step, idx) => (
@@ -158,15 +155,11 @@ export function GuidedProcessNavigator({
           <div className="bg-white rounded-xl p-6 shadow-quiz-card border border-slate-100">
             <h4 className="font-h3 text-quiz-option text-primary mb-4 flex items-center gap-2">
               <span className="material-symbols-outlined text-error">event_busy</span>
-              Advanced Details
+              {t.advancedDetails}
             </h4>
             <p className="text-on-surface-variant text-sm mb-4">
               <GlossaryTooltip text={currentStage.advancedDetails} />
             </p>
-            <button className="flex items-center gap-2 text-xs text-slate-500 hover:text-primary transition-colors font-label-caps uppercase">
-              <span className="material-symbols-outlined text-sm">info</span>
-              Check your local state laws
-            </button>
           </div>
         </div>
 
@@ -182,8 +175,8 @@ export function GuidedProcessNavigator({
                   <span className="material-symbols-outlined text-amber-600">gavel</span>
                 </div>
                 <div>
-                  <h3 className="font-h3 text-h3 text-primary">Constitutional Basis</h3>
-                  <p className="text-xs text-slate-500 mt-0.5">{currentStage.constitutionArticles.length} articles � Constitution of India</p>
+                  <h3 className="font-h3 text-h3 text-primary">{t.constitutionalBasis}</h3>
+                  <p className="text-xs text-slate-500 mt-0.5">{currentStage.constitutionArticles.length} articles • Constitution of India</p>
                 </div>
               </div>
               <span className={`material-symbols-outlined text-slate-400 transition-transform shrink-0 ${expandedSection === "constitution" ? "rotate-180" : ""}`}>
@@ -219,7 +212,7 @@ export function GuidedProcessNavigator({
                       className="inline-flex items-center gap-2 text-xs text-amber-700 hover:text-amber-900 font-semibold transition-colors"
                     >
                       <span className="material-symbols-outlined text-sm">open_in_new</span>
-                      Read full Constitution of India (legislative.gov.in)
+                      Read full Constitution of India
                     </a>
                   </div>
                 </motion.div>
@@ -249,7 +242,7 @@ export function GuidedProcessNavigator({
           onClick={handleNext}
           className="px-6 py-3 rounded-xl font-semibold bg-primary text-on-primary hover:opacity-90 flex items-center gap-2 transition-opacity shadow-sm"
         >
-          {isLast ? "Finish & Take Quiz" : isCompleted ? "Next Module" : "Complete & Continue"}
+          {isLast ? t.finishAndTakeQuiz : isCompleted ? t.nextModule : t.completeAndContinue}
           <span className="material-symbols-outlined text-sm">arrow_forward</span>
         </button>
       </div>
