@@ -7,6 +7,7 @@ import { SmartFAQ }               from "@/components/faq/SmartFAQ";
 import { MicroQuiz }              from "@/components/quiz/MicroQuiz";
 import { WelcomeOnboarding }      from "@/components/welcome/WelcomeOnboarding";
 import { ConstituencyFinder }     from "@/components/constituency/ConstituencyFinder";
+import { MythBuster }             from "@/components/myths/MythBuster";
 import { LanguageProvider, useLanguage, LANGUAGES } from "@/context/LanguageContext";
 
 const sidebarLinks = [
@@ -17,7 +18,7 @@ const sidebarLinks = [
   { id: 4, label: "Certification",    icon: "verified"    },
 ];
 
-const SIDEBAR_VIEWS = new Set(["dashboard", "navigator", "faq", "quiz", "constituency"]);
+const SIDEBAR_VIEWS = new Set(["dashboard", "navigator", "faq", "quiz", "constituency", "myths"]);
 
 function AppShell() {
   const { t, lang, setLang } = useLanguage();
@@ -44,11 +45,12 @@ function AppShell() {
     sidebarLinks.find((l) => !completedModules.includes(l.id) && isUnlocked(l.id))?.id ?? 0;
 
   const GLOBAL_NAV = [
-    { label: t.dashboard,    target: "dashboard"    },
-    { label: t.learning,     target: "navigator"    },
-    { label: t.quiz,         target: "quiz"         },
-    { label: t.constituency, target: "constituency" },
-    { label: t.resources,    target: "faq"          },
+    { label: t.dashboard,       target: "dashboard"    },
+    { label: t.learning,        target: "navigator"    },
+    { label: t.quiz,            target: "quiz"         },
+    { label: t.constituency,    target: "constituency" },
+    { label: "Myth Buster",     target: "myths"        },
+    { label: t.resources,       target: "faq"          },
   ];
 
   return (
@@ -186,6 +188,15 @@ function AppShell() {
                 {t.constituency}
               </button>
               <button
+                onClick={() => goToView("myths")}
+                className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors w-full ${
+                  activeView === "myths" ? "text-primary bg-primary/5 font-semibold" : "text-slate-600 hover:bg-slate-50 hover:text-primary"
+                }`}
+              >
+                <span className="material-symbols-outlined text-base">fact_check</span>
+                Myth Buster
+              </button>
+              <button
                 onClick={() => goToView("faq")}
                 className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors w-full ${
                   activeView === "faq" ? "text-primary bg-primary/5 font-semibold" : "text-slate-600 hover:bg-slate-50 hover:text-primary"
@@ -221,6 +232,7 @@ function AppShell() {
           {activeView === "quiz"         && <MicroQuiz setActiveSection={goToView} completeModule={completeModule} />}
           {activeView === "faq"          && <SmartFAQ  setActiveSection={goToView} />}
           {activeView === "constituency" && <ConstituencyFinder />}
+          {activeView === "myths"        && <MythBuster />}
         </main>
       </div>
 
@@ -231,7 +243,7 @@ function AppShell() {
           { label: t.learning,     view: "navigator",    icon: "school"     },
           { label: t.quiz,         view: "quiz",         icon: "quiz"       },
           { label: t.constituency, view: "constituency", icon: "place"      },
-          { label: t.resources,    view: "faq",          icon: "menu_book"  },
+          { label: "Myths",        view: "myths",        icon: "fact_check" },
         ].map((item) => (
           <button
             key={item.view}

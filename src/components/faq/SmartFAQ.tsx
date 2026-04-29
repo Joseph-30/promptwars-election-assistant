@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useState } from "react";
 import { faqData, glossaryData } from "@/data/mockData";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";

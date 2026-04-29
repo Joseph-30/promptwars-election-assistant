@@ -125,12 +125,75 @@ export function InteractiveTimeline({
 
           {/* ─── 3D Simulation Card ─── */}
           <div className="bg-white rounded-2xl shadow-quiz-card overflow-hidden border border-slate-100">
-            {/* Thumbnail preview area */}
+            {/* Thumbnail preview area with stick figure diagram */}
             <div
-              className="relative h-52 bg-gradient-to-br from-slate-900 via-slate-800 to-primary cursor-pointer group"
+              className="relative h-56 bg-gradient-to-br from-slate-900 via-slate-800 to-primary cursor-pointer group overflow-hidden"
               onClick={() => setSimOpen(true)}
             >
-              {/* Overlay play button */}
+              {/* Stick figure SVG scene */}
+              <svg
+                className="absolute inset-0 w-full h-full opacity-40 group-hover:opacity-55 transition-opacity duration-300"
+                viewBox="0 0 480 220"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                {/* Floor */}
+                <line x1="20" y1="200" x2="460" y2="200" stroke="#94a3b8" strokeWidth="2" />
+                {/* Polling booth structure */}
+                <rect x="60" y="100" width="70" height="100" fill="none" stroke="#64748b" strokeWidth="1.5" strokeDasharray="4 2" rx="2" />
+                <text x="95" y="155" textAnchor="middle" fill="#94a3b8" fontSize="8" fontFamily="monospace">BOOTH</text>
+                {/* EVM machine */}
+                <rect x="200" y="130" width="36" height="50" rx="3" fill="none" stroke="#6366f1" strokeWidth="1.5" />
+                <rect x="205" y="135" width="26" height="18" rx="1" fill="none" stroke="#6366f1" strokeWidth="1" />
+                <circle cx="218" cy="170" r="5" fill="none" stroke="#10b981" strokeWidth="1.5" />
+                <text x="218" y="195" textAnchor="middle" fill="#6366f1" fontSize="7" fontFamily="monospace">EVM</text>
+                {/* VVPAT */}
+                <rect x="248" y="140" width="24" height="36" rx="2" fill="none" stroke="#f59e0b" strokeWidth="1.5" />
+                <rect x="252" y="146" width="16" height="10" rx="1" fill="none" stroke="#f59e0b" strokeWidth="1" />
+                <text x="260" y="193" textAnchor="middle" fill="#f59e0b" fontSize="7" fontFamily="monospace">VVPAT</text>
+                {/* Queue line */}
+                <line x1="340" y1="200" x2="460" y2="200" stroke="#475569" strokeWidth="2" strokeDasharray="6 3" />
+                {/* Stick figure 1 — at EVM voting */}
+                <circle cx="218" cy="115" r="9" fill="none" stroke="#e2e8f0" strokeWidth="1.5" />
+                <line x1="218" y1="124" x2="218" y2="148" stroke="#e2e8f0" strokeWidth="1.5" />
+                <line x1="218" y1="130" x2="205" y2="140" stroke="#e2e8f0" strokeWidth="1.5" />
+                <line x1="218" y1="130" x2="231" y2="136" stroke="#e2e8f0" strokeWidth="1.5" />
+                <line x1="218" y1="148" x2="210" y2="165" stroke="#e2e8f0" strokeWidth="1.5" />
+                <line x1="218" y1="148" x2="226" y2="165" stroke="#e2e8f0" strokeWidth="1.5" />
+                {/* Stick figure 2 — in queue */}
+                <circle cx="350" cy="175" r="8" fill="none" stroke="#94a3b8" strokeWidth="1.5" />
+                <line x1="350" y1="183" x2="350" y2="198" stroke="#94a3b8" strokeWidth="1.5" />
+                <line x1="350" y1="188" x2="340" y2="196" stroke="#94a3b8" strokeWidth="1.5" />
+                <line x1="350" y1="188" x2="360" y2="196" stroke="#94a3b8" strokeWidth="1.5" />
+                <line x1="350" y1="198" x2="344" y2="210" stroke="#94a3b8" strokeWidth="1.5" />
+                <line x1="350" y1="198" x2="356" y2="210" stroke="#94a3b8" strokeWidth="1.5" />
+                {/* Stick figure 3 — in queue behind */}
+                <circle cx="390" cy="175" r="8" fill="none" stroke="#94a3b8" strokeWidth="1.5" />
+                <line x1="390" y1="183" x2="390" y2="198" stroke="#94a3b8" strokeWidth="1.5" />
+                <line x1="390" y1="188" x2="380" y2="196" stroke="#94a3b8" strokeWidth="1.5" />
+                <line x1="390" y1="188" x2="400" y2="196" stroke="#94a3b8" strokeWidth="1.5" />
+                <line x1="390" y1="198" x2="384" y2="210" stroke="#94a3b8" strokeWidth="1.5" />
+                <line x1="390" y1="198" x2="396" y2="210" stroke="#94a3b8" strokeWidth="1.5" />
+                {/* Polling Officer desk */}
+                <rect x="300" y="160" width="30" height="10" rx="2" fill="none" stroke="#64748b" strokeWidth="1.5" />
+                <circle cx="315" cy="148" r="7" fill="none" stroke="#94a3b8" strokeWidth="1.5" />
+                <line x1="315" y1="155" x2="315" y2="170" stroke="#94a3b8" strokeWidth="1.5" />
+                {/* Arrow indicating flow */}
+                <path d="M 440 160 L 320 160" stroke="#10b981" strokeWidth="1.5" markerEnd="url(#arrow)" strokeDasharray="5 3" fill="none" />
+                <defs>
+                  <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#10b981" />
+                  </marker>
+                </defs>
+                {/* Labels */}
+                <text x="315" y="142" textAnchor="middle" fill="#64748b" fontSize="7" fontFamily="monospace">OFFICER</text>
+                <text x="218" y="110" textAnchor="middle" fill="#e2e8f0" fontSize="7" fontFamily="monospace">VOTER</text>
+              </svg>
+
+              {/* Overlay gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
+
+              {/* Play button */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-16 h-16 rounded-full bg-white/20 border-2 border-white/50 flex items-center justify-center group-hover:scale-110 group-hover:bg-white/30 transition-all duration-200 shadow-xl">
                   <span className="material-symbols-outlined text-white text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>play_circle</span>
@@ -143,6 +206,16 @@ export function InteractiveTimeline({
                   <span className="material-symbols-outlined text-sm">3d_rotation</span>
                   3D Interactive {t.simulation}
                 </span>
+              </div>
+
+              {/* Step indicators bottom */}
+              <div className="absolute bottom-4 left-4 right-4 flex justify-between">
+                {["Queue", "ID Check", "Ink", "Vote", "VVPAT"].map((step, i) => (
+                  <div key={i} className="flex flex-col items-center gap-1">
+                    <div className="w-1.5 h-1.5 rounded-full bg-white/60" />
+                    <span className="text-[9px] text-white/60 font-bold uppercase tracking-wide hidden sm:block">{step}</span>
+                  </div>
+                ))}
               </div>
             </div>
 
