@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface WelcomeOnboardingProps {
   setActiveSection: (s: string) => void;
 }
 
 export function WelcomeOnboarding({ setActiveSection }: WelcomeOnboardingProps) {
-  const [region, setRegion] = useState("IN");
+  const { t } = useLanguage();
 
   return (
     <div className="flex flex-col items-center pt-16 pb-12 px-6">
@@ -16,14 +17,14 @@ export function WelcomeOnboarding({ setActiveSection }: WelcomeOnboardingProps) 
         <div className="inline-flex items-center justify-center bg-primary-container/10 p-4 rounded-full mb-md">
           <span className="material-symbols-outlined text-primary text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>account_balance</span>
         </div>
-        <h1 className="font-h1 text-h1 text-primary mb-md">Welcome to Civic Assistant</h1>
+        <h1 className="font-h1 text-h1 text-primary mb-md">{t.welcome}</h1>
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-xl">
-          Your trusted guide to democratic participation. We provide a clear, institutional path to understanding and engaging with your government.
+          {t.welcomeSub}
         </p>
 
         {/* Region Selection */}
         <div className="bg-white p-lg rounded-xl shadow-quiz-card mb-xl text-left border-l-4 border-primary">
-          <label className="font-label-caps text-label-caps text-primary block mb-sm">CURRENT FOCUS AREA</label>
+          <label className="font-label-caps text-label-caps text-primary block mb-sm">{t.currentFocusArea}</label>
           <div className="relative">
             <select
               value="IN"
@@ -38,7 +39,7 @@ export function WelcomeOnboarding({ setActiveSection }: WelcomeOnboardingProps) 
           </div>
           <p className="mt-sm text-xs text-on-surface-variant flex items-center gap-1">
             <span className="material-symbols-outlined text-sm">info</span>
-            Resources are currently tailored exclusively for the Indian Electoral System.
+            {t.lockedToIndia}
           </p>
         </div>
 
@@ -47,14 +48,14 @@ export function WelcomeOnboarding({ setActiveSection }: WelcomeOnboardingProps) 
           onClick={() => setActiveSection("dashboard")}
           className="w-full md:w-auto px-12 py-4 bg-primary text-white font-h3 text-quiz-option rounded-xl hover:opacity-90 active:scale-95 transition-all shadow-lg shadow-primary/20"
         >
-          Get Started
+          {t.getStarted}
         </button>
       </section>
 
       {/* ── Educational Path Bento ── */}
       <section className="max-w-[1000px] w-full mt-xl">
         <div className="text-center mb-xl">
-          <h2 className="font-h2 text-h2 text-primary mb-xs">Your Educational Path</h2>
+          <h2 className="font-h2 text-h2 text-primary mb-xs">{t.educationalPath}</h2>
           <div className="h-1 w-24 bg-secondary mx-auto rounded-full"></div>
         </div>
 
@@ -64,7 +65,7 @@ export function WelcomeOnboarding({ setActiveSection }: WelcomeOnboardingProps) 
             <div className="w-12 h-12 rounded-lg bg-surface flex items-center justify-center mb-4 group-hover:bg-secondary/10 transition-colors">
               <span className="material-symbols-outlined text-primary group-hover:text-secondary transition-colors">how_to_reg</span>
             </div>
-            <h3 className="text-xl font-semibold text-primary mb-2">Registration</h3>
+            <h3 className="text-xl font-semibold text-primary mb-2">{t.registration}</h3>
             <p className="text-sm text-on-surface-variant leading-relaxed">Master the prerequisites. Learn about eligibility, verification, and the foundational requirements of the franchise.</p>
           </button>
 
@@ -75,7 +76,7 @@ export function WelcomeOnboarding({ setActiveSection }: WelcomeOnboardingProps) 
             </div>
             <div className="relative z-10">
               <span className="text-xs font-bold tracking-widest uppercase opacity-90 mb-1 block">INSTITUTIONAL CORE</span>
-              <h3 className="text-xl font-semibold mb-1">Democratic Framework</h3>
+              <h3 className="text-xl font-semibold mb-1">{t.democraticFramework}</h3>
               <p className="text-white/80 text-sm">Understanding the mechanics of the Indian Parliamentary system.</p>
             </div>
           </button>
@@ -85,7 +86,7 @@ export function WelcomeOnboarding({ setActiveSection }: WelcomeOnboardingProps) 
             <div className="w-12 h-12 rounded-lg bg-surface flex items-center justify-center mb-4 group-hover:bg-secondary/10 transition-colors">
               <span className="material-symbols-outlined text-primary group-hover:text-secondary transition-colors">verified</span>
             </div>
-            <h3 className="text-xl font-semibold text-primary mb-2">Certification</h3>
+            <h3 className="text-xl font-semibold text-primary mb-2">{t.certification}</h3>
             <p className="text-sm text-on-surface-variant leading-relaxed">Complete the journey. Gain institutional recognition of your civic literacy and preparedness.</p>
           </button>
         </div>
@@ -94,8 +95,8 @@ export function WelcomeOnboarding({ setActiveSection }: WelcomeOnboardingProps) 
         <div className="mt-xl bg-white p-lg rounded-xl shadow-quiz-card flex items-center justify-between gap-md">
           <div className="flex-1">
             <div className="flex justify-between mb-sm">
-              <span className="font-label-caps text-primary">LEARNING MILESTONES</span>
-              <span className="font-label-caps text-secondary">0% READY</span>
+              <span className="font-label-caps text-primary">{t.learningMilestones}</span>
+              <span className="font-label-caps text-secondary">0% {t.ready}</span>
             </div>
             <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
               <div className="h-full bg-secondary w-0 transition-all duration-1000"></div>
@@ -114,13 +115,13 @@ export function WelcomeOnboarding({ setActiveSection }: WelcomeOnboardingProps) 
       {/* ── Footer ── */}
       <footer className="mt-xl flex flex-wrap justify-center gap-xl text-slate-500 font-label-caps">
         <button onClick={() => setActiveSection("faq")} className="flex items-center gap-2 hover:text-primary transition-colors">
-          <span className="material-symbols-outlined text-md">menu_book</span> Glossary
+          <span className="material-symbols-outlined text-md">menu_book</span> {t.glossaryMenu}
         </button>
         <button className="flex items-center gap-2 hover:text-primary transition-colors">
-          <span className="material-symbols-outlined text-md">help_outline</span> Help Center
+          <span className="material-symbols-outlined text-md">help_outline</span> {t.helpCenter}
         </button>
         <button className="flex items-center gap-2 hover:text-primary transition-colors">
-          <span className="material-symbols-outlined text-md">verified_user</span> Data Privacy
+          <span className="material-symbols-outlined text-md">verified_user</span> {t.dataPrivacy}
         </button>
       </footer>
     </div>

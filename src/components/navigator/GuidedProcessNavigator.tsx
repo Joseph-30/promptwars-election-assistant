@@ -169,6 +169,64 @@ export function GuidedProcessNavigator({
             </button>
           </div>
         </div>
+
+        {/* Constitutional Deep-Dive */}
+        {currentStage.constitutionArticles?.length > 0 && (
+          <div className={`bg-white rounded-xl shadow-quiz-card border-2 transition-all ${expandedSection === "constitution" ? "border-amber-400" : "border-slate-100"}`}>
+            <button
+              onClick={() => toggleSection("constitution")}
+              className="w-full flex items-center justify-between p-6 text-left"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-amber-50 flex items-center justify-center shrink-0">
+                  <span className="material-symbols-outlined text-amber-600">gavel</span>
+                </div>
+                <div>
+                  <h3 className="font-h3 text-h3 text-primary">Constitutional Basis</h3>
+                  <p className="text-xs text-slate-500 mt-0.5">{currentStage.constitutionArticles.length} articles � Constitution of India</p>
+                </div>
+              </div>
+              <span className={`material-symbols-outlined text-slate-400 transition-transform shrink-0 ${expandedSection === "constitution" ? "rotate-180" : ""}`}>
+                expand_more
+              </span>
+            </button>
+            <AnimatePresence>
+              {expandedSection === "constitution" && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  className="overflow-hidden"
+                >
+                  <div className="px-6 pb-6 space-y-4">
+                    {currentStage.constitutionArticles.map((a, idx) => (
+                      <div key={idx} className="flex gap-4 p-4 bg-amber-50 rounded-xl border border-amber-100">
+                        <div className="shrink-0">
+                          <span className="inline-block bg-amber-600 text-white text-xs font-bold px-2.5 py-1 rounded-lg whitespace-nowrap">
+                            {a.article}
+                          </span>
+                        </div>
+                        <div>
+                          <p className="font-semibold text-primary text-sm mb-1">{a.title}</p>
+                          <p className="text-slate-600 text-sm leading-relaxed">{a.summary}</p>
+                        </div>
+                      </div>
+                    ))}
+                    <a
+                      href="https://www.legislative.gov.in/constitution-of-india/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-xs text-amber-700 hover:text-amber-900 font-semibold transition-colors"
+                    >
+                      <span className="material-symbols-outlined text-sm">open_in_new</span>
+                      Read full Constitution of India (legislative.gov.in)
+                    </a>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        )}
       </div>
 
       {/* Navigation Footer */}
