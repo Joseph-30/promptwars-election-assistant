@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { timelineData } from "@/data/mockData";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -113,11 +114,13 @@ export function InteractiveTimeline({
                 </div>
               </div>
 
-              <div className="w-full md:w-64 h-48 md:h-auto shrink-0">
-                <img
+              <div className="w-full md:w-64 h-48 md:h-auto shrink-0 relative">
+                <Image
                   src="/The-new-Parliament.webp"
                   alt="Indian Parliament"
-                  className="w-full h-full object-cover"
+                  className="object-cover"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
                 />
               </div>
             </div>

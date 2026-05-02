@@ -207,6 +207,7 @@ export function MythBuster() {
                     onClick={() => toggle(myth.id)}
                     tabIndex={0}
                     role="button"
+                    aria-expanded={revealed}
                     onKeyDown={(e) => {
                       if (e.key === "Enter" || e.key === " ") {
                         e.preventDefault();

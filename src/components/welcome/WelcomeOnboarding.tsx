@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import { motion } from "framer-motion";
+import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 
 interface WelcomeOnboardingProps {
@@ -72,7 +74,7 @@ export function WelcomeOnboarding({ setActiveSection }: WelcomeOnboardingProps) 
           {/* Step 2: Primaries & Campaigns (Visual Focus) */}
           <button onClick={() => setActiveSection("dashboard")} className="md:col-span-1 bg-primary-container text-white p-6 rounded-xl shadow-quiz-card relative overflow-hidden flex flex-col justify-end min-h-[280px] text-left">
             <div className="absolute inset-0 opacity-40">
-              <img alt="Indian Parliament" className="w-full h-full object-cover" src="/The-new-Parliament.webp" />
+              <Image alt="Indian Parliament" className="object-cover" src="/The-new-Parliament.webp" fill sizes="(max-width: 768px) 100vw, 50vw" priority />
             </div>
             <div className="relative z-10">
               <span className="text-xs font-bold tracking-widest uppercase opacity-90 mb-1 block">INSTITUTIONAL CORE</span>

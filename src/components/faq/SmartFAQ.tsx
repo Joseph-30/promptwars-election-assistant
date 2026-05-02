@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from "react";
 import { faqData, glossaryData } from "@/data/mockData";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { useLanguage } from "../../context/LanguageContext";
 
 interface SmartFAQProps {
@@ -87,6 +88,8 @@ export function SmartFAQ({ setActiveSection }: SmartFAQProps) {
                   onClick={() => setSelectedFaq(selectedFaq === idx ? null : idx)}
                   tabIndex={0}
                   role="button"
+                  aria-expanded={selectedFaq === idx}
+                  aria-controls={`faq-answer-${idx}`}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();
@@ -107,6 +110,7 @@ export function SmartFAQ({ setActiveSection }: SmartFAQProps) {
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
                             className="overflow-hidden"
+                            id={`faq-answer-${idx}`}
                           >
                             <p className="text-on-surface-variant text-sm leading-relaxed mb-3">{faq.answer}</p>
                             <button className="text-primary text-sm font-semibold flex items-center gap-1 hover:underline">
@@ -149,7 +153,7 @@ export function SmartFAQ({ setActiveSection }: SmartFAQProps) {
 
           {/* Visual Guide Banner */}
           <div className="mt-6 rounded-xl overflow-hidden relative h-48">
-            <img src="/polling_station.png" alt="Polling station" className="w-full h-full object-cover" />
+            <Image src="/polling_station.png" alt="Polling station" className="object-cover" fill sizes="(max-width: 768px) 100vw, 33vw" />
             <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex items-end p-6">
               <div>
                 <h3 className="text-xl font-bold text-white mb-1">Visual Guide: At the Polling Station</h3>
