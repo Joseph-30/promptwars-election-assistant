@@ -205,6 +205,14 @@ export function MythBuster() {
                     key={myth.id}
                     className="relative rounded-2xl overflow-hidden cursor-pointer"
                     onClick={() => toggle(myth.id)}
+                    tabIndex={0}
+                    role="button"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        toggle(myth.id);
+                      }
+                    }}
                   >
                     <AnimatePresence mode="wait">
                       {!revealed ? (

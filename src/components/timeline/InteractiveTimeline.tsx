@@ -129,6 +129,14 @@ export function InteractiveTimeline({
             <div
               className="relative h-56 bg-gradient-to-br from-slate-900 via-slate-800 to-primary cursor-pointer group overflow-hidden"
               onClick={() => setSimOpen(true)}
+              tabIndex={0}
+              role="button"
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setSimOpen(true);
+                }
+              }}
             >
               {/* Stick figure SVG scene */}
               <svg

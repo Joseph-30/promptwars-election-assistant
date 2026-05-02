@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { faqData, glossaryData } from "@/data/mockData";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "../../context/LanguageContext";
@@ -16,22 +16,22 @@ export function SmartFAQ({ setActiveSection }: SmartFAQProps) {
   const [glossaryFilter, setGlossaryFilter] = useState("");
   const [letterFilter,   setLetterFilter]   = useState("");
 
-  const filteredFaqs = faqData.filter(
+  const filteredFaqs = useMemo(() => faqData.filter(
     (faq) =>
       faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
       faq.answer.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  ), [searchQuery]);
 
-  const filteredGlossary = glossaryData.filter((term) => {
+  const filteredGlossary = useMemo(() => glossaryData.filter((term) => {
     const matchesText   = term.term.toLowerCase().includes(glossaryFilter.toLowerCase());
     const matchesLetter = letterFilter === "" || term.term.toUpperCase().startsWith(letterFilter);
     return matchesText && matchesLetter;
-  });
+  }), [glossaryFilter, letterFilter]);
 
   // Build which letters actually have entries in the data
-  const availableLetters = Array.from(
+  const availableLetters = useMemo(() => Array.from(
     new Set(glossaryData.map((t) => t.term[0].toUpperCase()))
-  ).sort();
+  ).sort(), []);
 
   return (
     <div className="max-w-5xl mx-auto">
@@ -85,6 +85,14 @@ export function SmartFAQ({ setActiveSection }: SmartFAQProps) {
                     selectedFaq === idx ? "border-primary" : "border-transparent hover:border-slate-200"
                   }`}
                   onClick={() => setSelectedFaq(selectedFaq === idx ? null : idx)}
+                  tabIndex={0}
+                  role="button"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setSelectedFaq(selectedFaq === idx ? null : idx);
+                    }
+                  }}
                 >
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center shrink-0">

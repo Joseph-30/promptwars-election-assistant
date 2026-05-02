@@ -1,6 +1,6 @@
-﻿"use client";
+"use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { constituencyByDistrict, type ConstituencyInfo } from "@/data/mockData";
 import { useLanguage } from "@/context/LanguageContext";
 import { motion, AnimatePresence } from "framer-motion";
@@ -100,10 +100,13 @@ export function ConstituencyFinder() {
     }
   };
 
-  const totalVotes = info ? info.votes2024 + info.runnerVotes : 0;
-  const winnerPct  = totalVotes > 0 ? Math.round((info!.votes2024 / totalVotes) * 100) : 0;
-  const runnerPct  = 100 - winnerPct;
-  const candidates = info ? getCandidatesForConstituency(info.constituency) : null;
+  const { totalVotes, winnerPct, runnerPct, candidates } = useMemo(() => {
+    const tVotes = info ? info.votes2024 + info.runnerVotes : 0;
+    const wPct = tVotes > 0 ? Math.round((info!.votes2024 / tVotes) * 100) : 0;
+    const rPct = 100 - wPct;
+    const cands = info ? getCandidatesForConstituency(info.constituency) : null;
+    return { totalVotes: tVotes, winnerPct: wPct, runnerPct: rPct, candidates: cands };
+  }, [info]);
 
   return (
     <div className="max-w-3xl mx-auto">

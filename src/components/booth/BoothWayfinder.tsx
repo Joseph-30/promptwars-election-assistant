@@ -162,6 +162,27 @@ export function BoothWayfinder({ district, state }: BoothWayfinderProps) {
                 ))}
               </div>
             </div>
+
+            {/* Google Maps Embed */}
+            <div className="mt-6 p-4 bg-surface-container-low rounded-xl border border-slate-100">
+              <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3 flex items-center gap-1">
+                <span className="material-symbols-outlined text-sm">map</span>
+                Google Maps - Area View
+              </p>
+              <div className="w-full h-48 rounded-lg overflow-hidden border border-slate-200">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  loading="lazy"
+                  allowFullScreen
+                  src={`https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q=Polling+Booth,${encodeURIComponent(district || "New Delhi")},${encodeURIComponent(state || "Delhi")}`}
+                ></iframe>
+              </div>
+              <p className="text-[10px] text-slate-400 mt-2 text-center">
+                * Note: Exact booth location requires Voter ID. This map shows the general district center via Google Maps Services.
+              </p>
+            </div>
           </motion.div>
         ) : (
           <motion.div key="checklist" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-6">
