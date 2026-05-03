@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Public_Sans, Lexend } from "next/font/google";
 import "./globals.css";
 import { VoterModeProvider } from "@/context/VoterModeContext";
+import { AIAssistant } from "@/components/ai/AIAssistant";
 
 const publicSans = Public_Sans({
   variable: "--font-public-sans",
@@ -52,6 +53,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-surface text-on-surface font-body-md antialiased">
         <VoterModeProvider>
           {children}
+          <AIAssistant />
         </VoterModeProvider>
       </body>
     </html>
