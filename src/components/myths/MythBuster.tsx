@@ -120,6 +120,15 @@ const SEVERITY_COLORS: Record<string, string> = {
   low:    "text-green-500",
 };
 
+/**
+ * MythBuster Component
+ * 
+ * An interactive module designed to combat electoral misinformation.
+ * Users can swipe or click through common myths to reveal verified facts.
+ * Includes a Media Literacy section for deepfake detection.
+ * 
+ * @returns {JSX.Element}
+ */
 export function MythBuster() {
   const [revealedIds, setRevealedIds] = useState<Set<number>>(new Set());
   const [activeCategory, setActiveCategory] = useState<string>("All");

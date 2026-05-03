@@ -14,8 +14,25 @@ const lexend = Lexend({
 });
 
 export const metadata: Metadata = {
-  title: "CivicGuide - Election Process Education",
-  description: "An intelligent civic-education assistant.",
+  title: {
+    template: "%s | CivicGuide",
+    default: "CivicGuide - Empowering Indian Citizens Through Knowledge",
+  },
+  description: "An institutional-grade electoral education platform designed to foster civic literacy and transparency in the Indian democratic process.",
+  keywords: ["Election India", "Civic Education", "Voter Rights", "Polling Day", "Constituency Finder"],
+  authors: [{ name: "CivicGuide Team" }],
+  viewport: "width=device-width, initial-scale=1",
+  icons: {
+    icon: "/favicon.ico",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_IN",
+    url: "https://civicguide.in",
+    title: "CivicGuide - Election Education",
+    description: "Learn about the Indian electoral process with interactive 3D simulations and verified data.",
+    siteName: "CivicGuide",
+  },
 };
 
 export default function RootLayout({

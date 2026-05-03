@@ -10,6 +10,15 @@ interface SmartFAQProps {
   setActiveSection?: (s: string) => void;
 }
 
+/**
+ * SmartFAQ Component
+ * 
+ * An interactive, searchable FAQ and Glossary system for electoral terminology.
+ * Features an accordion-style FAQ section and a letter-filtered glossary.
+ * 
+ * @param {SmartFAQProps} props - Component properties
+ * @returns {JSX.Element}
+ */
 export function SmartFAQ({ setActiveSection }: SmartFAQProps) {
   const { t } = useLanguage();
   const [searchQuery,    setSearchQuery]    = useState("");

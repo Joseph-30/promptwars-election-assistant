@@ -55,6 +55,15 @@ function getCandidatesForConstituency(constituency: string) {
   return key ? CANDIDATE_DATA[key] : null;
 }
 
+/**
+ * ConstituencyFinder Component
+ * 
+ * Allows users to search for their Lok Sabha constituency using an Indian pincode.
+ * Fetches data from a public API and displays candidate information, election results,
+ * and booth guidance in a tabbed interface.
+ * 
+ * @returns {JSX.Element}
+ */
 export function ConstituencyFinder() {
   const { t } = useLanguage();
   const [pincode, setPincode]   = useState("");

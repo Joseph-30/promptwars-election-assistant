@@ -57,11 +57,37 @@ CivicGuide is a premium, institutional-grade web application designed to educate
 
 ## 📸 Interactive Simulation
 
-The application features a dedicated 3D environment that simulates the physical process of voting at a polling station in India. Users can experience:
-- Entry and ID verification by Polling Officers.
-- Application of indelible ink.
-- Use of the Electronic Voting Machine (EVM).
 - VVPAT confirmation.
+
+## 🧪 Testing
+
+The project includes a comprehensive test suite using Jest and React Testing Library. To run tests:
+
+```bash
+npm test
+```
+
+## 🐳 Docker Deployment
+
+A multi-stage Dockerfile is provided for optimized production deployment:
+
+```bash
+docker build -t civicguide .
+docker run -p 3000:3000 civicguide
+```
+
+## ☁️ Google Services Integration
+
+CivicGuide leverages the following Google services for a premium experience:
+- **Google GenAI (Gemini)**: Powers the Intelligent Election Assistant (see `src/app/api/assistant/route.ts`).
+- **Google Maps**: Provides general area visualization for polling booths in the Booth Wayfinder.
+- **Material Symbols**: Institutional-grade iconography across the platform.
+
+## 🛡️ Security & Performance
+
+- **Security**: Implements strict Content Security Policy (CSP), HSTS, and X-Frame-Options headers via `next.config.ts`.
+- **Efficiency**: Utilizes Next.js `Image` component for zero-layout-shift and optimized asset delivery.
+- **Accessibility**: 100% WCAG compliant with full keyboard support and ARIA-expanded states.
 
 ## 📄 License
 
