@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Public_Sans, Lexend } from "next/font/google";
 import "./globals.css";
 import { VoterModeProvider } from "@/context/VoterModeContext";
@@ -22,7 +22,6 @@ export const metadata: Metadata = {
   description: "An institutional-grade electoral education platform designed to foster civic literacy and transparency in the Indian democratic process.",
   keywords: ["Election India", "Civic Education", "Voter Rights", "Polling Day", "Constituency Finder"],
   authors: [{ name: "CivicGuide Team" }],
-  viewport: "width=device-width, initial-scale=1",
   icons: {
     icon: "/favicon.ico",
   },
@@ -34,6 +33,11 @@ export const metadata: Metadata = {
     description: "Learn about the Indian electoral process with interactive 3D simulations and verified data.",
     siteName: "CivicGuide",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({

@@ -90,7 +90,11 @@ export function AIAssistant() {
             </div>
 
             {/* Chat Body */}
-            <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50">
+            <div 
+              ref={scrollRef} 
+              className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50"
+              aria-live="polite"
+            >
               {messages.map((m, i) => (
                 <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
                   <div className={`max-w-[80%] p-3 rounded-2xl text-sm ${

@@ -1,12 +1,19 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
 
-// Initialize the Google Gen AI SDK
-// The API key should be provided via process.env.GEMINI_API_KEY
-const ai = new GoogleGenAI({});
-
 export async function POST(request: Request) {
   try {
+    const apiKey = process.env.GEMINI_API_KEY;
+    
+    // Check if the API key exists and isn't the placeholder
+    if (!apiKey || apiKey === "your_key_here") {
+      return NextResponse.json(
+        { error: 'AI Service is in offline/fallback mode. Please provide a valid GEMINI_API_KEY.' }, 
+        { status: 503 }
+      );
+    }
+
+    const ai = new GoogleGenAI(apiKey);
     const { message } = await request.json();
 
     if (!message) {
