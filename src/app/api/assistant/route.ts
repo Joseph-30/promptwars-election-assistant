@@ -13,7 +13,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const ai = new GoogleGenAI(apiKey);
+    const ai = new GoogleGenAI({ apiKey });
     const { message } = await request.json();
 
     if (!message) {
